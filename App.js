@@ -13,8 +13,9 @@ import { NotificationsScreen } from './src/drawer'
 import { LoginScreen, RegisterScreen } from './src/auth'
 
 import { Ionicons } from '@expo/vector-icons';
-
 import { IMAGE } from './src/constants/Image';
+
+
 
 
 
