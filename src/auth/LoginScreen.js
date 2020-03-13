@@ -44,9 +44,9 @@ export class LoginScreen extends Component {
             title="Password" isSecure={true}>
           </InputTextField>
 
-
+          <TouchableOpacity >
           <Text style={[styles.text, styles.link, { textAlign: "right" }]}>Forgot Password?</Text>
-
+          </TouchableOpacity>
           <TouchableOpacity style={styles.submitContainer} onPress={() => this.props.navigation.navigate('HomeApp')}>
             <Text style={[styles.text, { color: "#ffff", ontWeight: "600", fontSize: 16 }]}>Login</Text>
           </TouchableOpacity>
@@ -57,10 +57,6 @@ export class LoginScreen extends Component {
           </Text>
 
           </TouchableOpacity>
-      
-
-
-
         </View>
       </ScrollView>
 
