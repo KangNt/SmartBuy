@@ -12,7 +12,8 @@ import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail } fr
 import { NotificationsScreen } from './src/drawer'
 import { LoginScreen, RegisterScreen } from './src/auth'
 
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, Feather} from '@expo/vector-icons';
+
 import { IMAGE } from './src/constants/Image';
 
 
@@ -85,6 +86,7 @@ function DrawerNavigator({ navigation }) {
   return (
     <Drawer.Navigator initialRouteName="MenuTab"
       drawerContent={() => <CustomDrawerContent navigation={navigation} />}>
+
       <Drawer.Screen name="MenuTab" component={TabNavigator} />
       <Drawer.Screen name="Notifications" component={NotificationsScreen} />
     </Drawer.Navigator>

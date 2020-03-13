@@ -9,9 +9,6 @@ import { RVText } from '../core/RVText'
 export class HomeScreen extends Component {
 
 
-
-
-
     render() {
         return (
             <SafeAreaView style={{ flex: 1, }} >
