@@ -40,12 +40,8 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderColor: "#FFF",
         left: -33
-
     }
 })
-
-
-
 
 // import React from 'react'
 // import { View, StyleSheet, TouchableHighlight, Animated } from 'react-native';

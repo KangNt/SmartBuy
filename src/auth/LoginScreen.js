@@ -6,6 +6,7 @@ import { CustomHeader } from '../index'
 
 import InputTextField from "../../components/InputTextField"
 
+import AddButton from '../../components/AddButton'
 export class LoginScreen extends Component {
   render() {
     return (
@@ -15,7 +16,7 @@ export class LoginScreen extends Component {
         <View>
           <View style={{ marginTop: 60, alignItems: "center", justifyContent: "center" }}>
 
-            <Image source={require("../images/qr-code.png")}></Image>
+            <Image source={require("../images/logo-Sb.png") } style={{width:70,height:70}}></Image>
             <Text style={[styles.text, { marginTop: 10, fontSize: 22, fontWeight: "500" }]}>  SmartBuy</Text>
 
           </View>
@@ -44,9 +45,9 @@ export class LoginScreen extends Component {
             title="Password" isSecure={true}>
           </InputTextField>
 
-
+          <TouchableOpacity >
           <Text style={[styles.text, styles.link, { textAlign: "right" }]}>Forgot Password?</Text>
-
+          </TouchableOpacity>
           <TouchableOpacity style={styles.submitContainer} onPress={() => this.props.navigation.navigate('HomeApp')}>
             <Text style={[styles.text, { color: "#ffff", ontWeight: "600", fontSize: 16 }]}>Login</Text>
           </TouchableOpacity>
@@ -57,10 +58,6 @@ export class LoginScreen extends Component {
           </Text>
 
           </TouchableOpacity>
-      
-
-
-
         </View>
       </ScrollView>
 
@@ -122,6 +119,7 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 5
   },
+
   socialLogo: {
     width: 16,
     height: 16,
@@ -133,7 +131,7 @@ const styles = StyleSheet.create({
     fontWeight: "500"
   },
   submitContainer: {
-    backgroundColor: "#FF1654",
+    backgroundColor: "#C74241",
     fontSize: 16,
     borderRadius: 4,
     paddingVertical: 12,

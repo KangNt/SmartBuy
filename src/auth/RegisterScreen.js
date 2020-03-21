@@ -16,12 +16,10 @@ export class RegisterScreen extends Component {
                 <View>
                     <View style={{ marginTop: 60, alignItems: "center", justifyContent: "center" }}>
 
-                        <Image source={require("../images/qr-code.png")}></Image>
+                        <Image source={require("../images/logo-Sb.png")} style={{width:70,height:70}}   ></Image>
                         <Text style={[styles.text, { marginTop: 10, fontSize: 22, fontWeight: "500" }]}>  Sign Up</Text>
 
                     </View>
-
-
 
                     <InputTextField title="Username" style={{ marginTop: 20, marginBottom: 10 }}></InputTextField>
                     <InputTextField title="Email Address" style={{ marginTop: 15, marginBottom: 10 }}></InputTextField>

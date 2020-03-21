@@ -14,3 +14,4 @@ export class HomeScreenDetail extends Component {
         )
     }
 }
+

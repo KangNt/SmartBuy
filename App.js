@@ -6,19 +6,19 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-
-import { CustomHeader,CustomDrawerContent } from './src'
-import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail } from './src/tab'
+import { CustomHeader, CustomDrawerContent } from './src'
+import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen, CreateCodeScreen, ButtonScreen } from './src/tab'
 import { NotificationsScreen } from './src/drawer'
 import { LoginScreen, RegisterScreen } from './src/auth'
 
-import { Ionicons, Feather} from '@expo/vector-icons';
+import { Ionicons, Feather } from '@expo/vector-icons';
 
+import { FontAwesome5 } from '@expo/vector-icons';
 import { IMAGE } from './src/constants/Image';
 
 
 
-
+//error AddButton 
 
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +29,7 @@ const navOptionHandler = () => ({
 const StackHome = createStackNavigator();
 
 function HomeStack() {
-  
+
   return (
     <StackHome.Navigator initialRouteName="Home">
       <StackHome.Screen name="Home" component={HomeScreen} options={navOptionHandler} />
@@ -38,6 +38,38 @@ function HomeStack() {
   );
 };
 
+const StackHistory = createStackNavigator();
+
+function HistoryStack() {
+  return (
+    <StackHistory.Navigator initialRouteName="History" >
+      <StackHistory.Screen name="History" component={HomeScreen} options={navOptionHandler} />
+    </StackHistory.Navigator>
+  );
+};
+
+const StackButton = createStackNavigator();
+
+function ButtonStack() {
+  return (
+    <StackButton.Navigator initialRouteName="ButtonScreen" >
+      <StackButton.Screen name="ButtonScreen" component={ButtonScreen} options={navOptionHandler} />
+    </StackButton.Navigator>
+  ) 
+}
+
+
+const StackCreate = createStackNavigator();
+function CreateStack() {
+  return (
+    <StackCreate.Navigator initialRouteName="Create">
+      <StackCreate.Screen name="CreateCode" component={HomeScreen} options={navOptionHandler} />
+    </StackCreate.Navigator>
+  );
+};
+
+
+//history-create the code - like(<3)    
 const StackSetting = createStackNavigator();
 
 function SettingStack() {
@@ -49,33 +81,58 @@ function SettingStack() {
   )
 }
 
+
 function TabNavigator() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused }) => {
-          let iconName;
-          if (route.name === 'Home') {
-            iconName = focused
-              ? IMAGE.ICON_HOME
-              : IMAGE.ICON_HOME_BLACK;
-          } else if (route.name === 'Settings') {
-            iconName = focused
-              ? IMAGE.ICON_SETTINGS
-              : IMAGE.ICON_SETTINGS_BLACK;
-          }
-          // You can return any component that you like here!
-          return <Ionicons name={iconName} style={{ width: 20, height: 20 }}
-            resizeMode="contain" />;
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: 'red',
-        inactiveTintColor: 'black',
-      }}
+    // screenOptions={({ route }) => ({
+    //   tabBarIcon: ({ focused }) => {
+    //     let iconName;
+    //     if (route.name === 'Home') {
+    //       iconName = focused
+    //         ? IMAGE.ICON_HOME
+    //         : IMAGE.ICON_HOME_BLACK;
+    //     } else if (route.name === 'Settings') {
+    //       iconName = focused
+    //         ? IMAGE.ICON_SETTINGS
+    //         : IMAGE.ICON_SETTINGS_BLACK;
+    //     }
+    //     // You can return any component that you like here!
+    //     return <Ionicons name={iconName} style={{ width: 20, height: 20 }}
+    //       resizeMode="contain" />;
+    //   },
+    // })}
+    // tabBarOptions={{
+    //   activeTintColor: 'red',
+    //   inactiveTintColor: 'black',
+    // }}
     >
-      <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Settings" component={SettingStack} />
+
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ color }) => <FontAwesome5 name="home" size={24} color={color} />
+        }}
+        name="Home" component={HomeStack} />
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ color }) => <FontAwesome5 name="clock" size={24} color={color} />
+        }}
+        name="History" component={HistoryStack} />
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ color }) => <FontAwesome5 name="star" size={24} color={color} />
+        }}
+        name="ButtonScreen" component={ButtonStack} />
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ color }) => <FontAwesome5 name="qrcode" size={24} color={color} />
+        }}
+        name="CreateCode" component={CreateStack} />
+      <Tab.Screen
+        options={{
+          tabBarIcon: ({ color }) => <FontAwesome5 name="cog" size={24} color={color} />
+        }}
+        name="Settings" component={SettingStack} />
     </Tab.Navigator>
   )
 }
@@ -86,13 +143,13 @@ function DrawerNavigator({ navigation }) {
   return (
     <Drawer.Navigator initialRouteName="MenuTab"
       drawerContent={() => <CustomDrawerContent navigation={navigation} />}>
-
       <Drawer.Screen name="MenuTab" component={TabNavigator} />
       <Drawer.Screen name="Notifications" component={NotificationsScreen} />
     </Drawer.Navigator>
   )
 
 }
+
 
 const StackApp = createStackNavigator();
 
@@ -107,12 +164,6 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-
-
-
-
-
 
 
 
@@ -199,7 +250,6 @@ export default function App() {
 
 
 // export default createAppContainer(DrawerNavigator);
-
 
 
 
