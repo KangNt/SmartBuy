@@ -25,7 +25,7 @@ export class CustomHeader extends Component {
                   source={IMAGE.ICON_BACK}
                   resizeMode="contain"
                 />
-                <Text>Back</Text>
+                {/* <Text>Back</Text> */}
               </TouchableOpacity>
           }
         </View>

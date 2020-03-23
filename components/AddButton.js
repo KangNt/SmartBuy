@@ -1,16 +1,17 @@
-import React ,{Component}from 'react';
+import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons'
-// import Scan from '../screens/Scan'
+// import { FontAwesome5 } from '@expo/vector-icons';
+
+import { MaterialCommunityIcons } from 'react-native-vector-icons';
 export class AddButton extends Component {
 
-  
     render() {
         return (
 
             <View style={StyleSheet.container}>
                 <TouchableOpacity style={styles.button}>
-                    <FontAwesome5 name="qrcode" size={35} color="#FFF" />
+                    {/* <FontAwesome5 name="qrcode" size={35} color="#FFF" /> */}
+                    <MaterialCommunityIcons name="qrcode-scan"  size={35} color="#FFF" /> 
                 </TouchableOpacity>
             </View>
         )
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         borderWidth: 3,
         borderColor: "#FFF",
-        left: -33
+        left: -35
 
     }
 })

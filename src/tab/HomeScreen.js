@@ -1,35 +1,77 @@
 import React, { Component } from 'react'
-import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Image,ScrollView } from 'react-native'
+import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native'
 import { CustomHeader } from '../index'
 // import { RVText } from '../core/RVText'
 
-import Card from '../../components/Card/Card';
+
+// import Card from '../../components/Card/Card';
+import { Card, ListItem, Button, Icon } from 'react-native-elements';
+
+const users = [
+    {
+        name: 'brynn',
+        avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
+    },
+
+]
+
 export class HomeScreen extends Component {
 
     render() {
         return (
             <SafeAreaView style={{ flex: 1, }} >
-                   <CustomHeader title="Home" isHome={true} navigation={this.props.navigation} />
+                <CustomHeader title="Home" isHome={true} navigation={this.props.navigation} />
                 <View style={StyleSheet.container}>
                     <ScrollView>
-                    <TouchableOpacity style={StyleSheet.card}>
+                        <TouchableOpacity>
+                            <Card title="CARD WITH DIVIDER">
+                                {
+                                    users.map((u, i) => {
+                                        return (
+                                            <View key={i} style={styles.user}>
+                                                <Image
+                                                    style={styles.image}
+                                                    resizeMode="cover"
+                                                    source={{ uri: u.avatar }}
+                                                />
+                                                <Text style={styles.name}>{u.name}</Text>
+                                            </View>
+                                        );
+                                    })
+                                }
+                            </Card>
+                            </TouchableOpacity>
 
-                        <Image style={styles.cardImage}
-                            source={{ url: 'https://i1.sndcdn.com/avatars-000703955956-xs2oh0-t500x500.jpg' }} />
-                        <Text style={styles.cardText}>CardText</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={StyleSheet.card}>
+                                <TouchableOpacity>
+                            <Card containerStyle={{ padding: 0 }} >
+                                {
+                                    users.map((u, i) => {
+                                        return (
+                                            <ListItem
+                                                key={i}
+                                                roundAvatar
+                                                title={u.name}
+                                                avatar={{ uri: u.avatar }}
+                                            />
+                                        );
+                                    })
+                                }
+                            </Card>
+                            </TouchableOpacity>
 
-                        <Image style={styles.cardImage}
-                            source={{ url: 'https://i1.sndcdn.com/avatars-000703955956-xs2oh0-t500x500.jpg' }} />
-                        <Text style={styles.cardText}>CardText</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={StyleSheet.card}>
+                            <TouchableOpacity>
+                            <Card
+                                title='HELLO WORLD'
+                                image={require('../images/Linh.jpg')}>
+                                <Text style={{ marginBottom: 10 }}>
+                                    The idea with React Native Elements is more about component structure than actual design.</Text>
+                                <Button
+                                    icon={<Icon name='code' color='#ffffff' />}
+                                    buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
+                                    title='VIEW NOW' />
+                            </Card>
+                            </TouchableOpacity>
 
-                        <Image style={styles.cardImage}
-                            source={{ url: 'https://i1.sndcdn.com/avatars-000703955956-xs2oh0-t500x500.jpg' }} />
-                        <Text style={styles.cardText}>CardText</Text>
-                    </TouchableOpacity>
                     </ScrollView>
 
                 </View>

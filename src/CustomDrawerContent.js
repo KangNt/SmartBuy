@@ -9,19 +9,21 @@ export class CustomDrawerContent extends Component {
             <SafeAreaView style={{ flex: 1 }}>
             <View style={{ height: 150, alignItems: 'center', justifyContent: 'center' }}>
                 <TouchableOpacity>
+                    {/* <View >
+                        <View>
+                            <Image source={IMAGE.ICON_BACKGROUND}
+                            style={{width:'100%',height:"100%"}}
+                            />
+                                
+                        </View>
+                    </View> */}
                     <Image source={IMAGE.ICON_PROFILE}
                         style={{ height: 70, width: 70, borderRadius: 60, marginRight: 180, marginTop: 5 }}
                         showEditButton
                     />
-                    {/* <Avatar
-                        source={{
-                            uri:
-                                'https://i1.sndcdn.com/avatars-000703955956-xs2oh0-t500x500.jpg',
-                        }}
-                        showEditButton
-                        style={{ height: 70, width: 70, borderRadius: 60, marginRight: 180, marginTop: -20 }}
-                    /> */}
                 </TouchableOpacity>
+
+
                 <TouchableOpacity>
                     <Text style={{ marginTop: 5, marginLeft: -120, fontSize: 18, fontWeight: "bold" }}>KidPlaza </Text>
                 </TouchableOpacity>
@@ -45,7 +47,7 @@ export class CustomDrawerContent extends Component {
 
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
-                    onPress={() => this.props.navigation.navigate('MenuTab')}
+                    onPress={() => this.props.navigation.navigate('InfoScreen')}
                 >
                     <Text style={styles.text} ><FontAwesome5 name="user" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Hồ sơ</Text></Text>
                 </TouchableOpacity>
@@ -79,7 +81,7 @@ export class CustomDrawerContent extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
-                    onPress={() => this.props.navigation.navigate('MenuTab')}
+                    onPress={() => this.props.navigation.navigate('Notifications')}
                 >
 
                     <Text style={styles.text}><FontAwesome5 name="bell" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Notifications</Text></Text>
