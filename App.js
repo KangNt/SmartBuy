@@ -88,7 +88,6 @@ function ScanQrCodeStack(){
   )
 }
 
-
 function TabNavigator() {
   return (
     <Tab.Navigator
@@ -109,7 +108,6 @@ function TabNavigator() {
         }}
         component={HomeStack} />
         
-
       <Tab.Screen
         component={HistoryScreen}
         options={{
@@ -136,7 +134,7 @@ function TabNavigator() {
       <Tab.Screen
         component={FavouriteScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="heart-outline" color={color} size={size} />),
+          tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="charity" color={color} size={size} />),
         }}
         name="favourite" component={FavouriteStack} />
 

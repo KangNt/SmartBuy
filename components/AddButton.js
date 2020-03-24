@@ -16,7 +16,7 @@ export class AddButton extends Component {
             <View style={StyleSheet.container}>
                  {/* <CustomHeader title="ScanQrcode" isHome={true} navigation={this.props.navigation} /> */}
                  <TouchableOpacity style={styles.button}
-                onPress={() => navigation.navigate('ScanQrCode')}
+                // onPress={() => navigation.navigate('ScanQrCode')}
                 >
                     <MaterialCommunityIcons name="qrcode-scan" size={35} color="#FFF" /> 
                 </TouchableOpacity>

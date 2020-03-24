@@ -1,23 +1,93 @@
 import React, { Component } from 'react'
-import { Text, View, SafeAreaView, Image,TouchableOpacity,ScrollView,StyleSheet} from 'react-native'
+import { Text, View, SafeAreaView, Image,TouchableOpacity,ScrollView,StyleSheet,AsyncStorage,Alert} from 'react-native'
 import { IMAGE } from './constants/Image'
 import { FontAwesome5 } from '@expo/vector-icons';
 export class CustomDrawerContent extends Component {
-   
+    constructor(props){
+        super(props);
+        this.state ={ 
+            isLoading: false,
+            id:'',
+            name:'',
+            email:'',
+            password:'',
+            avatar:""
+    
+          }
+         try {
+            AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
+                // alert(result[0][1]+" "+result[1][1])
+                // alert(result[2][1])
+                this.setState({
+                  email:result[0][1],
+                  name:result[1][1],
+                  avatar:result[2][1],
+                  isLoading:true
+                })
+                
+              }) 
+         } catch (error) {
+             
+         }
+            
+    }
+           
+
+    _AlertLogout =()=>{
+        Alert.alert("Thong Bao", "Ban co chac chan muon logout khong?",
+        [
+          
+          {text:'Huy'},
+          { text:'OKI', onPress:this._Logout
+          
+          }
+        ],
+          {cancelable: false},)
+        
+      }
+     
+     
+      _Logout = async () => {
+        try {
+          AsyncStorage.clear();
+          this.setState({
+            email:'',
+            name:""
+          })
+          this.props.navigation.navigate('Login')
+        } catch (error) {
+          alert(error)
+          
+        }
+      }
+      getInfo = async () => {
+       
+        try {
+           AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
+                
+                this.setState({
+                  email:result[0][1],
+                  name:result[1][1],
+                  avatar:result[2][1],
+                  
+                })
+                
+              }) 
+         } catch (error) {
+             
+         }
+      }
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>
             <View style={{ height: 150, alignItems: 'center', justifyContent: 'center' }}>
-                <TouchableOpacity>
-                    {/* <View >
-                        <View>
-                            <Image source={IMAGE.ICON_BACKGROUND}
-                            style={{width:'100%',height:"100%"}}
-                            />
-                                
-                        </View>
-                    </View> */}
-                    <Image source={IMAGE.ICON_PROFILE}
+                <TouchableOpacity 
+                onPress={ () => this.getInfo()}
+                >
+                 
+                    <Image source={this.state.avatar==null || this.state.avatar=='' 
+                        ? require('./images/user.png')
+                        : {uri:this.state.avatar}}
                         style={{ height: 70, width: 70, borderRadius: 60, marginRight: 180, marginTop: 5 }}
                         showEditButton
                     />
@@ -25,11 +95,11 @@ export class CustomDrawerContent extends Component {
 
 
                 <TouchableOpacity>
-                    <Text style={{ marginTop: 5, marginLeft: -120, fontSize: 18, fontWeight: "bold" }}>KidPlaza </Text>
+                    <Text style={{ marginTop: 5, marginLeft: -120, fontSize: 18, fontWeight: "bold" }}>{this.state.name} </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity>
-                    <Text style={{ marginTop: 5, marginLeft: -120, color: "#ABB4BD" }}>@kiennguyen07</Text>
+                    <Text style={{ marginTop: 5, marginLeft: -120, color: "#ABB4BD" }}>{this.state.email}</Text>
 
                 </TouchableOpacity>
 
@@ -88,7 +158,7 @@ export class CustomDrawerContent extends Component {
 
                 <TouchableOpacity
                     style={{ marginTop: 35, marginLeft: 5 }}
-                    onPress={() => this.props.navigation.navigate('Login')}
+                    onPress={() => this._AlertLogout()}
                 >
                     <Text style={{ marginLeft: 15, marginTop: 65 }}>Đăng xuất</Text>
                 </TouchableOpacity>
