@@ -1,22 +1,22 @@
 
 import * as React from 'react';
-import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView } from 'react-native';
+// import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import { CustomHeader, CustomDrawerContent } from './src'
-import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen, FavouriteScreen } from './src/tab'
-import { NotificationsScreen, InfoScreen } from './src/drawer'
+import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen, FavouriteScreen, ScanQrCodeScreen } from './src/tab'
+import { NotificationsScreen, ProfileScreen } from './src/drawer'
 import { LoginScreen, RegisterScreen } from './src/auth'
 
-import { Ionicons, Feather } from '@expo/vector-icons';
+// import { Ionicons, Feather } from '@expo/vector-icons';
 
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 
-import { FontAwesome5 } from '@expo/vector-icons';
-import { IMAGE } from './src/constants/Image';
+// import { FontAwesome5 } from '@expo/vector-icons';
+// import { IMAGE } from './src/constants/Image';
 import { AddButton } from './components/AddButton'
 
 
@@ -52,17 +52,10 @@ function HistoryStack() {
   );
 };
 
-// const StackButton = createStackNavigator();
-// function ButtonStack() {
-//   return (
-//     <StackButton.Navigator >
-//       <StackButton.Screen name="Button" component={ButtonScreen} options={navOptionHandler} />
-//     </StackButton.Navigator>
-//   )
-// }
-
 
 //button scan Qrcode  
+
+
 const StackSetting = createStackNavigator();
 
 function SettingStack() {
@@ -84,32 +77,21 @@ function FavouriteStack() {
   )
 }
 
+const StackScanQrCode = createStackNavigator();
+
+function ScanQrCodeStack(){
+  return (
+    <StackScanQrCode.Navigator initialRouteName="ScanQrCode" >
+      <StackScanQrCode.Screen name="ScanQrCode" component={ScanQrCodeScreen} options={navOptionHandler} />
+    </StackScanQrCode.Navigator>
+
+  )
+}
+
 
 function TabNavigator() {
   return (
     <Tab.Navigator
-      // screenOptions={({ route }) => ({
-      //   tabBarIcon: ({ focused }) => {
-      //     let iconName;
-      //     if (route.name === 'Home') {
-      //       iconName = focused
-      //         ? IMAGE.ICON_HOME
-      //         : IMAGE.ICON_HOME_BLACK;
-      //     } else if (route.name === 'Settings') {
-      //       iconName = focused
-      //         ? IMAGE.ICON_SETTINGS
-      //         : IMAGE.ICON_SETTINGS_BLACK;
-      //     }
-      //     // You can return any component that you like here!
-      //     return <Ionicons name={iconName} style={{ width: 20, height: 20 }}
-      //       resizeMode="contain" />;
-      //   },
-      // })}
-      // tabBarOptions={{
-      //   activeTintColor: 'red',
-      //   inactiveTintColor: 'black',
-      // }}
-
       initialRouteName="Home"
       tabBarOptions={{
         activeTintColor: '#e91e63',
@@ -126,6 +108,7 @@ function TabNavigator() {
           ),
         }}
         component={HomeStack} />
+        
 
       <Tab.Screen
         component={HistoryScreen}
@@ -144,12 +127,11 @@ function TabNavigator() {
         name="Button" component={ButtonStack} /> */}
 
       <Tab.Screen
-        component={AddButton}
+        component={ScanQrCodeScreen}
         options={{
-          tabBarIcon: "button",
           tabBarIcon: ({ color, size }) => (<AddButton />)
         }}
-        name="Scan" />
+        name="Scan" component={ScanQrCodeStack} />
 
       <Tab.Screen
         component={FavouriteScreen}
@@ -177,7 +159,7 @@ function DrawerNavigator({ navigation }) {
       drawerContent={() => <CustomDrawerContent navigation={navigation} />}>
       <Drawer.Screen name="MenuTab" component={TabNavigator} />
       <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-      <Drawer.Screen name="InfoScreen" component={InfoScreen} />
+      <Drawer.Screen name="Profile" component={ProfileScreen} />
     </Drawer.Navigator>
   )
 }
@@ -193,11 +175,9 @@ export default function App() {
         <StackApp.Screen name="Register" component={RegisterScreen} options={navOptionHandler} />
       </StackApp.Navigator>
     </NavigationContainer>
+
   );
 }
-
-
-
 
 // import React from "react";
 // import { createAppContainer } from "react-navigation";

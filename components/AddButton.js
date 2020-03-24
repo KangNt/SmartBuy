@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity,TouchableHighlight } from 'react-native';
 // import { FontAwesome5 } from '@expo/vector-icons';
 
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
+// import { CustomHeader } from '../src/tab'
+
+
+
 export class AddButton extends Component {
 
     render() {
+        let { navigation} = this.props
         return (
 
             <View style={StyleSheet.container}>
-                <TouchableOpacity style={styles.button}>
-                    {/* <FontAwesome5 name="qrcode" size={35} color="#FFF" /> */}
-                    <MaterialCommunityIcons name="qrcode-scan"  size={35} color="#FFF" /> 
+                 {/* <CustomHeader title="ScanQrcode" isHome={true} navigation={this.props.navigation} /> */}
+                 <TouchableOpacity style={styles.button}
+                onPress={() => navigation.navigate('ScanQrCode')}
+                >
+                    <MaterialCommunityIcons name="qrcode-scan" size={35} color="#FFF" /> 
                 </TouchableOpacity>
+             
+
+
             </View>
         )
     }

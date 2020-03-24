@@ -47,7 +47,7 @@ export class CustomDrawerContent extends Component {
 
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
-                    onPress={() => this.props.navigation.navigate('InfoScreen')}
+                    onPress={() => this.props.navigation.navigate('Profile')}
                 >
                     <Text style={styles.text} ><FontAwesome5 name="user" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Hồ sơ</Text></Text>
                 </TouchableOpacity>
@@ -83,7 +83,6 @@ export class CustomDrawerContent extends Component {
                     style={{ marginTop: 25 }}
                     onPress={() => this.props.navigation.navigate('Notifications')}
                 >
-
                     <Text style={styles.text}><FontAwesome5 name="bell" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Notifications</Text></Text>
                 </TouchableOpacity>
 

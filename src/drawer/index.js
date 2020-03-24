@@ -1,2 +1,3 @@
 export * from './NotificationsScreen'
-export * from './InfoScreen'
+export * from './ProfileScreen'
+

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 
-import { IMAGE } from './constants/Image'
+  import { IMAGE } from './constants/Image'
 
 export class CustomHeader extends Component {
   render() {
