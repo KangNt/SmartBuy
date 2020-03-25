@@ -52,7 +52,7 @@ export class HistoryScreen extends Component {
                                 reverse
                                 name='history'
                                 type='font-awesome'
-                                size='13'
+                                size={13}
                                 color='#2196F3'
                             />
                         </TouchableOpacity>

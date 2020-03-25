@@ -9,6 +9,7 @@ import { FlatList } from 'react-native-gesture-handler';
 // import Card from '../../components/Card/Card';
 
 var {width,height} = Dimensions.get('window');
+
 import { Card, ListItem, Button, Icon } from 'react-native-elements';
 
 const users = [
@@ -40,7 +41,6 @@ export class HomeScreen extends Component {
          })
          .then(([req001,req002,req003]) => {
            this.setState({
-             
              sliders: req001,
              Getone:req002,
              categories:req003
@@ -108,12 +108,11 @@ export class HomeScreen extends Component {
                      renderItem={({item}) =>
                          <TouchableOpacity onPress={()=>this.setState({selectCate:item.id})}>
                              <View style={this.state.selectCate==item.id ? styles.divtheme : styles.divtheme2}>
-                                 
+                                                                        
                                  <Text>{item.cate_name}</Text>
                              </View>
                          </TouchableOpacity>
-                     }>
-                         
+                     }> 
                  </FlatList>
              </View>
              <ScrollView>

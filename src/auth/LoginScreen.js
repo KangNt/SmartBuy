@@ -6,7 +6,7 @@ import { CustomHeader } from '../index'
 
 import InputTextField from "../../components/InputTextField"
 
-import AddButton from '../../components/AddButton'
+import AddButton from '../tab/AddButton'
 export class LoginScreen extends Component {
   constructor(props) {
     super(props);
@@ -40,10 +40,10 @@ export class LoginScreen extends Component {
   }
   Login() {
     if (this.state.email == '') {
-      alert('Email khong duoc de trong');
+      alert('Email không được để trống');
     }
     else if (this.state.password == '') {
-      alert('Password khong duoc de trong');
+      alert('Password không được để trống');
     }
     else {
       fetch('https://testapi001.cf/api/login', {
@@ -60,12 +60,11 @@ export class LoginScreen extends Component {
         })
 
       })
-
         .then((response) => response.json())
         .then((responseJson) => {
 
           if (responseJson.msg == 'login fail') {
-            alert('Dang nhap that bai, vui long kiem tra lai email hoac mat khau')
+            alert('Đăng nhập không thành công! Email hoặc Password không đúng!')
           }
           else {
             AsyncStorage.multiSet([['email', responseJson.user_info.email], ['name', responseJson.user_info.name], ['avatar', responseJson.user_info.avatar]])

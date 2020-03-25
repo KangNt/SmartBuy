@@ -34,11 +34,11 @@ export class CustomDrawerContent extends Component {
            
 
     _AlertLogout =()=>{
-        Alert.alert("Thong Bao", "Ban co chac chan muon logout khong?",
+        Alert.alert("Thông báo!", "Bạn có chắc chắn muốn Logout không?",
         [
           
-          {text:'Huy'},
-          { text:'OKI', onPress:this._Logout
+          {text:'Cancel'},
+          { text:'OK', onPress:this._Logout
           
           }
         ],
@@ -138,9 +138,9 @@ export class CustomDrawerContent extends Component {
 
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
-                    onPress={() => this.props.navigation.navigate('MenuTab')}
+                    onPress={() => this.props.navigation.navigate('Card')}
                 >
-                    <Text style={styles.text}><FontAwesome5 name="bookmark" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Dấu trang</Text> </Text>
+                    <Text style={styles.text}><FontAwesome5 name="bookmark" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Shopping cart</Text> </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
@@ -156,11 +156,20 @@ export class CustomDrawerContent extends Component {
                     <Text style={styles.text}><FontAwesome5 name="bell" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Notifications</Text></Text>
                 </TouchableOpacity>
 
+
+                <TouchableOpacity
+                    style={{ marginTop: 25 }}
+                    onPress={() => this.props.navigation.navigate('Login')}
+                >
+
+                    <Text style={{ marginLeft: 15, marginTop: 15,fontWeight:'bold',size:18 }}><FontAwesome5 name="sign-in-alt" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Login</Text></Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity
                     style={{ marginTop: 35, marginLeft: 5 }}
                     onPress={() => this._AlertLogout()}
                 >
-                    <Text style={{ marginLeft: 15, marginTop: 65 }}>Đăng xuất</Text>
+                    <Text style={{ marginLeft: 15, marginTop: -10,fontWeight:'bold' }}><FontAwesome5 name="sign-out-alt" size={24} color={"#CDCCCE"} /> Đăng xuất</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
