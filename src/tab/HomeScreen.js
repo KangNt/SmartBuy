@@ -1,161 +1,177 @@
 import React, { Component } from 'react'
-import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Image, ScrollView, Dimensions,ImageBackground} from 'react-native'
+import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Image, ScrollView, Dimensions, ImageBackground } from 'react-native'
 import { CustomHeader } from '../index'
 // import { RVText } from '../core/RVText'
 import Swiper from 'react-native-swiper'
-
+import global from './global'
 import { FlatList } from 'react-native-gesture-handler';
 
-// import Card from '../../components/Card/Card';
+import Card from '../../components/Card/Card';
 
-var {width,height} = Dimensions.get('window');
+var { width, height } = Dimensions.get('window');
 
-import { Card, ListItem, Button, Icon } from 'react-native-elements';
+// import { Card, ListItem, Button, Icon } from 'react-native-elements';
 
-const users = [
-    {
-        name: 'brynn',
-        avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
-    },
 
-]
 
 export class HomeScreen extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state ={ 
-         
-          Getone:[],
-          sliders:[],
-          categories:[],
-          selectCate:""
-          
+        this.state = {
+
+            Getone: [],
+            sliders: [],
+            categories: [],
+            selectCate: "",
+
+            id: '',
+            name: '',
+            email: '',
+            password: '',
+            avatar: ""
+
+
         }
 
-    }
-    componentDidMount(){
-  
-        Promise.all([fetch('https://testapi001.cf/api'),fetch('https://testapi001.cf/api/'),fetch('https://testapi001.cf/api/categories')])
-         .then(([req1,req2,req3]) => {
-           return Promise.all([req1.json(),req2.json(),req3.json()])
-         })
-         .then(([req001,req002,req003]) => {
-           this.setState({
-             sliders: req001,
-             Getone:req002,
-             categories:req003
-             
-           })
-   
-         })
-         .catch((error) =>{
-           console.error(error);
-         });
-         
-         
-    }
-    renderPro(item){
-        if (this.state.selectCate==item.cate_id) {
-            
-         
-                return(
-                    <TouchableOpacity>
-                    <View style={StyleSheet.card}>
-                    <Image style={styles.cardImage}
-                    source={{uri:item.image}} />
-                        <Text>{item.name}</Text>
-                    </View>
-                    </TouchableOpacity>
-                )
+        try {
+            const val = AsyncStorage.multiGet(["email", "name", 'avatar']).then(result => {
+                // alert(result[0][1]+" "+result[1][1])
+                // alert(result[2][1])
+                this.setState({
+                    email: result[0][1],
+                    name: result[1][1],
+                    avatar: result[2][1],
+
+                })
+
+            })
+
+        } catch (error) {
+
         }
-        else if(this.state.selectCate==0){
-            return(
-                <TouchableOpacity>
-                <View style={StyleSheet.card}>
-                <Image style={styles.cardImage}
-                source={{uri:item.image}} />
-                    <Text>{item.name}</Text>
-                </View>
+
+
+
+    }
+    componentDidMount() {
+
+        Promise.all([fetch('https://testapi001.cf/api'), fetch('https://testapi001.cf/api/'), fetch('https://testapi001.cf/api/categories')])
+            .then(([req1, req2, req3]) => {
+                return Promise.all([req1.json(), req2.json(), req3.json()])
+            })
+            .then(([req001, req002, req003]) => {
+                this.setState({
+
+                    sliders: req001,
+                    Getone: req002,
+                    categories: req003
+
+                })
+
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+
+
+
+
+
+
+
+    }
+    getInfo = async () => {
+        try {
+            AsyncStorage.multiGet(["email", "name", 'avatar']).then(result => {
+                alert(result[0][1] + " " + result[1][1])
+                alert(result[2][1])
+                this.setState({
+                    email: result[0][1],
+                    name: result[1][1],
+                    avatar: result[2][1],
+
+                })
+
+            })
+        } catch (error) {
+
+        }
+    }
+    Show() {
+        alert('ho')
+
+
+    }
+    renderPro(item) {
+        if (this.state.selectCate == item.cate_id || this.state.selectCate == 0) {
+
+
+            return (
+
+                <TouchableOpacity style={styles.divListProduct} onPress={() => this.props.navigation.navigate('HomeDetail', { product: item })}>
+                    <Image
+                        style={styles.imageProduct}
+                        resizeMode="contain"
+                        source={{ uri: item.image }} />
+                    <View style={{ height: ((width / 2) - 20) - 90, backgroundColor: 'transparent', width: ((width / 2) - 20) - 10 }} />
+                    <Text style={{ fontWeight: 'bold', fontSize: 18, textAlign: 'center' }}>
+                        {item.name}
+                    </Text>
+                    <Text>Descp Food and Details</Text>
+                    <Text style={{ fontSize: 20, color: "green" }}>{item.price}</Text>
                 </TouchableOpacity>
+
             )
         }
-        
+
+
     }
+
+
     render() {
+
         return (
 
+            <SafeAreaView style={{ flex: 1, flexDirection: "column" }} >
+                <CustomHeader title="Home" isHome={true} navigation={this.props.navigation} />
+                <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
+                    <View style={{ flex: 1 }}>
+                        <View style={{ height: 150 }}>
+                            <Swiper>{this.state.Getone.map((Item) => {
+                                return (
 
-            <SafeAreaView style={{ flex: 1, }} >
-            <CustomHeader title="Home" isHome={true} navigation={this.props.navigation} />
-         <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
-         <View style={StyleSheet.container}>
-             <View style={{height:150}}>
-                 <Swiper showsButtons={true} showsPagination={false}>{this.state.Getone.map( (Item) =>{
-                     return(
-                        
-                         <ImageBackground style={{width:width,height:150}} source={{uri:Item.image}} >
-                             <Text style={styles.text}>{Item.name}</Text>
-                         </ImageBackground>
-                     )
+                                    <ImageBackground style={{ width: width, height: 150 }} source={{ uri: Item.image }} >
+                                        <Text style={styles.text}>{Item.name}</Text>
+                                    </ImageBackground>
+                                )
 
-                     })}
-                 </Swiper>
-             </View>
-             <View>
-                 
-                 <FlatList data={this.state.categories.category} horizontal={true}
-                     
-                     renderItem={({item}) =>
-                         <TouchableOpacity onPress={()=>this.setState({selectCate:item.id})}>
-                             <View style={this.state.selectCate==item.id ? styles.divtheme : styles.divtheme2}>
-                                                                        
-                                 <Text>{item.cate_name}</Text>
-                             </View>
-                         </TouchableOpacity>
-                     }> 
-                 </FlatList>
-             </View>
-             <ScrollView>
-                 
-                 <FlatList data={this.state.categories.product}
-                     renderItem={({item}) => this.renderPro(item)
-                         
-                     }>
+                            })}
+                            </Swiper>
+                        </View>
 
-                 </FlatList>
-                     
-                     
-                
-                 
-             </ScrollView>
+                        <FlatList data={this.state.categories.category} horizontal={true}
 
-         </View>
-         </ScrollView>
-     </SafeAreaView>
-            // <SafeAreaView style={{ flex: 1, }} >
-            //     <CustomHeader title="Home" isHome={true} navigation={this.props.navigation} />
-            //     <View style={StyleSheet.container}>
-            //         <ScrollView>
+                            renderItem={({ item }) =>
+                                <TouchableOpacity onPress={() => this.setState({ selectCate: item.id })}>
+                                    <View style={this.state.selectCate == item.id ? styles.divtheme : styles.divtheme2}>
 
+                                        <Text>{item.cate_name}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            }>
 
-            //                 {/* <TouchableOpacity>
-            //                 <Card
-            //                     title='HELLO WORLD'
-            //                     image={require('../images/Linh.jpg')}>
-            //                     <Text style={{ marginBottom: 10 }}>
-            //                         The idea with React Native Elements is more about component structure than actual design.</Text>
-            //                     <Button
-            //                         icon={<Icon name='code' color='#ffffff' />}
-            //                         buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
-            //                         title='VIEW NOW' />
-            //                 </Card>
-            //                 </TouchableOpacity> */}
+                        </FlatList>
+                        <View>
+                            <FlatList data={this.state.categories.product} numColumns={2}
+                                renderItem={({ item }) => this.renderPro(item)}
+                                keyExtractor={(item, index) => index.toString()}>
 
-            //         </ScrollView>
-
-            //     </View>
-
-            // </SafeAreaView>
+                            </FlatList>
+                            <View style={{ height: 20 }} />
+                        </View>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
 
 
 
@@ -177,35 +193,55 @@ export class HomeScreen extends Component {
         )
     }
 }
-
 const styles = StyleSheet.create({
+
+    imageProduct: {
+        width: ((width / 2) - 20) - 20,
+        height: ((width / 2) - 20) - 40,
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        top: -25
+    },
+    divListProduct: {
+        width: (width / 2) - 25,
+        padding: 10,
+        borderRadius: 10,
+        marginTop: 25,
+        marginBottom: 5,
+        marginLeft: 15,
+        alignItems: 'center',
+        elevation: 8,
+        shadowOpacity: 0.3,
+        shadowRadius: 50,
+        backgroundColor: 'white',
+    },
     container: {
-        marginTop: 20,
-        flex:1,
+        marginTop: 10,
+        flex: 1,
         justifyContent: 'center',
         alignItems: "center",
         backgroundColor: "#F5FCFF"
 
     },
-    divtheme:{
-        height:42,
-        borderBottomWidth:3,
-        padding:10,
-        borderColor:'#c2191c',
-        backgroundColor:'#D3DCE3'
-      },
-      divtheme2:{
-        height:41,
+    divtheme: {
+        height: 42,
+        borderBottomWidth: 3,
+        padding: 10,
+        borderColor: '#c2191c',
+        backgroundColor: '#D3DCE3'
+    },
+    divtheme2: {
+        height: 41,
         // borderBottomWidth:2,
-        borderColor:'#c2191c',
-        padding:10,
-        backgroundColor:'white'
-      },
-    categories:{
-        backgroundColor:'rgb(176, 224, 230)',
-        padding:10,
-        borderColor:"red",
-        borderTopWidth:3
+        borderColor: '#c2191c',
+        padding: 10,
+        backgroundColor: 'white'
+    },
+    categories: {
+        backgroundColor: 'rgb(176, 224, 230)',
+        padding: 10,
+        borderColor: "red",
+        borderTopWidth: 3
 
     },
     card: {
@@ -225,7 +261,7 @@ const styles = StyleSheet.create({
     cardImage: {
         width: 100,
         height: 50,
-        
+
     },
     cardText: {
         padding: 10,
