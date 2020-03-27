@@ -7,10 +7,11 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import { CustomHeader, CustomDrawerContent } from './src'
-import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen, FavouriteScreen, ScanQrCodeScreen ,AddButton} from './src/tab'
+import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
 import { NotificationsScreen, ProfileScreen, CardScreen} from './src/drawer'
+import BarcodeScannerExample from './src'
 import { LoginScreen, RegisterScreen } from './src/auth'
-
+import { AddButton } from './components/AddButton'
 // import { Ionicons, Feather } from '@expo/vector-icons';
 
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
@@ -18,10 +19,6 @@ import { MaterialCommunityIcons } from 'react-native-vector-icons';
 // import { FontAwesome5 } from '@expo/vector-icons';
 // import { IMAGE } from './src/constants/Image';
 // import { AddButton } from './src/tab/AddButton'
-
-
-
-
 //error AddButton 
 
 const Tab = createBottomTabNavigator();
@@ -37,6 +34,7 @@ function HomeStack() {
   return (
     <StackHome.Navigator initialRouteName="Home">
       <StackHome.Screen name="Home" component={HomeScreen} options={navOptionHandler} />
+      <StackHome.Screen name="Login" component={LoginScreen} options={navOptionHandler} />  
       <StackHome.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
     </StackHome.Navigator>
   );
@@ -82,7 +80,7 @@ const StackScanQrCode = createStackNavigator();
 function ScanQrCodeStack() {
   return (
     <StackScanQrCode.Navigator initialRouteName="ScanQrCode" >
-      <StackScanQrCode.Screen name="ScanQrCode" component={ScanQrCodeScreen} options={navOptionHandler} />
+      <StackScanQrCode.Screen name="ScanQrCode" component={BarcodeScannerExample} options={navOptionHandler} />
       
     </StackScanQrCode.Navigator>
 

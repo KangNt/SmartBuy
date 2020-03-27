@@ -8,7 +8,5 @@ export * from './FavouriteScreen'
 
 export * from './HistoryScreen'
 
-export * from './AddButton'
-
 export * from './ScanQrCodeScreen'
 
