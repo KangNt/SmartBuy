@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, ScrollView, Image,AsyncStorage } from 'react-native'
+import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, ScrollView, Image,AsyncStorage,KeyboardAvoidingView } from 'react-native'
 
 import { CustomHeader } from '../index'
 import InputTextField from "../../components/InputTextField"
@@ -69,7 +69,7 @@ Login(){
           }
           else{
             AsyncStorage.multiSet([['email',responseJson.user_info.email],['name',responseJson.user_info.name],['avatar',responseJson.user_info.avatar]])
-            this.props.navigation.navigate('Home',{occho:responseJson.user_info.email})
+            this.props.navigation.navigate('MenuTab',{email:responseJson.user_info.email,name:responseJson.user_info.name,avatar: responseJson.user_info.avatar})
           }
           
           
@@ -91,8 +91,9 @@ Login(){
 
   render() {
     return (
-
+      
       <ScrollView style={styles.container}>
+        <KeyboardAvoidingView style={{flex:1,marginBottom:200,}}>
         {/* <CustomHeader title="Login" navigation={this.props.navigation} /> */}
         <View>
           <View style={{ marginTop: 60, alignItems: "center", justifyContent: "center" }}>
@@ -119,7 +120,7 @@ Login(){
 
 
           <Text style={[styles.text, { color: "#ABB4BD", fontSize: 15, textAlign: "center", marginVertical: 20 }]}>or</Text>
-
+          
           <InputTextField valueText={(value)=>this.setState({email:value})} title="Email"></InputTextField>
           <InputTextField
             style={{ marginTop: 32, marginBottom: 8 }}
@@ -141,10 +142,12 @@ Login(){
           </Text>
 
           </TouchableOpacity>
+          
         </View>
+        </KeyboardAvoidingView>
       </ScrollView>
-
-
+      
+      
 
 
 

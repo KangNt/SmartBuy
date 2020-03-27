@@ -17,6 +17,7 @@ export class CustomHeader extends Component {
                 <Image style={{ width: 30, height: 30, marginLeft: 5 }}
                   source={IMAGE.ICON_MENU}
                   resizeMode='contain' />
+                  <Text>HIHI</Text>
               </TouchableOpacity>
               :
               <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}

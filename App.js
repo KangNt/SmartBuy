@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView,AsyncStorage } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -6,10 +5,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import { CustomHeader, CustomDrawerContent } from './src'
+import { CustomHeader, CustomDrawerContent,Scanner,BarcodeScannerExample } from './src'
 import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen, CreateCodeScreen, ButtonScreen } from './src/tab'
 import { NotificationsScreen } from './src/drawer'
-import { LoginScreen, RegisterScreen } from './src/auth'
+import { LoginScreen, RegisterScreen,ShowScan } from './src/auth'
 
 import { Ionicons, Feather } from '@expo/vector-icons';
 
@@ -31,8 +30,9 @@ const StackHome = createStackNavigator();
 function HomeStack() {
 
   return (
-    <StackHome.Navigator>
+    <StackHome.Navigator initialRouteName="Home">
       <StackHome.Screen name="Home" component={HomeScreen} options={navOptionHandler} />
+      <StackHome.Screen name="Login" component={LoginScreen} options={navOptionHandler} />
       <StackHome.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
       
       
@@ -64,8 +64,9 @@ function ButtonStack() {
 const StackCreate = createStackNavigator();
 function CreateStack() {
   return (
-    <StackCreate.Navigator initialRouteName="Create">
-      <StackCreate.Screen name="CreateCode" component={HomeScreen} options={navOptionHandler} />
+    <StackCreate.Navigator initialRouteName="CreateCode">
+      <StackCreate.Screen name="CreateCode" component={BarcodeScannerExample} options={navOptionHandler} />
+      <StackCreate.Screen name="showscan" component={ShowScan} options={navOptionHandler} />
     </StackCreate.Navigator>
   );
 };
@@ -76,7 +77,7 @@ const StackSetting = createStackNavigator();
 
 function SettingStack() {
   return (
-    <StackSetting.Navigator initialRouteName="Setting">
+    <StackSetting.Navigator initialRouteName="SettingDetail">
       <StackSetting.Screen name="Setting" component={SettingsScreen} options={navOptionHandler} />
       <StackSetting.Screen name="SettingDetail" component={SettingsScreenDetail} options={navOptionHandler} />
     </StackSetting.Navigator>
@@ -129,12 +130,12 @@ function TabNavigator() {
         options={{
           tabBarIcon: ({ color }) => <FontAwesome5 name="qrcode" size={24} color={color} />
         }}
-        name="CreateCode" component={CreateStack} />
+        name="Scan" component={CreateStack} />
       <Tab.Screen
         options={{
           tabBarIcon: ({ color }) => <FontAwesome5 name="cog" size={24} color={color} />
         }}
-        name="Settings"  component={SettingStack} />
+        name="Settings123"  component={SettingStack} />
     </Tab.Navigator>
   )
 }
@@ -158,7 +159,7 @@ const StackApp = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <StackApp.Navigator initialRouteName="History">
+      <StackApp.Navigator initialRouteName="HomeApp">
         <StackApp.Screen name="HomeApp" component={DrawerNavigator} options={navOptionHandler} />
         <StackApp.Screen name="Login" component={LoginScreen} options={navOptionHandler} />
         <StackApp.Screen name="Register" component={RegisterScreen} options={navOptionHandler} />

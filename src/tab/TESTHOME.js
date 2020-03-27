@@ -1,14 +1,13 @@
-import React, { Component,useState, useEffect } from 'react'
+import React, { Component } from 'react'
 import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Image,ScrollView,ImageBackground,AsyncStorage, Dimensions, Button} from 'react-native'
 import { CustomHeader } from '../index'
-// import {RNCamera} from 'react-native-camera'
 // import { RVText } from '../core/RVText'
 import Card from '../../components/Card/Card';
 import global from './global'
 // import Swiper from 'react-native-swiper'
 import { FlatList } from 'react-native-gesture-handler';
 var {width,height} = Dimensions.get('window');
-export class HomeScreen extends Component {
+export class TESTHOME extends Component {
     constructor(props){
         super(props);
         this.state ={ 
@@ -96,9 +95,6 @@ export class HomeScreen extends Component {
           
         
       }
-      Click(){
-        this.props.navigation.openDrawer()
-      }
     renderPro(item){
         if (this.state.selectCate==item.cate_id ||this.state.selectCate==0) {
             
@@ -126,18 +122,16 @@ export class HomeScreen extends Component {
     
     render() {
         
-        // if(is)const {email} = this.props.route.params  
+        const {email} = this.props.route.params  
       
         
         return (
             <SafeAreaView style={{ flex: 1,flexDirection:"column" }} >
                 <CustomHeader title="Home" isHome={true} navigation={this.props.navigation} />
-               
-              
                 <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
                 <View style={{flex:1}}>
                     <View style={{height:150}}>
-                         {/* <Text>{email}</Text> */}
+                         <Text>{email}</Text>
                         {/* <Swiper>{this.state.Getone.map( (Item) =>{
                             return(
                                

@@ -8,6 +8,7 @@ import { RVText } from '../core/RVText'
 
 export class SettingsScreen extends Component {
   render() {
+    
     return (
       <SafeAreaView style={{ flex: 1, }}>
         <CustomHeader title="Settings" isHome={true} navigation={this.props.navigation} />
@@ -18,6 +19,7 @@ export class SettingsScreen extends Component {
             style={{ marginTop: 20 }}
             onPress={() => this.props.navigation.navigate('SettingDetail')}
           >
+            
             <RVText content="Go Settings Detail!" />
           </TouchableOpacity>
         </View>

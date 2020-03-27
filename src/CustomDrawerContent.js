@@ -14,7 +14,7 @@ export class CustomDrawerContent extends Component {
             avatar:""
     
           }
-         try {
+         
             AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
                 // alert(result[0][1]+" "+result[1][1])
                 // alert(result[2][1])
@@ -26,11 +26,9 @@ export class CustomDrawerContent extends Component {
                 })
                 
               }) 
-         } catch (error) {
-             
-         }
+         } 
             
-    }
+    
            
     getInfo = async () => {
         alert('hi')
@@ -90,7 +88,7 @@ export class CustomDrawerContent extends Component {
         return (
             <SafeAreaView style={{ flex: 1,marginTop:20 }}>   
             <View style={{ height: 150, alignItems: 'center', justifyContent: 'center' }}>
-                <TouchableOpacity >
+                <TouchableOpacity onPress={() =>this.getInfo()}>
                     <Image source={this.state.avatar==null || this.state.avatar=='' 
                         ? require("../assets/u.png")
                         : {uri:this.state.avatar}}
@@ -163,7 +161,7 @@ export class CustomDrawerContent extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
-                    onPress={() => this.props.navigation.navigate('MenuTab')}
+                    onPress={() => this.props.navigation.navigate('Notifications')}
                 >
 
                     <Text style={styles.text}><FontAwesome5 name="bell" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Notifications</Text></Text>
