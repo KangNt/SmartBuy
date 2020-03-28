@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 
 import { Text, View, SafeAreaView } from 'react-native'
-import {CustomHeader} from '../index'
-export class HomeScreenDetail extends Component {
+import {CustomHeader} from './index'
+export class Cart extends Component {
     render() {
         return (
             <SafeAreaView style={{ flex: 1, }}>
-            <CustomHeader title="Home Detail" isHome={false} navigation={this.props.navigation} />
+            <CustomHeader title="Cart" isHome={false} navigation={this.props.navigation} />
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <Text>Home Detail</Text>
+              <Text>Cart Detail</Text>
             </View>
           </SafeAreaView>
         )

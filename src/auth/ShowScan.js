@@ -7,16 +7,28 @@ import { CustomHeader } from '../index'
 import { FlatList } from 'react-native-gesture-handler';
 var {width,height} = Dimensions.get('window');
 export class ShowScan extends Component {
-   
+    constructor(props){
+        super(props)
+        this.state={
+            name:""
+        }
+    }
+   componentWillMount(){
+    const {info} = this.props.route.params
+    this.setState({
+        name:info
+    })
+   }
     render() {
-         const {info} = this.props.route.params 
+        
+         
         return (
             <SafeAreaView style={{ flex: 1,flexDirection:"column" }} >
                 <CustomHeader title="Detail Scan" navigation={this.props.navigation} />
                 <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
                 <View style={{flex:1}}>
                     <View style={{height:150}}>
-                    <Text>{info}</Text>
+                    <Text>{this.state.name}</Text>
                     {/* <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                         <Text>Back</Text>
                     </TouchableOpacity> */}

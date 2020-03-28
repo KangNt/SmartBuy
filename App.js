@@ -1,22 +1,25 @@
+
 import * as React from 'react';
-import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView,AsyncStorage } from 'react-native';
+// import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
-import { CustomHeader, CustomDrawerContent,Scanner,BarcodeScannerExample } from './src'
-import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen, CreateCodeScreen, ButtonScreen } from './src/tab'
-import { NotificationsScreen } from './src/drawer'
-import { LoginScreen, RegisterScreen,ShowScan } from './src/auth'
-
-import { Ionicons, Feather } from '@expo/vector-icons';
-
 import { FontAwesome5 } from '@expo/vector-icons';
-import { IMAGE } from './src/constants/Image';
+import { CustomHeader, CustomDrawerContent,BarcodeScannerExample,Cart} from './src'
+import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
+import { NotificationsScreen, ProfileScreen, CardScreen} from './src/drawer'
 
+import { LoginScreen, RegisterScreen,ShowScan } from './src/auth'
+import { AddButton } from './components/AddButton'
+// import { Ionicons, Feather } from '@expo/vector-icons';
 
+import { MaterialCommunityIcons } from 'react-native-vector-icons';
 
+// import { FontAwesome5 } from '@expo/vector-icons';
+// import { IMAGE } from './src/constants/Image';
+// import { AddButton } from './src/tab/AddButton'
 //error AddButton 
 
 const Tab = createBottomTabNavigator();
@@ -32,10 +35,9 @@ function HomeStack() {
   return (
     <StackHome.Navigator initialRouteName="Home">
       <StackHome.Screen name="Home" component={HomeScreen} options={navOptionHandler} />
-      <StackHome.Screen name="Login" component={LoginScreen} options={navOptionHandler} />
+      <StackHome.Screen name="cart" component={Cart} options={navOptionHandler} />
+      <StackHome.Screen name="Login" component={LoginScreen} options={navOptionHandler} />  
       <StackHome.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
-      
-      
     </StackHome.Navigator>
   );
 };
@@ -50,92 +52,100 @@ function HistoryStack() {
   );
 };
 
-const StackButton = createStackNavigator();
 
-function ButtonStack() {
-  return (
-    <StackButton.Navigator initialRouteName="ButtonScreen" >
-      <StackButton.Screen name="ButtonScreen" component={ButtonScreen} options={navOptionHandler} />
-    </StackButton.Navigator>
-  ) 
-}
+//button scan Qrcode  
 
 
-const StackCreate = createStackNavigator();
-function CreateStack() {
-  return (
-    <StackCreate.Navigator initialRouteName="CreateCode">
-      <StackCreate.Screen name="CreateCode" component={BarcodeScannerExample} options={navOptionHandler} />
-      <StackCreate.Screen name="showscan" component={ShowScan} options={navOptionHandler} />
-    </StackCreate.Navigator>
-  );
-};
-
-
-//history-create the code - like(<3)    
 const StackSetting = createStackNavigator();
 
 function SettingStack() {
   return (
-    <StackSetting.Navigator initialRouteName="SettingDetail">
+    <StackSetting.Navigator initialRouteName="Setting">
       <StackSetting.Screen name="Setting" component={SettingsScreen} options={navOptionHandler} />
       <StackSetting.Screen name="SettingDetail" component={SettingsScreenDetail} options={navOptionHandler} />
     </StackSetting.Navigator>
   )
 }
 
+const StackFavourite = createStackNavigator();
+
+function FavouriteStack() {
+  return (
+    <StackFavourite.Navigator initialRouteName="Favourite">
+      <StackFavourite.Screen name="Favourite" component={FavouriteScreen} options={navOptionHandler} />
+    </StackFavourite.Navigator>
+  )
+}
+
+const StackScanQrCode = createStackNavigator();
+
+function ScanQrCodeStack() {
+  return (
+    <StackScanQrCode.Navigator initialRouteName="ScanQrCode" >
+      <StackScanQrCode.Screen name="ScanQrCode" component={BarcodeScannerExample} options={navOptionHandler} />
+      <StackScanQrCode.Screen name="showscan" component={ShowScan} options={navOptionHandler} />
+      
+    </StackScanQrCode.Navigator>
+
+  )
+}
 
 function TabNavigator() {
   return (
     <Tab.Navigator
-    // screenOptions={({ route }) => ({
-    //   tabBarIcon: ({ focused }) => {
-    //     let iconName;
-    //     if (route.name === 'Home') {
-    //       iconName = focused
-    //         ? IMAGE.ICON_HOME
-    //         : IMAGE.ICON_HOME_BLACK;
-    //     } else if (route.name === 'Settings') {
-    //       iconName = focused
-    //         ? IMAGE.ICON_SETTINGS
-    //         : IMAGE.ICON_SETTINGS_BLACK;
-    //     }
-    //     // You can return any component that you like here!
-    //     return <Ionicons name={iconName} style={{ width: 20, height: 20 }}
-    //       resizeMode="contain" />;
-    //   },
-    // })}
-    // tabBarOptions={{
-    //   activeTintColor: 'red',
-    //   inactiveTintColor: 'black',
-    // }}
+      initialRouteName="Home"
+      tabBarOptions={{
+        activeTintColor: '#e91e63',
+      }}
     >
 
       <Tab.Screen
+        name="Home"
+        component={HomeScreen}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome5 name="home" size={24} color={color} />
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
+          ),
         }}
-        name="Home" component={HomeStack} />
+        component={HomeStack} />
+
       <Tab.Screen
+        component={HistoryScreen}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome5 name="clock" size={24} color={color} />
+          tabBarLabel: 'History',
+          tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="clock" color={color} size={size} />),
         }}
         name="History" component={HistoryStack} />
+
       <Tab.Screen
+        
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome5 name="star" size={24} color={color} />
+          tabBarLabel: 'Scan',
+          tabBarIcon: () => <AddButton />,
+          
+          
         }}
-        name="ButtonScreen" component={ButtonStack} />
+
+        name="Scan" component={ScanQrCodeStack}
+        
+        
+      />
+
       <Tab.Screen
+        component={FavouriteScreen}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome5 name="qrcode" size={24} color={color} />
+          tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="charity" color={color} size={size} />),
         }}
-        name="Scan" component={CreateStack} />
+        name="favourite" component={FavouriteStack} />
+
+
       <Tab.Screen
+        component={SettingsScreen}
         options={{
-          tabBarIcon: ({ color }) => <FontAwesome5 name="cog" size={24} color={color} />
+          tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="settings" color={color} size={size} />),
         }}
-        name="Settings123"  component={SettingStack} />
+        name="Settings" component={SettingStack} />
     </Tab.Navigator>
   )
 }
@@ -148,11 +158,12 @@ function DrawerNavigator({ navigation }) {
       drawerContent={() => <CustomDrawerContent navigation={navigation} />}>
       <Drawer.Screen name="MenuTab" component={TabNavigator} />
       <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+      <Drawer.Screen name="Profile" component={ProfileScreen} />
+      <Drawer.Screen name="Card" component={CardScreen} />
+
     </Drawer.Navigator>
   )
-
 }
-
 
 const StackApp = createStackNavigator();
 
@@ -165,11 +176,9 @@ export default function App() {
         <StackApp.Screen name="Register" component={RegisterScreen} options={navOptionHandler} />
       </StackApp.Navigator>
     </NavigationContainer>
+
   );
 }
-
-
-
 
 // import React from "react";
 // import { createAppContainer } from "react-navigation";

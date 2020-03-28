@@ -1,8 +1,9 @@
 import React, { Component,useState, useEffect } from 'react'
-import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Image,ScrollView,ImageBackground,AsyncStorage, Dimensions, Button} from 'react-native'
+import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Image,ScrollView,ImageBackground,AsyncStorage, Dimensions, Button,RefreshControl,TextInput} from 'react-native'
 import { CustomHeader } from '../index'
 // import {RNCamera} from 'react-native-camera'
 // import { RVText } from '../core/RVText'
+import { SearchBar } from 'react-native-elements';
 import Card from '../../components/Card/Card';
 import global from './global'
 // import Swiper from 'react-native-swiper'
@@ -12,11 +13,12 @@ export class HomeScreen extends Component {
     constructor(props){
         super(props);
         this.state ={ 
-         
-          Getone:[],
+          loading:false,
+          products:[],
           sliders:[],
           categories:[],
           selectCate:"",
+          search: '',
           
           id:'',
             name:'',
@@ -47,6 +49,26 @@ export class HomeScreen extends Component {
         
 
     }
+    FuncRS=()=>{
+      // AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
+        // alert(result[0][1]+" "+result[1][1])
+        // alert(result[2][1])
+        this.setState({
+          // email:result[0][1],
+          // name:result[1][1],
+          // avatar:result[2][1],
+          loading:true
+        })
+        
+      // }) 
+      setTimeout(()=>{
+        this.setState({
+          loading:false
+        })
+      },3000)
+      // alert(this.state.loading)
+      this.props.navigation.navigate('Home')
+    }
     componentDidMount(){
         
         Promise.all([fetch('https://testapi001.cf/api'),fetch('https://testapi001.cf/api/'),fetch('https://testapi001.cf/api/categories')])
@@ -57,7 +79,7 @@ export class HomeScreen extends Component {
            this.setState({
              
              sliders: req001,
-             Getone:req002,
+             products:req002,
              categories:req003
              
            })
@@ -74,6 +96,7 @@ export class HomeScreen extends Component {
          
          
     }
+  
     getInfo = async () => {
         try {
            AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
@@ -125,16 +148,28 @@ export class HomeScreen extends Component {
     }
     
     render() {
-        
+        const data =this.state.products
+       
+        const searchPros =data.filter((item)=>{
+          const itemData = item.name.toUpperCase()
+          
+          return itemData.indexOf(this.state.search.toUpperCase()) >-1
+          
+        })
+
         // if(is)const {email} = this.props.route.params  
-      
-        
         return (
-            <SafeAreaView style={{ flex: 1,flexDirection:"column" }} >
+            <SafeAreaView style={{ flex: 1,flexDirection:"column", }}>
                 <CustomHeader title="Home" isHome={true} navigation={this.props.navigation} />
-               
+                <SearchBar platform="android" containerStyle={{height:40,width:width,justifyContent:"center"}} inputStyle={{fontSize:15,}}
+                    placeholder="Search..."
+                    onChangeText={val => this.setState({search:val})}
+                    value={this.state.search}
+              />
               
-                <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
+                <ScrollView
+                    showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
+                      
                 <View style={{flex:1}}>
                     <View style={{height:150}}>
                          {/* <Text>{email}</Text> */}
@@ -145,7 +180,6 @@ export class HomeScreen extends Component {
                                     <Text style={styles.text}>{Item.name}</Text>
                                 </ImageBackground>
                             )
-
                             })}
                         </Swiper> */}
                     </View>
@@ -163,7 +197,7 @@ export class HomeScreen extends Component {
                                 
                         </FlatList>
                       <View>
-                        <FlatList data={this.state.categories.product} numColumns={2}
+                        <FlatList data={searchPros} numColumns={2}
                             renderItem={({item}) => this.renderPro(item)}
                             keyExtractor = { (item,index) => index.toString() }>
                         

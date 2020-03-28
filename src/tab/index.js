@@ -3,5 +3,10 @@ export * from './HomeScreenDetail'
 
 export * from './SettingsScreen'
 export * from './SettingsScreenDetail'
-export * from './global'
+
+export * from './FavouriteScreen'
+
 export * from './HistoryScreen'
+
+export * from './ScanQrCodeScreen'
+

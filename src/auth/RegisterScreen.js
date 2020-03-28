@@ -27,11 +27,10 @@ export class RegisterScreen extends Component {
                         style={{ marginTop: 15, marginBottom: 10 }}
                         title="Password" isSecure={true}>
                     </InputTextField>
-                    <InputTextField
-                        style={{ marginTop: 15, marginBottom: 10 }}
-                        title="Confirm Password" isSecure={true}>
-                    </InputTextField>
-                    <InputTextField title="Full Name" style={{ marginTop: 15, marginBottom: 10 }}></InputTextField>
+                    <InputTextField title="First Name" style={{ marginTop: 15, marginBottom: 10 }}></InputTextField>
+                    <InputTextField title="Last Name" style={{ marginTop: 15, marginBottom: 10 }}></InputTextField>
+
+
                     <TouchableOpacity style={styles.submitContainer} onPress={() => this.props.navigation.navigate('HomeApp')}>
                         <Text style={[styles.text, { color: "#ffff", ontWeight: "600", fontSize: 16 }]}>Submit</Text>
                     </TouchableOpacity>

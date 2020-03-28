@@ -23,9 +23,9 @@ export class BarcodeScannerExample extends React.Component {
   render() {
     const { hasCameraPermission, scanned } = this.state;
 
-    if (hasCameraPermission === null) {
-      return <Text>Requesting for camera permission</Text>;
-    }
+    // if (hasCameraPermission === null) {
+    //   return <Text>Requesting for camera permission</Text>;
+    // }
     if (hasCameraPermission === false) {
       return <Text>No access to camera</Text>;
     }
@@ -33,12 +33,15 @@ export class BarcodeScannerExample extends React.Component {
       <View
         style={{
           flex: 1,
+          
+          // backgroundColor:'red',
           flexDirection: 'column',
-          justifyContent: 'flex-end',
+          justifyContent: 'center',
+          // alignItems:'center'
         }}>
-        <BarCodeScanner
+        <BarCodeScanner style={{flex:1,marginTop:24}}
           onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
-          style={StyleSheet.absoluteFillObject}
+         
         />
 
         {scanned && (

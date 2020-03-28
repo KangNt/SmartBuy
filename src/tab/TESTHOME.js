@@ -139,7 +139,6 @@ export class TESTHOME extends Component {
                                     <Text style={styles.text}>{Item.name}</Text>
                                 </ImageBackground>
                             )
-
                             })}
                         </Swiper> */}
                     </View>
