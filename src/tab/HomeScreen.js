@@ -1,14 +1,23 @@
-import React, { Component,useState, useEffect } from 'react'
-import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, Image,ScrollView,ImageBackground,AsyncStorage, Dimensions, Button,RefreshControl,TextInput} from 'react-native'
+import React, { Component} from 'react'
+import { Text, View, SafeAreaView, TouchableOpacity, 
+  StyleSheet, Image,ScrollView,ImageBackground,AsyncStorage, 
+  Dimensions, Button,RefreshControl,TextInput ,TouchableHighlight} 
+from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient';
 import { CustomHeader } from '../index'
 // import {RNCamera} from 'react-native-camera'
 // import { RVText } from '../core/RVText'
+import Carousel,{ ParallaxImage,Pagination } from 'react-native-snap-carousel';
 import { SearchBar } from 'react-native-elements';
-import Card from '../../components/Card/Card';
 import global from './global'
 // import Swiper from 'react-native-swiper'
 import { FlatList } from 'react-native-gesture-handler';
 var {width,height} = Dimensions.get('window');
+const SCREEN_WIDTH = width < height ? width : height;
+const recipeNumColums = 2;
+// item size
+const RECIPE_ITEM_HEIGHT = 150;
+const RECIPE_ITEM_MARGIN = 20;
 export class HomeScreen extends Component {
     constructor(props){
         super(props);
@@ -19,34 +28,28 @@ export class HomeScreen extends Component {
           categories:[],
           selectCate:"",
           search: '',
-          
           id:'',
-            name:'',
-            email:'',
-            password:'',
-            avatar:""
-          
-          
+          name:'',
+          email:'',
+          password:'',
+          avatar:""
         }
        
-            try {
-               const val = AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
-                    // alert(result[0][1]+" "+result[1][1])
-                    // alert(result[2][1])
-                    this.setState({
-                      email:result[0][1],
-                      name:result[1][1],
-                      avatar:result[2][1],
-                      
-                    })
-                    
-                  }) 
+        try {
+            const val = AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
+                // alert(result[0][1]+" "+result[1][1])
+                // alert(result[2][1])
+                this.setState({
+                  email:result[0][1],
+                  name:result[1][1],
+                  avatar:result[2][1],
+                  
+                })
                 
-             } catch (error) {
-                 
-             }
-          
-        
+              }) 
+        } catch (error) {
+              
+        }
 
     }
     FuncRS=()=>{
@@ -70,7 +73,6 @@ export class HomeScreen extends Component {
       this.props.navigation.navigate('Home')
     }
     componentDidMount(){
-        
         Promise.all([fetch('https://testapi001.cf/api'),fetch('https://testapi001.cf/api/'),fetch('https://testapi001.cf/api/categories')])
          .then(([req1,req2,req3]) => {
            return Promise.all([req1.json(),req2.json(),req3.json()])
@@ -88,13 +90,6 @@ export class HomeScreen extends Component {
          .catch((error) =>{
            console.error(error);
          });
-          
-        
-          
-        
-                
-         
-         
     }
   
     getInfo = async () => {
@@ -114,47 +109,59 @@ export class HomeScreen extends Component {
              
          }
       }
-      Show(){
-          alert('ho')
-          
-        
-      }
       Click(){
         this.props.navigation.openDrawer()
       }
     renderPro(item){
         if (this.state.selectCate==item.cate_id ||this.state.selectCate==0) {
-            
-
-                return(
-                    
-                    <TouchableOpacity style={styles.divListProduct} onPress={()=>this.props.navigation.navigate('HomeDetail',{product:item})}>
-                        <Image
-                            style={styles.imageProduct}
-                            resizeMode="contain"
-                            source={{uri:item.image}} />
-                            <View style={{height:((width/2)-20)-90, backgroundColor:'transparent', width:((width/2)-20)-10}} />
-                            <Text style={{fontWeight:'bold',fontSize:18,textAlign:'center'}}>
-                            {item.name}
-                            </Text>
-                            <Text>Descp Food and Details</Text>
-                            <Text style={{fontSize:20,color:"green"}}>{item.price}</Text>
-                    </TouchableOpacity>
-                    
-                )
+            return(
+              <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={()=>this.props.navigation.navigate('HomeDetail',{product:item})}>
+              <View style={styles.container1}>
+                <Image style={styles.photo} source={{ uri: item.image }} />
+                <Text style={styles.title}>{item.name}</Text>
+                <Text style={styles.category}>{item.price}</Text>
+              </View>
+            </TouchableHighlight>
+                
+                // <TouchableOpacity style={styles.divListProduct} onPress={()=>this.props.navigation.navigate('HomeDetail',{product:item})}>
+                //     <Image
+                //         style={styles.imageProduct}
+                //         resizeMode="contain"
+                //         source={{uri:item.image}} />
+                //         <View style={{height:((width/2)-20)-90, backgroundColor:'transparent', width:((width/2)-20)-10}} />
+                //         <Text style={{fontWeight:'bold',fontSize:18,textAlign:'center'}}>
+                //         {item.name}
+                //         </Text>
+                //         <Text>Descp Food and Details</Text>
+                //         <Text style={{fontSize:20,color:"green"}}>{item.price}</Text>
+                // </TouchableOpacity>
+                
+            )
         }
         
         
     }
-    
+    renderSlide(item){
+      return(
+        <View>
+          <TouchableOpacity style={{borderRadius:15,shadowOpacity:0.3,alignItems:'center',justifyContent:"center",position:'relative'}}>
+            <Image style={{height:150,width:width-20,borderRadius:15,shadowRadius:0.3,shadowColor:'blue'}} source={{uri:item.image}} >
+            </Image>
+            
+            <LinearGradient style={{width:width-20,height:150,position:"absolute",borderRadius:15,justifyContent:"flex-end"}} colors={['transparent','rgba(0,0,32,0.7)']}>
+              <Text style={{color:'#fff',paddingLeft:8,paddingRight:5,paddingBottom:4}}>{item.name}</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          
+        </View>
+      )
+      
+    }
     render() {
         const data =this.state.products
-       
         const searchPros =data.filter((item)=>{
           const itemData = item.name.toUpperCase()
-          
           return itemData.indexOf(this.state.search.toUpperCase()) >-1
-          
         })
 
         // if(is)const {email} = this.props.route.params  
@@ -165,66 +172,61 @@ export class HomeScreen extends Component {
                     placeholder="Search..."
                     onChangeText={val => this.setState({search:val})}
                     value={this.state.search}
-              />
-              
+                />
                 <ScrollView
-                    showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
+                    showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>   
+                  <View style={{flex:1}}>
+                  
+                      <View>
+                            <Carousel
+                              layout={'default'} loop={true}
+                              autoplay={true} autoplayInterval={2500} 
+                              layoutCardOffset={`50`}
+                              inactiveSlideOpacity={0.7}
+                              loopClonesPerSide={3}
+                              vertical={false}
+                              // ref={(c) => { this._carousel = c; }}
+                              data={this.state.products}
+                              renderItem={({item}) => this.renderSlide(item)}
+                              sliderWidth={width}
+                              itemWidth={width}
+                              sliderHeight={200}
+                              itemHeight={200}
+                              
+                            />
+                          
                       
-                <View style={{flex:1}}>
-                    <View style={{height:150}}>
-                         {/* <Text>{email}</Text> */}
-                        {/* <Swiper>{this.state.Getone.map( (Item) =>{
-                            return(
-                               
-                                <ImageBackground style={{width:width,height:150}} source={{uri:Item.image}} >
-                                    <Text style={styles.text}>{Item.name}</Text>
-                                </ImageBackground>
-                            )
-                            })}
-                        </Swiper> */}
-                    </View>
-                        
-                        <FlatList data={this.state.categories.category} horizontal={true}
-                            
-                            renderItem={({item}) =>
-                                <TouchableOpacity onPress={()=>this.setState({selectCate:item.id})}>
-                                    <View style={this.state.selectCate==item.id ? styles.divtheme : styles.divtheme2}>
-                                        
-                                        <Text>{item.cate_name}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            }>
+                          {/* <Text>{email}</Text> */}
+                          {/* <Swiper>{this.state.Getone.map( (Item) =>{
+                              return(
                                 
-                        </FlatList>
+                                  <ImageBackground style={{width:width,height:150}} source={{uri:Item.image}} >
+                                      <Text style={styles.text}>{Item.name}</Text>
+                                  </ImageBackground>
+                              )
+                              })}
+                          </Swiper> */}
+                      </View>  
+                      <FlatList data={this.state.categories.category} horizontal={true}
+                          renderItem={({item}) =>
+                              <TouchableOpacity onPress={()=>this.setState({selectCate:item.id})}>
+                                  <View style={this.state.selectCate==item.id ? styles.divtheme : styles.divtheme2}>
+                                      
+                                      <Text>{item.cate_name}</Text>
+                                  </View>
+                              </TouchableOpacity>
+                          }>      
+                      </FlatList>
                       <View>
                         <FlatList data={searchPros} numColumns={2}
                             renderItem={({item}) => this.renderPro(item)}
                             keyExtractor = { (item,index) => index.toString() }>
-                        
                         </FlatList>
                         <View style={{height:20}} />
-                    </View>  
-                </View>
+                      </View>  
+                  </View>
                 </ScrollView>
             </SafeAreaView>
-
-
-
-
-
-            // <SafeAreaView style={{ flex: 1, }} >
-            //     <CustomHeader title="Home" isHome={true} navigation={this.props.navigation} />
-            //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-
-            //         <RVText content="Home!" />
-            //         <TouchableOpacity
-            //             style={{ marginTop: 20 }}
-            //             onPress={() => this.props.navigation.navigate('HomeDetail')}
-            //         >
-            //         <RVText content=" Do Home Detail" />
-            //         </TouchableOpacity>
-            //     </View>
-            // </SafeAreaView>
         )
     }
 }
@@ -303,5 +305,39 @@ const styles = StyleSheet.create({
     cardText: {
         padding: 10,
         fontSize: 16
+    },
+    container1: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: RECIPE_ITEM_MARGIN,
+      marginTop: 20,
+      width: (SCREEN_WIDTH - (recipeNumColums + 1) * RECIPE_ITEM_MARGIN) / recipeNumColums,
+      height: RECIPE_ITEM_HEIGHT + 75,
+      borderColor: '#cccccc',
+      borderWidth: 0.5,
+      borderRadius: 15
+    },
+    photo: {
+      width: (SCREEN_WIDTH - (recipeNumColums + 1) * RECIPE_ITEM_MARGIN) / recipeNumColums,
+      height: RECIPE_ITEM_HEIGHT,
+      borderRadius: 15,
+      borderBottomLeftRadius: 0,
+      borderBottomRightRadius: 0
+    },
+    title: {
+      flex: 1,
+      // fontFamily: 'FallingSky',
+      fontSize: 17,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      color: '#444444',
+      marginTop: 3,
+      marginRight: 5,
+      marginLeft: 5,
+    },
+    category: {
+      marginTop: 5,
+      marginBottom: 5
     }
 })

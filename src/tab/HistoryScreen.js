@@ -134,7 +134,7 @@ export class HistoryScreen extends Component {
     }
 }
 
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
     subtitleView: {
         flexDirection: 'row',
         paddingLeft: 10,

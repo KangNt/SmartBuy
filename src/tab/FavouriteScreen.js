@@ -61,9 +61,9 @@ export class FavouriteScreen extends Component {
                     <View style={{ flex: 1 }}></View>
 
                 </View>
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <Text>FavouriteScreen</Text>
-                </View>
+                </View> */}
                 <ScrollView>
                     <TouchableOpacity>
                         <ListItem
@@ -162,6 +162,21 @@ export class FavouriteScreen extends Component {
     //         );
     //     }
 
+const styles ={
+    subtitleView: {
+        flexDirection: 'row',
+        paddingLeft: 10,
+        paddingTop: 5
+    },
+    ratingImage: {
+        height: 100,
+        width: 100
+    },
+    ratingText: {
+        paddingLeft: 10,
+        color: 'grey'
+    }
 
+}
 
 

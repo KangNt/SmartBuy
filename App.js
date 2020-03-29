@@ -9,7 +9,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { CustomHeader, CustomDrawerContent,BarcodeScannerExample,Cart} from './src'
 import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
-import { NotificationsScreen, ProfileScreen, CardScreen} from './src/drawer'
+import { NotificationsScreen, ProfileScreen} from './src/drawer'
 
 import { LoginScreen, RegisterScreen,ShowScan } from './src/auth'
 import { AddButton } from './components/AddButton'
@@ -101,7 +101,7 @@ function TabNavigator() {
 
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
@@ -111,7 +111,7 @@ function TabNavigator() {
         component={HomeStack} />
 
       <Tab.Screen
-        component={HistoryScreen}
+        
         options={{
           tabBarLabel: 'History',
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="clock" color={color} size={size} />),
@@ -133,7 +133,7 @@ function TabNavigator() {
       />
 
       <Tab.Screen
-        component={FavouriteScreen}
+        
         options={{
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="charity" color={color} size={size} />),
         }}
@@ -141,7 +141,7 @@ function TabNavigator() {
 
 
       <Tab.Screen
-        component={SettingsScreen}
+        
         options={{
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="settings" color={color} size={size} />),
         }}
@@ -159,7 +159,7 @@ function DrawerNavigator({ navigation }) {
       <Drawer.Screen name="MenuTab" component={TabNavigator} />
       <Drawer.Screen name="Notifications" component={NotificationsScreen} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
-      <Drawer.Screen name="Card" component={CardScreen} />
+      
 
     </Drawer.Navigator>
   )
