@@ -29,22 +29,42 @@ export class CustomDrawerContent extends Component {
          } catch (error) {
              
          }
+         
             
     }
            
-
-    _AlertLogout =()=>{
-        Alert.alert("Thông báo!", "Bạn có chắc chắn muốn Logout không?",
-        [
+    // componentDidMount(){
+    //    this.getInfo()
+            
+      
+    // }
+    // getInfo(){
+    //     return(
+    //         AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
+    //             alert(result[0][1])
+    //             this.setState({
+    //             email:result[0][1],
+    //             name:result[1][1],
+    //             avatar:result[2][1],
+                
+    //             })
+                
+    //         }) 
+    //     )
+    // }
+   
+    // _AlertLogout =()=>{
+    //     Alert.alert("Thông báo!", "Bạn có chắc chắn muốn Logout không?",
+    //     [
           
-          {text:'Cancel'},
-          { text:'OK', onPress:this._Logout
+    //       {text:'Cancel'},
+    //       { text:'OK', onPress:this._Logout
           
-          }
-        ],
-          {cancelable: false},)
+    //       }
+    //     ],
+    //       {cancelable: false},)
         
-      }
+    //   }
      
      
       _Logout = async () => {
@@ -60,23 +80,7 @@ export class CustomDrawerContent extends Component {
           
         }
       }
-      getInfo = async () => {
-       
-        try {
-           AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
-                
-                this.setState({
-                  email:result[0][1],
-                  name:result[1][1],
-                  avatar:result[2][1],
-                  
-                })
-                
-              }) 
-         } catch (error) {
-             
-         }
-      }
+      
     render() {
         return (
             <SafeAreaView style={{ flex: 1 }}>
@@ -167,7 +171,7 @@ export class CustomDrawerContent extends Component {
 
                 <TouchableOpacity
                     style={{ marginTop: 35, marginLeft: 5 }}
-                    onPress={() => this._AlertLogout()}
+                    onPress={() => this._Logout()}
                 >
                     <Text style={{ marginLeft: 15, marginTop: -10,fontWeight:'bold' }}><FontAwesome5 name="sign-out-alt" size={24} color={"#CDCCCE"} /> Đăng xuất</Text>
                 </TouchableOpacity>

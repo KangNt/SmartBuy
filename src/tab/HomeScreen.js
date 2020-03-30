@@ -32,7 +32,9 @@ export class HomeScreen extends Component {
           name:'',
           email:'',
           password:'',
-          avatar:""
+          avatar:"",
+          quantity:null,
+          total:null
         }
        
         try {
@@ -52,26 +54,6 @@ export class HomeScreen extends Component {
         }
 
     }
-    FuncRS=()=>{
-      // AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
-        // alert(result[0][1]+" "+result[1][1])
-        // alert(result[2][1])
-        this.setState({
-          // email:result[0][1],
-          // name:result[1][1],
-          // avatar:result[2][1],
-          loading:true
-        })
-        
-      // }) 
-      setTimeout(()=>{
-        this.setState({
-          loading:false
-        })
-      },3000)
-      // alert(this.state.loading)
-      this.props.navigation.navigate('Home')
-    }
     componentDidMount(){
         Promise.all([fetch('https://testapi001.cf/api'),fetch('https://testapi001.cf/api/'),fetch('https://testapi001.cf/api/categories')])
          .then(([req1,req2,req3]) => {
@@ -90,6 +72,7 @@ export class HomeScreen extends Component {
          .catch((error) =>{
            console.error(error);
          });
+         
     }
   
     getInfo = async () => {
@@ -109,9 +92,7 @@ export class HomeScreen extends Component {
              
          }
       }
-      Click(){
-        this.props.navigation.openDrawer()
-      }
+
     renderPro(item){
         if (this.state.selectCate==item.cate_id ||this.state.selectCate==0) {
             return(
@@ -157,7 +138,11 @@ export class HomeScreen extends Component {
       )
       
     }
+ 
+  
+    
     render() {
+      
         const data =this.state.products
         const searchPros =data.filter((item)=>{
           const itemData = item.name.toUpperCase()
@@ -206,7 +191,8 @@ export class HomeScreen extends Component {
                               )
                               })}
                           </Swiper> */}
-                      </View>  
+                      </View> 
+                       
                       <FlatList data={this.state.categories.category} horizontal={true}
                           renderItem={({item}) =>
                               <TouchableOpacity onPress={()=>this.setState({selectCate:item.id})}>
@@ -217,6 +203,7 @@ export class HomeScreen extends Component {
                               </TouchableOpacity>
                           }>      
                       </FlatList>
+                    
                       <View>
                         <FlatList data={searchPros} numColumns={2}
                             renderItem={({item}) => this.renderPro(item)}
