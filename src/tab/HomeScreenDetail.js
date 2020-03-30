@@ -32,12 +32,7 @@ export class HomeScreenDetail extends Component {
             <Image style={styles.productImg} source={{uri:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3v7KDJN7TAoJa5sFaPWcp1HX8JFcpF3z5K3ngz4L6kWoEP7Ca"}}/>
             <Text style={styles.name}>Super Soft T-Shirt</Text>
             <Text style={styles.price}>$ 12.22</Text>
-            <Text style={styles.description}>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
-              Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
-              natoque penatibus et magnis dis parturient montes, 
-              nascetur ridiculus mus. Donec quam felis, ultricies nec
-            </Text>
+           
           </View>
           <View style={styles.starContainer}>
             <Image style={styles.star} source={{uri:"https://img.icons8.com/color/40/000000/star.png"}}/>
@@ -46,6 +41,12 @@ export class HomeScreenDetail extends Component {
             <Image style={styles.star} source={{uri:"https://img.icons8.com/color/40/000000/star.png"}}/>
             <Image style={styles.star} source={{uri:"https://img.icons8.com/color/40/000000/star.png"}}/>
           </View>
+          <Text style={styles.description}>
+              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+              Aenean commodo ligula eget dolor. Aenean massa. Cum sociis 
+              natoque penatibus et magnis dis parturient montes, 
+              nascetur ridiculus mus. Donec quam felis, ultricies nec
+            </Text>
           <View style={styles.contentColors}>
             <TouchableOpacity style={[styles.btnColor, {backgroundColor:"#00BFFF"}]}></TouchableOpacity> 
             <TouchableOpacity style={[styles.btnColor, {backgroundColor:"#FF1493"}]}></TouchableOpacity> 
