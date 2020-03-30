@@ -147,7 +147,7 @@ export class CustomDrawerContent extends Component {
                     onPress={() => this.props.navigation.navigate('MenuTab')}
                 >
 
-                    <Text style={styles.text} ><FontAwesome5 name="bolt" size={24} color={"#CDCCCE"} />     <Text style={styles.texts}>Khoảnh khắc</Text></Text>
+                    <Text style={styles.text} ><FontAwesome5 name="bolt" size={24} color={"#CDCCCE"} />     <Text style={styles.texts}>CreateCode</Text></Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ marginTop: 25 }}

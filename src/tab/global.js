@@ -4,7 +4,6 @@ export class global extends Component {
         super(props);
         this.state ={ 
             onLogin:''
-    
           }
     }
 }

@@ -8,5 +8,6 @@ export * from './FavouriteScreen'
 
 export * from './HistoryScreen'
 
-export * from './ScanQrCodeScreen'
+
+
 

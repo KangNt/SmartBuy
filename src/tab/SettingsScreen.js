@@ -5,8 +5,6 @@ import { CustomHeader } from '../index'
 
 import { IMAGE } from '../constants/Image'
 // import { RVText } from '../core/RVText'
-
-
 import { ListItem } from 'react-native-elements'
 
 import { FlatList } from 'react-native-gesture-handler'

@@ -1,16 +1,16 @@
-
 import * as React from 'react';
 // import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
-import { CustomHeader, CustomDrawerContent } from './src'
+import { FontAwesome5 } from '@expo/vector-icons';
+import { CustomHeader, CustomDrawerContent,BarcodeScannerExample,Cart} from './src'
 import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
 import { NotificationsScreen, ProfileScreen, CardScreen} from './src/drawer'
-import BarcodeScannerExample from './src'
-import { LoginScreen, RegisterScreen } from './src/auth'
+
+import { LoginScreen, RegisterScreen,ShowScan } from './src/auth'
 import { AddButton } from './components/AddButton'
 // import { Ionicons, Feather } from '@expo/vector-icons';
 
@@ -34,6 +34,7 @@ function HomeStack() {
   return (
     <StackHome.Navigator initialRouteName="Home">
       <StackHome.Screen name="Home" component={HomeScreen} options={navOptionHandler} />
+      <StackHome.Screen name="cart" component={Cart} options={navOptionHandler} />
       <StackHome.Screen name="Login" component={LoginScreen} options={navOptionHandler} />  
       <StackHome.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
     </StackHome.Navigator>
@@ -81,6 +82,7 @@ function ScanQrCodeStack() {
   return (
     <StackScanQrCode.Navigator initialRouteName="ScanQrCode" >
       <StackScanQrCode.Screen name="ScanQrCode" component={BarcodeScannerExample} options={navOptionHandler} />
+      <StackScanQrCode.Screen name="showscan" component={ShowScan} options={navOptionHandler} />
       
     </StackScanQrCode.Navigator>
 
@@ -116,12 +118,18 @@ function TabNavigator() {
         name="History" component={HistoryStack} />
 
       <Tab.Screen
-        component={ScanQrCodeScreen}
+        
         options={{
-          tabBarLabel: 'ScanCode',
-          tabBarIcon: ({ color, size }) => (<AddButton />)
+          tabBarLabel: 'Scan',
+          tabBarIcon: () => <AddButton />,
+          
+          
         }}
-        name="Scan" component={ScanQrCodeStack} />
+
+        name="Scan" component={ScanQrCodeStack}
+        
+        
+      />
 
       <Tab.Screen
         component={FavouriteScreen}
@@ -325,7 +333,3 @@ export default function App() {
 // );//end-export
 
 // export default createAppContainer(TabNavigator);
-
-
-
-
