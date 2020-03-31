@@ -3,97 +3,137 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
   Image,
-  Alert,
-  ScrollView,
+  TouchableOpacity,
   FlatList,
-  Button,
-  SafeAreaView,
-  
+  Dimensions,
+  Alert,
+  ScrollView
 } from 'react-native';
-
-import { CustomHeader } from '../index'
-
 import { TextInput } from 'react-native-paper';
-
 export class HomeScreenDetail extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      modalVisible: false,
+      userSelected: [],
+      product: {
+        name: "Ch510-sony",
+        description: "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+        created: "",
+        images: [
+          "https://salt.tikicdn.com/cache/w1200/ts/product/42/b3/30/9899385a6d821a948167cd1dd0eed190.jpg",
+          "https://vcdn.tikicdn.com/ts/review/69/37/6b/527998850c75518c6cc4b733cdbdf16b.jpg",
+          "https://vcdn.tikicdn.com/ts/review/b9/b9/7e/37d5eb931efbb1beca09aaafed4fc98d.jpg",
+        ],
+        colors: [
+          "#00BFFF",
+          "#FF1493",
+          "#00CED1",
+          "#228B22",
+          "#20B2AA",
+          "#FF4500",
+        ]
+      }
+    };
   }
 
-  clickEventListener() {
-    Alert.alert("Success", "Product has beed added to cart")
+  __setImageSelected = (image) => {
+    this.setState({ selectedImage: image });
   }
 
+  __renderImages = () => {
+    return (
+      <View style={styles.smallImagesContainer}>
+        {this.state.product.images.map((prop, key) => {
+          return (
+            <TouchableOpacity key={key} onPress={() => { this.__setImageSelected(prop) }}>
+              <Image style={styles.smallImage} source={{ uri: prop }} />
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    )
+  }
 
-  state = {
-    text: ''
-  };
+  __renderColors = () => {
+    return (
+      <View style={styles.contentColors}>
+        {this.state.product.colors.map((prop, key) => {
+          return (
+            <TouchableOpacity key={key} style={[styles.btnColor, { backgroundColor: prop }]}></TouchableOpacity>
+          );
+        })}
+      </View>
+    )
+  }
 
   render() {
-
-
-
+    var mainImage = (this.state.selectedImage) ? this.state.selectedImage : this.state.product.images[0];
     return (
-      <SafeAreaView style={{ flex: 1, }}>
-        <CustomHeader title="Home Detail" navigation={this.props.navigation} />
-        <View style={styles.container}>
-          <ScrollView>
-            <View style={{ alignItems: 'center', marginHorizontal: 30 }}>
-              <Image style={styles.productImg} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3v7KDJN7TAoJa5sFaPWcp1HX8JFcpF3z5K3ngz4L6kWoEP7Ca" }} />
-              <Text style={styles.name}>Super Soft T-Shirt</Text>
-              <Text style={styles.price}>$ 12.22</Text>
-
+      <View style={styles.container}>
+        <ScrollView style={styles.content}>
+          <View style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.name}>{this.state.product.name}</Text>
             </View>
+            <View style={styles.cardContent}>
+              <View style={styles.header}>
+                <View style={styles.mainImageContainer}>
+                  <Image style={styles.mainImage} source={{ uri: mainImage }} />
+                </View>
+                {this.__renderImages()}
+              </View>
+            </View>
+          </View>
 
-            <View style={styles.starContainer}>
+          <View style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>Colors</Text>
+            </View>
+            <View style={styles.cardContent}>
+              {this.__renderColors()}
+            </View>
+          </View>
+          
+          <View style={styles.starContainer}>
               <Image style={styles.star} source={{ uri: "https://img.icons8.com/color/40/000000/star.png" }} />
               <Image style={styles.star} source={{ uri: "https://img.icons8.com/color/40/000000/star.png" }} />
               <Image style={styles.star} source={{ uri: "https://img.icons8.com/color/40/000000/star.png" }} />
               <Image style={styles.star} source={{ uri: "https://img.icons8.com/color/40/000000/star.png" }} />
               <Image style={styles.star} source={{ uri: "https://img.icons8.com/color/40/000000/star.png" }} />
             </View>
+            
 
-            <Text style={styles.description}>
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-              Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-              natoque penatibus et magnis dis parturient montes,
-              nascetur ridiculus mus. Donec quam felis, ultricies nec
-            </Text>
-
-            <View style={styles.contentColors}>
-              <TouchableOpacity style={[styles.btnColor, { backgroundColor: "#00BFFF" }]}></TouchableOpacity>
-              <TouchableOpacity style={[styles.btnColor, { backgroundColor: "#FF1493" }]}></TouchableOpacity>
-              <TouchableOpacity style={[styles.btnColor, { backgroundColor: "#00CED1" }]}></TouchableOpacity>
-              <TouchableOpacity style={[styles.btnColor, { backgroundColor: "#228B22" }]}></TouchableOpacity>
-              <TouchableOpacity style={[styles.btnColor, { backgroundColor: "#20B2AA" }]}></TouchableOpacity>
-              <TouchableOpacity style={[styles.btnColor, { backgroundColor: "#FF4500" }]}></TouchableOpacity>
+          <View style={styles.card}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.cardTitle}>Description</Text>
             </View>
-
-            <View style={styles.contentSize}>
-              <TouchableOpacity style={styles.btnSize}><Text>S</Text></TouchableOpacity>
-              <TouchableOpacity style={styles.btnSize}><Text>M</Text></TouchableOpacity>
-              <TouchableOpacity style={styles.btnSize}><Text>L</Text></TouchableOpacity>
-              <TouchableOpacity style={styles.btnSize}><Text>XL</Text></TouchableOpacity>
+            <View style={styles.cardContent}>
+              <Text style={styles.description}>{this.state.product.description}</Text>
             </View>
-            <TextInput
-              label='comments'
-              value={this.state.text}
-              onChangeText={text => this.setState({ text })}
-              focused
+          </View>
+          <View style={styles.card}>
+          
+          <TextInput
+            label='comments'
+            value={this.state.text}
+            onChangeText={text => this.setState({ text })}
+            focused
             />
+            
+          </View>
 
-            <View style={styles.separator}></View>
-            <View style={styles.addToCarContainer}>
+          <View style={styles.card}>
+            <View style={styles.cardContent}>
               <TouchableOpacity style={styles.shareButton} onPress={() => this.clickEventListener()}>
                 <Text style={styles.shareButtonText}>Add To Cart</Text>
               </TouchableOpacity>
             </View>
-          </ScrollView>
-        </View>
-      </SafeAreaView>
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 }
@@ -102,15 +142,42 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 20,
+    backgroundColor: "#ebf0f7",
   },
-  productImg: {
+  content: {
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 20,
+  },
+  header: {
+    flexDirection: 'row',
+  },
+  mainImage: {
     width: 200,
     height: 200,
   },
+  smallImagesContainer: {
+    flexDirection: 'column',
+    marginLeft: 30
+  },
+  smallImage: {
+    width: 60,
+    height: 60,
+    marginTop: 5,
+  },
+  btnColor: {
+    height: 40,
+    width: 40,
+    borderRadius: 40,
+    marginHorizontal: 3
+  },
+  contentColors: {
+    flexDirection: 'row',
+  },
   name: {
-    fontSize: 28,
+    fontSize: 22,
     color: "#696969",
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   price: {
     marginTop: 10,
@@ -119,56 +186,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   description: {
-    textAlign: 'center',
-    marginTop: 10,
+    fontSize: 18,
     color: "#696969",
-  },
-  star: {
-    width: 40,
-    height: 40,
-  },
-  btnColor: {
-    height: 30,
-    width: 30,
-    borderRadius: 30,
-    marginHorizontal: 3
-  },
-  btnSize: {
-    height: 40,
-    width: 40,
-    borderRadius: 40,
-    borderColor: '#778899',
-    borderWidth: 1,
-    marginHorizontal: 3,
-    backgroundColor: 'white',
-
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  starContainer: {
-    justifyContent: 'center',
-    marginHorizontal: 30,
-    flexDirection: 'row',
-    marginTop: 20
-  },
-  contentColors: {
-    justifyContent: 'center',
-    marginHorizontal: 30,
-    flexDirection: 'row',
-    marginTop: 20
-  },
-  contentSize: {
-    justifyContent: 'center',
-    marginHorizontal: 30,
-    flexDirection: 'row',
-    marginTop: 20
-  },
-  separator: {
-    height: 2,
-    backgroundColor: "#eeeeee",
-    marginTop: 20,
-    marginHorizontal: 30
   },
   shareButton: {
     marginTop: 10,
@@ -183,10 +202,57 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 20,
   },
-  addToCarContainer: {
-    marginHorizontal: 30
-  }
+
+  /******** card **************/
+  card: {
+    shadowColor: '#00000021',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
+
+    marginVertical: 5,
+    backgroundColor: "white",
+    marginHorizontal: 5,
+  },
+  cardContent: {
+    paddingVertical: 12.5,
+    paddingHorizontal: 16,
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 12.5,
+    paddingBottom: 25,
+    paddingHorizontal: 16,
+    borderBottomLeftRadius: 1,
+    borderBottomRightRadius: 1,
+  },
+  cardTitle: {
+    color: "#00BFFF"
+  },
+  starContainer: {
+    justifyContent: 'center',
+    marginHorizontal: 30,
+    flexDirection: 'row',
+    marginTop: 10
+  },
+  star: {
+    width: 40,
+    height: 40,
+  },
 });
+
+{/* <TextInput
+label='comments'
+value={this.state.text}
+onChangeText={text => this.setState({ text })}
+focused
+/>
+import { TextInput } from 'react-native-paper'; */}
 
 
 // import React, { Component } from 'react'
