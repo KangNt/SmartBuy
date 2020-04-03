@@ -8,8 +8,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { CustomHeader, CustomDrawerContent,BarcodeScannerExample,Cart} from './src'
 import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
-import { NotificationsScreen, ProfileScreen} from './src/drawer'
-
+import { NotificationsScreen,ProfileScreen} from './src/drawer'
+// import  { Profile } from './src/drawer/profile'
 import { LoginScreen, RegisterScreen,ShowScan } from './src/auth'
 import { AddButton } from './components/AddButton'
 // import { Ionicons, Feather } from '@expo/vector-icons';
@@ -26,6 +26,7 @@ const Tab = createBottomTabNavigator();
 const navOptionHandler = () => ({
   headerShown: false
 })
+
 
 const StackHome = createStackNavigator();
 

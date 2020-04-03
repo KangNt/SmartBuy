@@ -48,12 +48,11 @@ export class SettingsScreen extends Component {
       leftIcon={{ name: item.icon }}
       bottomDivider
       chevron
+      onPress={() => this.props.navigation.navigate('Profile')}
     />
     </TouchableOpacity>
 
   )
-
-
   render() {
 
     const list = [
@@ -119,7 +118,12 @@ export class SettingsScreen extends Component {
             {/* <RVText content="Go Settings Detail!" /> */}
           </TouchableOpacity>
 
-        </View>
+       </View>
+
+
+
+
+
       </SafeAreaView>
 
 

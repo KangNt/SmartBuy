@@ -1,179 +1,239 @@
-import React, { Component } from 'react';
-import { IMAGE} from '../constants/Image'
-import {
-    StyleSheet,
-    Text,
-    View,
-    Image,
-    TouchableOpacity,
-    ScrollView
-} from 'react-native';
-import { CustomHeader } from '../index'
+import React, { Component } from 'react'
 
-import {FontAwesome5 }from '@expo/vector-icons'
+import { StyleSheet, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity } from "react-native";
 
-export class ProfileScreen extends Component {
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
-    render() {
-        return (
-            
-            <View style={styles.container}>
-                <CustomHeader title="Profile" navigation={this.props.navigation}  />
-                <View style={styles.header}>
-                </View>
-                
-                <Image style={styles.avatar} source={IMAGE.ICON_PROFILE} />
-                <ScrollView>
-                <View style={styles.body}>
-                    {/* <Text style={{ fontSize: 22,color: "#696969",}}>KidPlaza</Text> */}
-                
-                    <View style={styles.bodyContent}>
-                        {/* <Text style={styles.name}>John Doe</Text>
-                        <Text style={styles.info}>UX Designer / Mobile developer</Text>
-                        <Text style={styles.description}>Lorem ipsum dolor sit amet, saepe sapientem eu nam. Qui ne assum electram expetendis, omittam deseruisse consequuntur ius an,</Text> */}
-                        
-                        <TouchableOpacity style={styles.buttonContainer}>
-                            <Text><FontAwesome5 name="user" size={20} /> Giới tính </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonContainer}>
-                        <Text><FontAwesome5 name="mobile-alt" size={20} /> Số điện thoại</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonContainer}>
-                        <Text><FontAwesome5 name="birthday-cake" size={20} /> Ngày sinh</Text>
-                        </TouchableOpacity>
-                        
-                    </View>
-                    <View style={styles.bodyContent}>
-                        <TouchableOpacity style={styles.buttonContainers}>
-                        <Text><FontAwesome5 name="envelope" size={20} /> Email</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonContainers}>
-                        <Text><FontAwesome5 name="map-marker-alt" size={20} /> Địa chỉ</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonContainers}>
-                        <Text><FontAwesome5 name="calendar-alt" size={20} /> Ngày tham gia</Text>
-                        </TouchableOpacity>
-                    </View>
-                        
+
+export class ProfileScreen extends Component{
+    render(){
+        return(
+            <SafeAreaView style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={styles.titleBar}>
+                    <TouchableOpacity >
+                    <Ionicons name="ios-arrow-back" size={24} color="#52575D"></Ionicons>
+                    </TouchableOpacity>
+                    
+                    <TouchableOpacity>
+                    <Ionicons name="md-more" size={24} color="#52575D"></Ionicons>
+                    </TouchableOpacity>
                     
                 </View>
-                <View style={styles.bodyContent}>
-                        <TouchableOpacity style={styles.buttonContainerss}>
-                        <Text><FontAwesome5 name="phone" size={20} />   Danh bạ    </Text>
-                        </TouchableOpacity>
+
+                <View style={{ alignSelf: "center" }}>
+                    <View style={styles.profileImage}>
+                        <Image source={require("../images/Linh.jpg")} style={styles.image} resizeMode="center"></Image>
                     </View>
-                </ScrollView>
-            </View>
-            
-        );
+                    <View style={styles.dm}>
+                        <MaterialIcons name="chat" size={18} color="#DFD8C8"></MaterialIcons>
+                    </View>
+                    <View style={styles.active}></View>
+                    <View style={styles.add}>
+                        <Ionicons name="ios-add" size={48} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2 }}></Ionicons>
+                    </View>
+                </View>
+
+                <View style={styles.infoContainer}>
+                    <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>Julie</Text>
+                    <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>Photographer</Text>
+                </View>
+
+                <View style={styles.statsContainer}>
+                    <View style={styles.statsBox}>
+                        <Text style={[styles.text, styles.subText]}><MaterialIcons name="cake" size={18} color="#DFD8C8"/></Text>
+                        <Text style={[styles.text, { fontSize: 12 }]}>26/03/1999</Text>
+                    </View>
+                    <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
+                        <Text style={[styles.text, styles.subText]}><MaterialIcons name="phone" size={18} color="#DFD8C8"/> </Text>
+                        <Text style={[styles.text, { fontSize: 12 }]}>0967521045</Text>
+                    </View>
+                    <View style={styles.statsBox}>
+                        <Text style={[styles.text, styles.subText]}><MaterialIcons name="email" size={18} color="#DFD8C8"/></Text>
+                        <Text style={[styles.text, { fontSize: 12 }]}>kang@gmail.com</Text>
+                    </View>
+                </View>
+                
+                <View style={styles.statsContainer}>
+
+                    <View style={styles.statsBox}>
+                        <Text style={[styles.text, { fontSize: 12 }]}> <MaterialIcons name="fingerprint" size={18} color="#DFD8C8"/></Text>
+                        <Text style={[styles.text, styles.subText]}>Password</Text>
+                    </View>
+                     
+                    <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
+                        <Text style={[styles.text, styles.subText]}>Phone </Text>
+                        <Text style={[styles.text, { fontSize: 12 }]}>0967521045</Text>
+                    </View>
+                    <View style={styles.statsBox}>
+                          <Text style={[styles.text, styles.subText]}><MaterialIcons name="settings" size={18} color="#DFD8C8"/></Text>
+                        <Text style={[styles.text, { fontSize: 12 }]}>Settings</Text>
+                        
+                    </View>
+                </View>
+
+                <View style={{ marginTop: 32 }}>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                        <View style={styles.mediaImageContainer}>
+                            <Image source={require("../images/Linh.jpg")} style={styles.image} resizeMode="cover"></Image>
+                        </View>
+                        <View style={styles.mediaImageContainer}>
+                            <Image source={require("../images/Linh.jpg")} style={styles.image} resizeMode="cover"></Image>
+                        </View>
+                        <View style={styles.mediaImageContainer}>
+                            <Image source={require("../images/Linh.jpg")} style={styles.image} resizeMode="cover"></Image>
+                        </View>
+                    </ScrollView>
+                    <View style={styles.mediaCount}>
+                        <Text style={[styles.text, { fontSize: 24, color: "#DFD8C8", fontWeight: "300" }]}>70</Text>
+                        <Text style={[styles.text, { fontSize: 12, color: "#DFD8C8", textTransform: "uppercase" }]}>Media</Text>
+                    </View>
+                </View>
+                <Text style={[styles.subText, styles.recent]}>Recent Activity</Text>
+                <View style={{ alignItems: "center" }}>
+                    <View style={styles.recentItem}>
+                        <View style={styles.activityIndicator}></View>
+                        <View style={{ width: 250 }}>
+                            <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
+                                Started following <Text style={{ fontWeight: "400" }}>Jake Challeahe</Text> and <Text style={{ fontWeight: "400" }}>Luis Poteer</Text>
+                            </Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.recentItem}>
+                        <View style={styles.activityIndicator}></View>
+                        <View style={{ width: 250 }}>
+                            <Text style={[styles.text, { color: "#41444B", fontWeight: "300" }]}>
+                                Started following <Text style={{ fontWeight: "400" }}>Luke Harper</Text>
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </ScrollView>
+        </SafeAreaView>
+        )
     }
 }
 
+
 const styles = StyleSheet.create({
-    header: {
-        backfaceVisibility:'visible',
-        height: 200,
-        backgroundColor:"#AE87E6"
-        
-    },
-    avatar: {
-        width: 130,
-        height: 130,
-        borderRadius: 63,
-        borderWidth: 4,
-        borderColor: "white",
-        marginBottom: 10,
-        alignSelf: 'center',
-        position: 'absolute',
-        marginTop: 130
-    },
-    name: {
-        fontSize: 22,
-        color: "#FFFFFF",
-        fontWeight: '600',
-    },
-    body: {
-        marginTop: 40,
-        flexDirection:'row'
-    },
-    bodyContent: {
+    container: {
         flex: 1,
-        alignItems: 'center',
-        padding: 30,
-       
+        backgroundColor: "#FFF"
     },
-    name: {
-        fontSize: 28,
-        color: "#696969",
-        fontWeight: "600"
+    text: {
+        fontFamily: "HelveticaNeue",
+        color: "#52575D"
     },
-    info: {
-        fontSize: 16,
-        color: "#00BFFF",
-        marginTop: 10
+    image: {
+        flex: 1,
+        height: undefined,
+        width: undefined
     },
-    description: {
-        fontSize: 16,
-        color: "#696969",
-        marginTop: 10,
-        textAlign: 'center'
+    titleBar: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 24,
+        marginHorizontal: 16
     },
-    buttonContainer: {
-        marginTop: 10,
-        height: 45,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20,
-        width: 150,
+    subText: {
+        fontSize: 12,
+        color: "#AEB5BC",
+        textTransform: "uppercase",
+        fontWeight: "500"
+    },
+    profileImage: {
+        width: 200,
+        height: 200,
+        borderRadius: 100,
+        overflow: "hidden"
+    },
+    dm: {
+        backgroundColor: "#41444B",
+        position: "absolute",
+        top: 20,
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    active: {
+        backgroundColor: "#34FFB9",
+        position: "absolute",
+        bottom: 28,
+        left: 10,
+        padding: 4,
+        height: 20,
+        width: 20,
+        borderRadius: 10
+    },
+    add: {
+        backgroundColor: "#41444B",
+        position: "absolute",
+        bottom: 0,
+        right: 0,
+        width: 60,
+        height: 60,
         borderRadius: 30,
-        backgroundColor: "#FEF9F3",
-        marginLeft:-10
+        alignItems: "center",
+        justifyContent: "center"
     },
-    buttonContainers: {
-        marginTop: 10,
-        height: 45,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20,
-        width: 150,
-        borderRadius: 30,
-        backgroundColor: "#FEF9F3",
-        
+    infoContainer: {
+        alignSelf: "center",
+        alignItems: "center",
+        marginTop: 16
     },
-    buttonContainerss: {
-        marginTop: -30,
-        height: 45,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: 20,
-        width: 250,
-        borderRadius: 30,
-        backgroundColor: "#FEF9F3",
-        
+    statsContainer: {
+        flexDirection: "row",
+        alignSelf: "center",
+        marginTop: 32
     },
-
+    statsBox: {
+        alignItems: "center",
+        flex: 1
+    },
+    mediaImageContainer: {
+        width: 180,
+        height: 200,
+        borderRadius: 12,
+        overflow: "hidden",
+        marginHorizontal: 10
+    },
+    mediaCount: {
+        backgroundColor: "#41444B",
+        position: "absolute",
+        top: "50%",
+        marginTop: -50,
+        marginLeft: 30,
+        width: 100,
+        height: 100,
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 12,
+        shadowColor: "rgba(0, 0, 0, 0.38)",
+        shadowOffset: { width: 0, height: 10 },
+        shadowRadius: 20,
+        shadowOpacity: 1
+    },
+    recent: {
+        marginLeft: 78,
+        marginTop: 32,
+        marginBottom: 6,
+        fontSize: 10
+    },
+    recentItem: {
+        flexDirection: "row",
+        alignItems: "flex-start",
+        marginBottom: 16
+    },
+    activityIndicator: {
+        backgroundColor: "#CABFAB",
+        padding: 4,
+        height: 12,
+        width: 12,
+        borderRadius: 6,
+        marginTop: 3,
+        marginRight: 20
+    }
 });
-
-
-
-// import React, { Component } from 'react'
-
-// import { Text, View, SafeAreaView } from 'react-native'
-// import { CustomHeader } from '../index'
-
-
-// export class ProfileScreen extends Component {
-//     render() {
-//         return (
-//             <SafeAreaView style={{ flex: 1, }}>
-//                 <CustomHeader title="Information" navigation={this.props.navigation} />
-//                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//                     <Text>ProfileScreen</Text>
-//                 </View>
-//             </SafeAreaView>
-//         )
-//     }
-// }
