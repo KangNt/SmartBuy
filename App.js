@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -159,8 +158,6 @@ function DrawerNavigator({ navigation }) {
       <Drawer.Screen name="MenuTab" component={TabNavigator} />
       <Drawer.Screen name="Notifications" component={NotificationsScreen} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
-      
-
     </Drawer.Navigator>
   )
 }

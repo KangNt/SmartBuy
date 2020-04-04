@@ -47,7 +47,7 @@ Login(){
         alert('Password khong duoc de trong');
       }
       else{
-        fetch('https://testapi001.cf/api/login', {
+        fetch('https://smartbuy01.gq/api/login', {
           method: 'POST',
           headers:{
           'Accept': 'application/json',
