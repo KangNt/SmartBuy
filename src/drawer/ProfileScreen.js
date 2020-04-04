@@ -38,38 +38,54 @@ export class ProfileScreen extends Component{
                     <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>Julie</Text>
                     <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>Photographer</Text>
                 </View>
-
+              
                 <View style={styles.statsContainer}>
-                    <View style={styles.statsBox}>
-                        <Text style={[styles.text, styles.subText]}><MaterialIcons name="cake" size={18} color="#DFD8C8"/></Text>
+                    <TouchableOpacity style={styles.statsBox}>
+                    <View>
+                        <Text style={[styles.text, styles.subText]}><MaterialIcons name="cake" size={20} color="#DFD8C8"/></Text>
                         <Text style={[styles.text, { fontSize: 12 }]}>26/03/1999</Text>
                     </View>
-                    <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                        <Text style={[styles.text, styles.subText]}><MaterialIcons name="phone" size={18} color="#DFD8C8"/> </Text>
+                    </TouchableOpacity>
+
+                  <TouchableOpacity style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
+                  <View >
+                        <Text style={[styles.text, styles.subText]}><MaterialIcons name="phone" size={20} color="#DFD8C8"/> </Text>
                         <Text style={[styles.text, { fontSize: 12 }]}>0967521045</Text>
                     </View>
-                    <View style={styles.statsBox}>
-                        <Text style={[styles.text, styles.subText]}><MaterialIcons name="email" size={18} color="#DFD8C8"/></Text>
+                  </TouchableOpacity>
+
+                   <TouchableOpacity style={styles.statsBox}>
+                   <View>
+                        <Text style={[styles.text, styles.subText]}><MaterialIcons name="email" size={20} color="#DFD8C8"/></Text>
                         <Text style={[styles.text, { fontSize: 12 }]}>kang@gmail.com</Text>
                     </View>
+                   </TouchableOpacity>
+                    
                 </View>
+              
                 
                 <View style={styles.statsContainer}>
+                <TouchableOpacity style={styles.statsBox}>
+                <View style={{justifyContent:'center'}}>
+                        <Text style={[styles.text, styles.subText]}><MaterialIcons name="fingerprint" size={20} color="#DFD8C8"/></Text>
+                        <Text style={[styles.text, { fontSize: 12 }]}> Password</Text>
+                    </View>
+                </TouchableOpacity>
+                   
+                     <TouchableOpacity style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
+                     <View>
+                        <Text style={[styles.text, styles.subText]}><MaterialIcons name="history" size={20} color="#DFD8C8"/> </Text>
+                        <Text style={[styles.text, { fontSize: 12 }]}>History</Text>
+                    </View>
+                     </TouchableOpacity>
 
-                    <View style={styles.statsBox}>
-                        <Text style={[styles.text, { fontSize: 12 }]}> <MaterialIcons name="fingerprint" size={18} color="#DFD8C8"/></Text>
-                        <Text style={[styles.text, styles.subText]}>Password</Text>
-                    </View>
-                     
-                    <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                        <Text style={[styles.text, styles.subText]}>Phone </Text>
-                        <Text style={[styles.text, { fontSize: 12 }]}>0967521045</Text>
-                    </View>
-                    <View style={styles.statsBox}>
-                          <Text style={[styles.text, styles.subText]}><MaterialIcons name="settings" size={18} color="#DFD8C8"/></Text>
+                    <TouchableOpacity style={styles.statsBox}>
+                    <View>
+                          <Text style={[styles.text, styles.subText]}><MaterialIcons name="settings" size={20} color="#DFD8C8"/></Text>
                         <Text style={[styles.text, { fontSize: 12 }]}>Settings</Text>
-                        
                     </View>
+                    </TouchableOpacity>                  
+                 
                 </View>
 
                 <View style={{ marginTop: 32 }}>
@@ -140,7 +156,8 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: "#AEB5BC",
         textTransform: "uppercase",
-        fontWeight: "500"
+        fontWeight: "500",
+        marginLeft:15
     },
     profileImage: {
         width: 200,

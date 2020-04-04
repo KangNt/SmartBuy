@@ -142,9 +142,9 @@ function TabNavigator() {
       <Tab.Screen
         
         options={{
-          tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="settings" color={color} size={size} />),
+          tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="face-profile" color={color} size={size} />),
         }}
-        name="Settings" component={SettingStack} />
+        name="Profile" component={SettingStack} />
     </Tab.Navigator>
   )
 }
