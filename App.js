@@ -7,8 +7,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { CustomHeader, CustomDrawerContent,BarcodeScannerExample,Cart} from './src'
-import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
+import {CustomDrawerContent,BarcodeScannerExample} from './src'
+import Cart from './src/Cart'
+import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen,CategoryDetail, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
 import { NotificationsScreen, ProfileScreen} from './src/drawer'
 
 import { LoginScreen, RegisterScreen,ShowScan } from './src/auth'
@@ -38,6 +39,7 @@ function HomeStack() {
       <StackHome.Screen name="cart" component={Cart} options={navOptionHandler} />
       <StackHome.Screen name="Login" component={LoginScreen} options={navOptionHandler} />  
       <StackHome.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
+      <StackHome.Screen name="CategoryDetail" component={CategoryDetail} options={navOptionHandler} />
     </StackHome.Navigator>
   );
 };
@@ -63,6 +65,7 @@ function SettingStack() {
     <StackSetting.Navigator initialRouteName="Setting">
       <StackSetting.Screen name="Setting" component={SettingsScreen} options={navOptionHandler} />
       <StackSetting.Screen name="SettingDetail" component={SettingsScreenDetail} options={navOptionHandler} />
+      <StackSetting.Screen name="Profile" component={ProfileScreen} options={navOptionHandler} />
     </StackSetting.Navigator>
   )
 }

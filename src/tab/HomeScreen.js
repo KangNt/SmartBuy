@@ -5,11 +5,10 @@ import { Text, View, SafeAreaView, TouchableOpacity,
 from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
 import { CustomHeader } from '../index'
-// import {RNCamera} from 'react-native-camera'
-// import { RVText } from '../core/RVText'
 import Carousel,{ ParallaxImage,Pagination } from 'react-native-snap-carousel';
 import { SearchBar } from 'react-native-elements';
 import global from './global'
+import CustomDrawerContent from '../CustomDrawerContent'
 // import Swiper from 'react-native-swiper'
 import { FlatList } from 'react-native-gesture-handler';
 var {width,height} = Dimensions.get('window');
@@ -55,7 +54,7 @@ export class HomeScreen extends Component {
 
     }
     componentDidMount(){
-        Promise.all([fetch('https://testapi001.cf/api'),fetch('https://testapi001.cf/api/'),fetch('https://testapi001.cf/api/categories')])
+        Promise.all([fetch('https://smartbuy01.gq/api/slider'),fetch('https://smartbuy01.gq/api/products'),fetch('https://smartbuy01.gq/api/categories')])
          .then(([req1,req2,req3]) => {
            return Promise.all([req1.json(),req2.json(),req3.json()])
          })
@@ -67,7 +66,7 @@ export class HomeScreen extends Component {
              categories:req003
              
            })
-   
+           console.log(this.state.categories.category)
          })
          .catch((error) =>{
            console.error(error);
@@ -94,9 +93,9 @@ export class HomeScreen extends Component {
       }
 
     renderPro(item){
-        if (this.state.selectCate==item.cate_id ||this.state.selectCate==0) {
+       
             return(
-              <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={()=>this.props.navigation.navigate('HomeDetail',{product:item})}>
+              <TouchableHighlight onPress={()=>this.props.navigation.navigate('HomeDetail',{product:item})}>
               <View style={styles.container1}>
                 <Image style={styles.photo} source={{ uri: item.image }} />
                 <Text style={styles.title}>{item.name}</Text>
@@ -118,9 +117,19 @@ export class HomeScreen extends Component {
                 // </TouchableOpacity>
                 
             )
-        }
         
         
+        
+    }
+    renderCate(item){
+      return(
+        <TouchableOpacity onPress={()=>this.props.navigation.navigate('CategoryDetail',{category:item})}>
+          <View style={this.state.selectCate==item.id ? styles.divtheme : styles.divtheme2}>
+              
+              <Text>{item.cate_name}</Text>
+          </View>
+        </TouchableOpacity>
+      )
     }
     renderSlide(item){
       return(
@@ -130,7 +139,7 @@ export class HomeScreen extends Component {
             </Image>
             
             <LinearGradient style={{width:width-20,height:150,position:"absolute",borderRadius:15,justifyContent:"flex-end"}} colors={['transparent','rgba(0,0,32,0.7)']}>
-              <Text style={{color:'#fff',paddingLeft:8,paddingRight:5,paddingBottom:4}}>{item.name}</Text>
+              <Text style={{color:'#fff',paddingLeft:8,paddingRight:5,paddingBottom:4}}>{item.description}</Text>
             </LinearGradient>
           </TouchableOpacity>
           
@@ -147,12 +156,14 @@ export class HomeScreen extends Component {
         const searchPros =data.filter((item)=>{
           const itemData = item.name.toUpperCase()
           return itemData.indexOf(this.state.search.toUpperCase()) >-1
+          
         })
 
         // if(is)const {email} = this.props.route.params  
         return (
             <SafeAreaView style={{ flex: 1,flexDirection:"column", }}>
-                <CustomHeader title="Home" isHome={true} navigation={this.props.navigation} />
+              {/* <CustomDrawerContent></CustomDrawerContent> */}
+                <CustomHeader title="Home" isHome={true} cart={true} navigation={this.props.navigation} />
                 <SearchBar platform="android" containerStyle={{height:40,width:width,justifyContent:"center"}} inputStyle={{fontSize:15,}}
                     placeholder="Search..."
                     onChangeText={val => this.setState({search:val})}
@@ -165,13 +176,12 @@ export class HomeScreen extends Component {
                       <View>
                             <Carousel
                               layout={'default'} loop={true}
-                              autoplay={true} autoplayInterval={2500} 
-                              layoutCardOffset={`50`}
+                              autoplay={true} autoplayInterval={2500}
                               inactiveSlideOpacity={0.7}
                               loopClonesPerSide={3}
                               vertical={false}
                               // ref={(c) => { this._carousel = c; }}
-                              data={this.state.products}
+                              data={this.state.sliders}
                               renderItem={({item}) => this.renderSlide(item)}
                               sliderWidth={width}
                               itemWidth={width}
@@ -179,32 +189,14 @@ export class HomeScreen extends Component {
                               itemHeight={200}
                               
                             />
-                          
-                      
-                          {/* <Text>{email}</Text> */}
-                          {/* <Swiper>{this.state.Getone.map( (Item) =>{
-                              return(
-                                
-                                  <ImageBackground style={{width:width,height:150}} source={{uri:Item.image}} >
-                                      <Text style={styles.text}>{Item.name}</Text>
-                                  </ImageBackground>
-                              )
-                              })}
-                          </Swiper> */}
                       </View> 
-                       
-                      <FlatList data={this.state.categories.category} horizontal={true}
-                          renderItem={({item}) =>
-                              <TouchableOpacity onPress={()=>this.setState({selectCate:item.id})}>
-                                  <View style={this.state.selectCate==item.id ? styles.divtheme : styles.divtheme2}>
-                                      
-                                      <Text>{item.cate_name}</Text>
-                                  </View>
-                              </TouchableOpacity>
-                          }>      
-                      </FlatList>
-                    
-                      <View>
+                       <View>
+                        <FlatList data={this.state.categories.result} horizontal={true}
+                            renderItem={({item}) =>this.renderCate(item)}
+                            keyExtractor = { (item,index) => index.toString() }>      
+                        </FlatList>
+                        </View>
+                      <View >
                         <FlatList data={searchPros} numColumns={2}
                             renderItem={({item}) => this.renderPro(item)}
                             keyExtractor = { (item,index) => index.toString() }>

@@ -7,6 +7,6 @@ export * from './SettingsScreenDetail'
 export * from './FavouriteScreen'
 
 export * from './HistoryScreen'
-
+export * from './CategoryDetail'
 export * from './ScanQrCodeScreen'
 

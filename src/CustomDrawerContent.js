@@ -38,33 +38,33 @@ export class CustomDrawerContent extends Component {
             
       
     // }
-    // getInfo(){
-    //     return(
-    //         AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
-    //             alert(result[0][1])
-    //             this.setState({
-    //             email:result[0][1],
-    //             name:result[1][1],
-    //             avatar:result[2][1],
+    getInfo(){
+        return(
+            AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
+                alert(result[0][1])
+                this.setState({
+                email:result[0][1],
+                name:result[1][1],
+                avatar:result[2][1],
                 
-    //             })
+                })
                 
-    //         }) 
-    //     )
-    // }
+            }) 
+        )
+    }
    
-    // _AlertLogout =()=>{
-    //     Alert.alert("Thông báo!", "Bạn có chắc chắn muốn Logout không?",
-    //     [
+    _AlertLogout =()=>{
+        Alert.alert("Thông báo!", "Bạn có chắc chắn muốn Logout không?",
+        [
           
-    //       {text:'Cancel'},
-    //       { text:'OK', onPress:this._Logout
+          {text:'Cancel'},
+          { text:'OK', onPress:this._Logout
           
-    //       }
-    //     ],
-    //       {cancelable: false},)
+          }
+        ],
+          {cancelable: false},)
         
-    //   }
+      }
      
      
       _Logout = async () => {
@@ -74,7 +74,7 @@ export class CustomDrawerContent extends Component {
             email:'',
             name:""
           })
-          this.props.navigation.navigate('Login')
+          this.props.navigation.navigate('Home')
         } catch (error) {
           alert(error)
           
@@ -83,7 +83,7 @@ export class CustomDrawerContent extends Component {
       
     render() {
         return (
-            <SafeAreaView style={{ flex: 1 }}>
+            <SafeAreaView style={{ flex: 1,marginTop:40 }}>
             <View style={{ height: 150, alignItems: 'center', justifyContent: 'center' }}>
                 <TouchableOpacity 
                 onPress={ () => this.getInfo()}
@@ -115,7 +115,7 @@ export class CustomDrawerContent extends Component {
                     onPress={() => this.props.navigation.navigate('MenuTab')}
                 >
                     <Text style={styles.text}>
-                        <FontAwesome5 name="home" size={24} color={"#CDCCCE"} />   Home</Text>
+                        <FontAwesome5 name="home" size={24} color={"#CDCCCE"} />   Trang Chủ</Text>
                     
                 </TouchableOpacity>
 
@@ -123,57 +123,38 @@ export class CustomDrawerContent extends Component {
                     style={{ marginTop: 25 }}
                     onPress={() => this.props.navigation.navigate('Profile')}
                 >
-                    <Text style={styles.text} ><FontAwesome5 name="user" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Hồ sơ</Text></Text>
+                    <Text style={styles.text} ><FontAwesome5 name="user" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Thông Báo</Text></Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
                     onPress={() => this.props.navigation.navigate('MenuTab')}
                 >
-                    <Text style={styles.text}><FontAwesome5 name="list-alt" size={24} color={"#CDCCCE"} />   <Text style={styles.texts}>Danh sách</Text></Text>
+                    <Text style={styles.text}><FontAwesome5 name="list-alt" size={24} color={"#CDCCCE"} />   <Text style={styles.texts}>Liên Hệ</Text></Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
                     onPress={() => this.props.navigation.navigate('MenuTab')}
                 >
 
-                    <Text style={styles.text}><FontAwesome5 name="comment-dots" size={24} color={"#CDCCCE"} />   <Text style={styles.texts}>Chủ đề</Text></Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={{ marginTop: 25 }}
-                    onPress={() => this.props.navigation.navigate('Card')}
-                >
-                    <Text style={styles.text}><FontAwesome5 name="bookmark" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Shopping cart</Text> </Text>
+                    <Text style={styles.text}><FontAwesome5 name="comment-dots" size={24} color={"#CDCCCE"} />   <Text style={styles.texts}>Giới Thiệu</Text></Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={{ marginTop: 25 }}
-                    onPress={() => this.props.navigation.navigate('MenuTab')}
-                >
-
-                    <Text style={styles.text} ><FontAwesome5 name="bolt" size={24} color={"#CDCCCE"} />     <Text style={styles.texts}>Khoảnh khắc</Text></Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={{ marginTop: 25 }}
-                    onPress={() => this.props.navigation.navigate('Notifications')}
-                >
-                    <Text style={styles.text}><FontAwesome5 name="bell" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Notifications</Text></Text>
-                </TouchableOpacity>
-
-
-                <TouchableOpacity
-                    style={{ marginTop: 25 }}
+                    style={this.state.email != null ? {display:'none'} : {marginTop:25}}
                     onPress={() => this.props.navigation.navigate('Login')}
                 >
-
-                    <Text style={{ marginLeft: 15, marginTop: 15,fontWeight:'bold',size:18 }}><FontAwesome5 name="sign-in-alt" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Login</Text></Text>
+                    <Text style={styles.text}><FontAwesome5 name="sign-in-alt" size={24} color={"#CDCCCE"} />
+                        <Text style={styles.texts}>   Đăng Nhập</Text>
+                    </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={{ marginTop: 35, marginLeft: 5 }}
-                    onPress={() => this._Logout()}
+                    style={this.state.email != null ? {marginTop:25} : {display:'none'}}
+                    onPress={this._AlertLogout}
                 >
-                    <Text style={{ marginLeft: 15, marginTop: -10,fontWeight:'bold' }}><FontAwesome5 name="sign-out-alt" size={24} color={"#CDCCCE"} /> Đăng xuất</Text>
+                    <Text style={styles.text}><FontAwesome5 name="sign-in-alt" size={24} color={"#CDCCCE"} />
+                        <Text style={styles.texts}>   Đăng Xuất</Text>
+                    </Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
@@ -185,7 +166,7 @@ const styles = StyleSheet.create({
     text: {
         marginLeft: 10,
         flexDirection: "row",
-        marginLeft: 10,
+        // marginLeft: 10,
         fontSize:18
          
     },

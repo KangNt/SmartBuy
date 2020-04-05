@@ -9,7 +9,7 @@ export default class InputTextField extends React.Component{
                <Text style={styles.inputTitle}>
                    {this.props.title}
                </Text>
-               <TextInput placeholder={this.props.placeholderText}  onChangeText={this.props.valueText}secureTextEntry={this.props.isSecure} style={StyleSheet.input}>
+               <TextInput placeholder={this.props.placeholderText} ref={this.props.clear_input}  onChangeText={this.props.valueText}secureTextEntry={this.props.isSecure} style={StyleSheet.input}>
                </TextInput>
                 <View style={{borderBottomWidth: 1, borderBottomColor:"#D8D8D8"}}></View>
 

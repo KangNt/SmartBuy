@@ -12,12 +12,14 @@ export class ShowScan extends Component {
         this.state={
             name:""
         }
+        const {info} = this.props.route.params
+        this.setState({
+            name:info
+        })
+        alert(this.state.name)
     }
-   componentWillMount(){
-    const {info} = this.props.route.params
-    this.setState({
-        name:info
-    })
+   componentDiMount(){
+    
    }
     render() {
         
@@ -26,9 +28,19 @@ export class ShowScan extends Component {
             <SafeAreaView style={{ flex: 1,flexDirection:"column" }} >
                 <CustomHeader title="Detail Scan" navigation={this.props.navigation} />
                 <ScrollView showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
+                <FlatList data={this.state.name} horizontal={true}
+                          renderItem={({item})=>{
+                              return(
+                                  <View>
+                                      <Text>{item.name}</Text>
+                                  </View>
+                              )
+                          }}
+                          keyExtractor = { (item,index) => index.toString() }>      
+                </FlatList>
                 <View style={{flex:1}}>
                     <View style={{height:150}}>
-                    <Text>{this.state.name}</Text>
+                    <Text>{}</Text>
                     {/* <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                         <Text>Back</Text>
                     </TouchableOpacity> */}

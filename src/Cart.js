@@ -3,7 +3,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Text, View,TouchableOpacity,Dimensions,Image,ScrollView } from 'react-native'
 import {CustomHeader} from './index'
 var { width } = Dimensions.get("window")
-export class Cart extends Component {
+export default class Cart extends Component {
     render() {
         return ( 
             <View style={{ flex: 1, }}>

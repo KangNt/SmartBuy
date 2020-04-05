@@ -46,7 +46,7 @@ export class FavouriteScreen extends Component {
 
                     </View>
                     <View style={{ flex: 0.1, marginTop: 3,marginRight:-60}}>
-                            <TouchableOpacity>
+                            {/* <TouchableOpacity>
                                 <Icon
                                     raised
                                     reverse
@@ -55,9 +55,9 @@ export class FavouriteScreen extends Component {
                                     size='13'
                                     color='#2196F3'
                                 />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
 
-                        </View>
+                    </View>
                     <View style={{ flex: 1 }}></View>
 
                 </View>

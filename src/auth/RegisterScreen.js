@@ -8,7 +8,78 @@ import { CustomHeader } from '../index'
 import InputTextField from "../../components/InputTextField"
 
 export class RegisterScreen extends Component {
+    constructor(props){
+        super(props);
+        this.state ={ 
+            isLoading: true,
+            fullname:'',
+            email:'',
+            password:'',
+            cfpassword:'',
+            err_email:"",
+            err_fullname:"",
+            err_password:"",
+            err_cfpassword:"",
+          }
+    
+    }
+    register(){
+        fetch('https://smartbuy01.gq/api/users/register',{
+            method: 'POST',
+            headers:{
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            
+            },
+          
+            body:JSON.stringify({
+            name:this.state.fullname,
+            email: this.state.email,
+            password:this.state.password,
+            })
+        }).then((response) => response.json())
+        .then((responseJson) =>{
+            
+            this.setState({
+                err_fullname:responseJson.name,
+                err_email:responseJson.email,
+                err_password:responseJson.password,
+            })
+            if(this.state.password.length < 6){
+                this.setState({  
+                    err_password:responseJson.password,
+                })
+            }
+            if(this.state.password != this.state.cfpassword){
+                this.setState({  
+                    err_cfpassword:"Mật khẩu xác nhận không chính xác",
+                })
+            }
+            if(this.state.cfpassword==''){
+                this.setState({  
+                    err_cfpassword:"Xác nhận mật khẩu không được để trống",
+                })
+            }
+            else{
+                this.setState({  
+                    err_cfpassword:"",
+                })
+                alert(responseJson.result)
+                this.setState({
+                  fullname:'',
+                  email:'',
+                  password:'',
+                  cfpassword:''
+                })
+                this.clear_fullname.clear()
+                this.clear_email.clear()
+                this.clear_password.clear()
+                this.clear_cfpasword.clear()
+            }
+        })   
+    }
     render() {
+        
         return (
 
             <ScrollView style={styles.container}>
@@ -21,17 +92,26 @@ export class RegisterScreen extends Component {
 
                     </View>
 
-                    <InputTextField title="Username" style={{ marginTop: 20, marginBottom: 10 }}></InputTextField>
-                    <InputTextField title="Email Address" style={{ marginTop: 15, marginBottom: 10 }}></InputTextField>
-                    <InputTextField
+                    <InputTextField clear_input={input => { this.clear_fullname = input }} title="Full Name" valueText={(value)=>this.setState({fullname:value})} style={{ marginTop: 20, marginBottom: 10 }}></InputTextField>
+                    <Text style={{color:'red'}}>{this.state.err_fullname}</Text>
+                    <InputTextField clear_input={input => { this.clear_email = input }}
+                        title="Email Address" valueText={(value)=>this.setState({email:value})} style={{ marginTop: 15, marginBottom: 10 }}>
+
+                    </InputTextField>
+                    <Text style={{color:'red'}}>{this.state.err_email}</Text>
+                    <InputTextField clear_input={input => { this.clear_password = input }} valueText={(value)=>this.setState({password:value})}
                         style={{ marginTop: 15, marginBottom: 10 }}
                         title="Password" isSecure={true}>
                     </InputTextField>
-                    <InputTextField title="First Name" style={{ marginTop: 15, marginBottom: 10 }}></InputTextField>
-                    <InputTextField title="Last Name" style={{ marginTop: 15, marginBottom: 10 }}></InputTextField>
+                    <Text style={{color:'red'}}>{this.state.err_password}</Text>
+                    <InputTextField clear_input={input => { this.clear_cfpasword = input }} valueText={(value)=>this.setState({cfpassword:value})}
+                        style={{ marginTop: 15, marginBottom: 10 }}
+                        title="Confirm Password" isSecure={true}>
+                    </InputTextField>
+                    <Text style={{color:'red'}}>{this.state.err_cfpassword}</Text>
 
 
-                    <TouchableOpacity style={styles.submitContainer} onPress={() => this.props.navigation.navigate('HomeApp')}>
+                    <TouchableOpacity style={styles.submitContainer} onPress={() => this.register()}>
                         <Text style={[styles.text, { color: "#ffff", ontWeight: "600", fontSize: 16 }]}>Submit</Text>
                     </TouchableOpacity>
 

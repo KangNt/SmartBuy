@@ -8,7 +8,7 @@ import { TextInput } from 'react-native-paper';
 
 export class CustomHeader extends Component {
   render() {
-    let { navigation, isHome, title } = this.props
+    let { navigation, isHome, title,cart } = this.props
     return (
       <View style={{ flexDirection: 'row', height: 50,marginTop:20 }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -39,7 +39,7 @@ export class CustomHeader extends Component {
          
           <Text style={{ textAlign: 'center',fontSize:19 }}>{title}</Text>
           <Text style={{ textAlign: 'center',fontSize:19 }}></Text>
-          {isHome 
+          {cart 
           ?
           <TouchableOpacity onPress={()=> navigation.navigate('cart')} style={{position:'absolute',left:200}}>
             <FontAwesome5 name="cart-plus" size={20}></FontAwesome5>

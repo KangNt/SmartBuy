@@ -36,7 +36,7 @@ export class SettingsScreen extends Component {
   keyExtractor = (item, index) => index.toString()
 
   renderItem = ({ item }) => (
-    <TouchableOpacity>
+    <TouchableOpacity  onPress={() => this.props.navigation.navigate('Profile')}>
 
     
     <ListItem
@@ -64,26 +64,26 @@ export class SettingsScreen extends Component {
         avatar_url: 'https://i1.sndcdn.com/avatars-000703955956-xs2oh0-t500x500.jpg',
         subtitle: '@kiennguyen07'
       },
-      {
-        name: 'Invoice',
-        icon: 'bookmark'
-      },
-      {
-        name: 'Password',
-        icon: 'fingerprint'
-      },
-      {
-        name: 'Update',
-        icon: 'update'
-      },
-      {
-        name: 'Notifications',
-        icon: 'notifications'
-      },
-      {
-        name: 'History',
-        icon: 'history'
-      }
+      // {
+      //   name: 'Invoice',
+      //   icon: 'bookmark'
+      // },
+      // {
+      //   name: 'Password',
+      //   icon: 'fingerprint'
+      // },
+      // {
+      //   name: 'Update',
+      //   icon: 'update'
+      // },
+      // {
+      //   name: 'Notifications',
+      //   icon: 'notifications'
+      // },
+      // {
+      //   name: 'History',
+      //   icon: 'history'
+      // }
 
     ]
 
@@ -95,11 +95,11 @@ export class SettingsScreen extends Component {
       horizontal={true}
       >
             
-        <View style={{ flexDirection: 'row', height: 50, height: 150,}}>
-          <ImageBackground source={IMAGE.ICON_BACKGROUND} style={{ width: '100%', height: '100%' }}>
-         <CustomHeader isHome={false} navigation={this.props.navigation} />
-          </ImageBackground>
-        </View>
+        {/* <View style={{ flexDirection: 'row', height: 50, height: 150,}}> */}
+          {/* <ImageBackground source={IMAGE.ICON_BACKGROUND} style={{ width: '100%', height: '100%' }}> */}
+         <CustomHeader isHome={false} title="Settings" navigation={this.props.navigation} />
+          {/* </ImageBackground> */}
+        {/* </View> */}
 
         <TouchableOpacity>
           <FlatList
@@ -108,7 +108,33 @@ export class SettingsScreen extends Component {
             renderItem={this.renderItem}
           />
         </TouchableOpacity>
-
+        <TouchableOpacity>
+          <ListItem
+              title={"Thông Báo"}
+              subtitle={'Mọi thông báo sẽ được gửi tại đây'}
+              leftIcon={{name:'notifications'}}
+              bottomDivider
+              chevron
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <ListItem
+              title={"Đổi Mật Khẩu"}
+              subtitle={'Đổi mật khẩu tại đây'}
+              leftIcon={{name:'lock'}}
+              bottomDivider
+              chevron
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <ListItem
+              title={"Thông tin cá nhân"}
+              subtitle={'Thay đổi thông tin cá nhân tại đây'}
+              leftIcon={{name:'person'}}
+              bottomDivider
+              chevron
+          />
+        </TouchableOpacity>
 
 
 
