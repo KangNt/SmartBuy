@@ -74,6 +74,9 @@ export class EditProfileScreen extends Component {
                         title="Save Update"
                         onPress={this.handleSubmit}
                     />
+                       <Button
+                        title="Cancel"
+                    />
                 </View>
 
             </SafeAreaView>
