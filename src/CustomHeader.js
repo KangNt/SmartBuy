@@ -10,12 +10,12 @@ export class CustomHeader extends Component {
   render() {
     let { navigation, isHome, title,cart } = this.props
     return (
-      <View style={{ flexDirection: 'row', height: 70,marginTop:0, }}>
+      <View style={{ flexDirection: 'row', height: 60,marginTop:0,}}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           {
             isHome ?
               <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                <Image style={{ width: 30, height: 30, marginLeft: 5,marginTop:0 }}
+                <Image style={{ width: 30, height: 30, marginLeft: 5,marginTop:10 }}
                   source={IMAGE.ICON_MENU}
                   resizeMode='contain' />
                   
@@ -24,7 +24,7 @@ export class CustomHeader extends Component {
               <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
                 onPress={() => this.props.navigation.goBack()}
               >
-                <Image style={{ width: 25, height: 25, marginLeft: 5,marginTop:-13   }}
+                <Image style={{ width: 25, height: 25, marginLeft: 5,marginTop:-6   }}
                   source={IMAGE.ICON_BACK}
                   resizeMode="contain"
                 />

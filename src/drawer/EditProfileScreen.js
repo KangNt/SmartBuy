@@ -1,9 +1,9 @@
 
 import React, { Component } from 'react'
 
-import { Text, View, SafeAreaView } from 'react-native'
+import { Text, View, SafeAreaView,Image } from 'react-native'
 import { CustomHeader } from '../index'
-
+// import { colors } from "../../utils";
 export class EditProfileScreen extends Component {
 
     render() {
@@ -18,3 +18,6 @@ export class EditProfileScreen extends Component {
         )
     }
 }
+
+
+
