@@ -4,3 +4,5 @@ export * from './Comments'
 
 export * from './EditProfileScreen'
 export * from './ChangePasswordScreen'
+
+export * from  './ForgotPasswordScreen'

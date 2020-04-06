@@ -10,7 +10,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import {CustomDrawerContent,BarcodeScannerExample} from './src'
 import Cart from './src/Cart'
 import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen,CategoryDetail, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
-import { NotificationsScreen, ProfileScreen, EditProfileScreen, ChangePasswordScreen} from './src/drawer'
+import { NotificationsScreen, ProfileScreen, EditProfileScreen, ChangePasswordScreen, ForgotPasswordScreen} from './src/drawer'
 
 import { LoginScreen, RegisterScreen,ShowScan } from './src/auth'
 import { AddButton } from './components/AddButton'
@@ -164,6 +164,7 @@ function DrawerNavigator({ navigation }) {
       <Drawer.Screen name="Profile" component={ProfileScreen} />
       <Drawer.Screen name="EditProfile" component={EditProfileScreen} />
       <Drawer.Screen name="ChangePassword" component={ChangePasswordScreen} />
+      <Drawer.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
       
 
     </Drawer.Navigator>

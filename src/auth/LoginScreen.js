@@ -128,7 +128,7 @@ Login(){
            
           </InputTextField>
 
-          <TouchableOpacity >
+          <TouchableOpacity  onPress={() => this.props.navigation.navigate('ForgotPassword')}>
           <Text style={[styles.text, styles.link, { textAlign: "right" }]}>Forgot Password?</Text>
           </TouchableOpacity>
           {/* this.props.navigation.navigate('HomeApp') */}
