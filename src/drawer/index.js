@@ -6,3 +6,5 @@ export * from './EditProfileScreen'
 export * from './ChangePasswordScreen'
 
 export * from  './ForgotPasswordScreen'
+
+export * from './ContactScreen'
