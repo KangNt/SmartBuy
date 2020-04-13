@@ -93,7 +93,7 @@ function ScanQrCodeStack() {
   )
 }
 
-function TabNavigator() {
+function TabNavigator({navigation}) {
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -104,7 +104,6 @@ function TabNavigator() {
 
       <Tab.Screen
         name="Home"
-        
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
@@ -114,7 +113,6 @@ function TabNavigator() {
         component={HomeStack} />
 
       <Tab.Screen
-        
         options={{
           tabBarLabel: 'History',
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="clock" color={color} size={size} />),
@@ -122,26 +120,20 @@ function TabNavigator() {
         name="History" component={HistoryStack} />
 
       <Tab.Screen
-        
         options={{
           tabBarLabel: 'Scan',
-          tabBarIcon: () => <AddButton />,
-          
-          
+          tabBarIcon: () => <AddButton {...navigation}/>,
         }}
 
-        name="Scan" component={ScanQrCodeStack}
-        
-        
+        name="ScanQrCode" component={ScanQrCodeStack}
+
       />
 
       <Tab.Screen
-        
         options={{
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="charity" color={color} size={size} />),
         }}
         name="favourite" component={FavouriteStack} />
-
 
       <Tab.Screen
         

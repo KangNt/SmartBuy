@@ -17,6 +17,7 @@ const recipeNumColums = 2;
 // item size
 const RECIPE_ITEM_HEIGHT = 150;
 const RECIPE_ITEM_MARGIN = 20;
+
 export class HomeScreen extends Component {
     constructor(props){
         super(props);
@@ -169,6 +170,7 @@ export class HomeScreen extends Component {
                     onChangeText={val => this.setState({search:val})}
                     value={this.state.search}
                 />
+                
                 <ScrollView
                     showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>   
                   <View style={{flex:1}}>
