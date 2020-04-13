@@ -143,14 +143,19 @@ export class EditProfileScreen extends Component {
 
 
                         <View style={styles.styleButton}>
+                        
+                         <TouchableOpacity style={styles.submitContainer} onPress={this.handleSubmit} >
+                            <Text style={[styles.text, { color: "#ffff", fontSize: 16, }]}>Save Update</Text>
+                        </TouchableOpacity>
 
-                        <Button
-                            title="Save Update"
-                            onPress={this.handleSubmit}
-                        />
-                        <Button
+                        <View style={{marginTop: 20}}>
+                        <Button     
                             title="Cancel"
                         />
+                        </View>
+                      
+
+
                         </View>
 
 
@@ -204,7 +209,23 @@ const styles = StyleSheet.create({
     },
     styleButton:{
         marginTop:20
-    }
+    },
+    submitContainer: {
+        backgroundColor: "#314A86",
+        fontSize: 16,
+        borderRadius: 4,
+        paddingVertical: 12,
+        marginTop: 15,
+        alignItems: "center",
+        justifyContent: "center",
+        shadowColor: "rgb(49, 74, 134)",
+        shadowOffset: { width: 0, height: 9 },
+        shadowOpacity: 1,
+        shadowRadius: 5,
+        alignSelf: 'stretch',
+        marginLeft: 85,
+        marginRight: 90
+      },
 });
 
 
