@@ -10,6 +10,7 @@ export class LoginScreen extends Component {
   constructor(props){
     super(props);
     this.state ={ 
+        
         isLoading: true,
         id:'',
         name:'',
@@ -21,29 +22,12 @@ export class LoginScreen extends Component {
 
 }
 
-getInfo = async () => {
-  try {
-     AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
-          alert(result[0][1]+" "+result[1][1])
-          alert(result[2][1])
-          this.setState({
-            email:result[0][1],
-            name:result[1][1],
-            avatar:result[2][1],
-            
-          })
-          
-        }) 
-   } catch (error) {
-       
-   }
-}
 Login(){
     if(this.state.email==''){
-        alert('Email khong duoc de trong');
+        alert('Email không được để trống');
       }
       else if(this.state.password==''){
-        alert('Password khong duoc de trong');
+        alert('Password không được để trống');
       }
       else{
         fetch('https://smartbuy01.gq/api/users/login', {
@@ -65,11 +49,12 @@ Login(){
           .then((responseJson) =>{
           
           if(responseJson.msg=='login fail'){
-              alert('Dang nhap that bai, vui long kiem tra lai email hoac mat khau')
+              alert('Đăng nhập thất bại, vui lòng kiểm lại email hoặc password')
           }
+         
           else{
-            AsyncStorage.multiSet([['email',responseJson.user_info.email],['name',responseJson.user_info.name],['avatar',responseJson.user_info.avatar]])
-            this.props.navigation.navigate('MenuTab',{email:responseJson.user_info.email,name:responseJson.user_info.name,avatar: responseJson.user_info.avatar})
+            AsyncStorage.multiSet([['id_user',`${responseJson.user_info.id}`],['email',responseJson.user_info.email],['name',responseJson.user_info.name],['avatar',responseJson.user_info.avatar]])
+            this.props.navigation.navigate('Home')
           }
           
           
@@ -127,7 +112,9 @@ Login(){
             title="Password" isSecure={true}  valueText={(value)=>this.setState({password:value})}>
            
           </InputTextField>
-
+          
+          
+          
           <TouchableOpacity >
           <Text style={[styles.text, styles.link, { textAlign: "right" }]}>Forgot Password?</Text>
           </TouchableOpacity>

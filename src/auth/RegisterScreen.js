@@ -36,6 +36,7 @@ export class RegisterScreen extends Component {
             name:this.state.fullname,
             email: this.state.email,
             password:this.state.password,
+            cfpassword:this.state.cfpassword
             })
         }).then((response) => response.json())
         .then((responseJson) =>{
@@ -44,23 +45,9 @@ export class RegisterScreen extends Component {
                 err_fullname:responseJson.name,
                 err_email:responseJson.email,
                 err_password:responseJson.password,
+                err_cfpassword:responseJson.cfpassword
             })
-            if(this.state.password.length < 6){
-                this.setState({  
-                    err_password:responseJson.password,
-                })
-            }
-            if(this.state.password != this.state.cfpassword){
-                this.setState({  
-                    err_cfpassword:"Mật khẩu xác nhận không chính xác",
-                })
-            }
-            if(this.state.cfpassword==''){
-                this.setState({  
-                    err_cfpassword:"Xác nhận mật khẩu không được để trống",
-                })
-            }
-            else{
+            if(responseJson.result =="Đăng kí thành công"){
                 this.setState({  
                     err_cfpassword:"",
                 })
@@ -76,6 +63,7 @@ export class RegisterScreen extends Component {
                 this.clear_password.clear()
                 this.clear_cfpasword.clear()
             }
+         
         })   
     }
     render() {

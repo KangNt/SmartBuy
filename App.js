@@ -10,7 +10,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import {CustomDrawerContent,BarcodeScannerExample} from './src'
 import Cart from './src/Cart'
 import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen,CategoryDetail, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
-import { NotificationsScreen, ProfileScreen} from './src/drawer'
+import { NotificationsScreen, ProfileScreen, ContactScreen,EditProfileScreen,ChangePasswordScreen} from './src/drawer'
 
 import { LoginScreen, RegisterScreen,ShowScan } from './src/auth'
 import { AddButton } from './components/AddButton'
@@ -37,7 +37,9 @@ function HomeStack() {
     <StackHome.Navigator initialRouteName="Home">
       <StackHome.Screen name="Home" component={HomeScreen} options={navOptionHandler} />
       <StackHome.Screen name="cart" component={Cart} options={navOptionHandler} />
-      <StackHome.Screen name="Login" component={LoginScreen} options={navOptionHandler} />  
+      <StackHome.Screen name="Login" component={LoginScreen} options={navOptionHandler} /> 
+      <StackHome.Screen name="Register" component={RegisterScreen} options={navOptionHandler} /> 
+      <StackHome.Screen name="Menu" component={CustomDrawerContent} options={navOptionHandler} /> 
       <StackHome.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
       <StackHome.Screen name="CategoryDetail" component={CategoryDetail} options={navOptionHandler} />
     </StackHome.Navigator>
@@ -66,6 +68,8 @@ function SettingStack() {
       <StackSetting.Screen name="Setting" component={SettingsScreen} options={navOptionHandler} />
       <StackSetting.Screen name="SettingDetail" component={SettingsScreenDetail} options={navOptionHandler} />
       <StackSetting.Screen name="Profile" component={ProfileScreen} options={navOptionHandler} />
+      <StackSetting.Screen name="ChangePassword" component={ChangePasswordScreen} options={navOptionHandler} />
+      <StackSetting.Screen name="EditProfile" component={EditProfileScreen} options={navOptionHandler} />
     </StackSetting.Navigator>
   )
 }
@@ -76,6 +80,7 @@ function FavouriteStack() {
   return (
     <StackFavourite.Navigator initialRouteName="Favourite">
       <StackFavourite.Screen name="Favourite" component={FavouriteScreen} options={navOptionHandler} />
+      <StackFavourite.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
     </StackFavourite.Navigator>
   )
 }
@@ -93,12 +98,27 @@ function ScanQrCodeStack() {
   )
 }
 
-function TabNavigator() {
+function TabNavigator({navigation}) {
   return (
     <Tab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
         activeTintColor: '#e91e63',
+        // style:{
+        //   height:40,
+        //   marginBottom:20,
+        //   backgroundColor: 'blue', 
+          
+        // },
+        // labelStyle :{
+         
+        // },
+        // tabStyle:{
+          
+         
+        //   top:40
+        // }
+        
       }}
     >
 
@@ -125,12 +145,12 @@ function TabNavigator() {
         
         options={{
           tabBarLabel: 'Scan',
-          tabBarIcon: () => <AddButton />,
+          tabBarIcon: () => <AddButton {...navigation} />,
           
           
         }}
 
-        name="Scan" component={ScanQrCodeStack}
+        name="ScanQrCode" component={ScanQrCodeStack}
         
         
       />
@@ -157,12 +177,13 @@ const Drawer = createDrawerNavigator();
 
 function DrawerNavigator({ navigation }) {
   return (
-    <Drawer.Navigator initialRouteName="MenuTab"
-      drawerContent={() => <CustomDrawerContent navigation={navigation} />}>
+    <Drawer.Navigator initialRouteName="MenuTab" drawerContent={()=> <CustomDrawerContent navigation={navigation}/>} > 
       <Drawer.Screen name="MenuTab" component={TabNavigator} />
+      <Drawer.Screen name="Menu" component={CustomDrawerContent} />
       <Drawer.Screen name="Notifications" component={NotificationsScreen} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
-      
+     
+      <Drawer.Screen name="Contact" component={ContactScreen} />
 
     </Drawer.Navigator>
   )

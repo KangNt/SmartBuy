@@ -36,22 +36,15 @@ export class SettingsScreen extends Component {
   keyExtractor = (item, index) => index.toString()
 
   renderItem = ({ item }) => (
-    <TouchableOpacity  onPress={() => this.props.navigation.navigate('Profile')}>
-
-    
     <ListItem
       title={item.name}
       subtitle={item.subtitle}
       leftAvatar={{
         source: item.avatar_url && { uri: item.avatar_url },
-        title: item.name[0]
+        
       }}
-      
-      leftIcon={{ name: item.icon }}
-      bottomDivider
-      chevron
+     
     />
-    </TouchableOpacity>
 
   )
 
@@ -62,7 +55,7 @@ export class SettingsScreen extends Component {
       {
         name: 'KidPlaza',
         avatar_url: 'https://i1.sndcdn.com/avatars-000703955956-xs2oh0-t500x500.jpg',
-        subtitle: '@kiennguyen07'
+        subtitle: 'nam@123.com'
       },
       // {
       //   name: 'Invoice',
@@ -108,16 +101,7 @@ export class SettingsScreen extends Component {
             renderItem={this.renderItem}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
-          <ListItem
-              title={"Thông Báo"}
-              subtitle={'Mọi thông báo sẽ được gửi tại đây'}
-              leftIcon={{name:'notifications'}}
-              bottomDivider
-              chevron
-          />
-        </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>this.props.navigation.navigate('ChangePassword')}>
           <ListItem
               title={"Đổi Mật Khẩu"}
               subtitle={'Đổi mật khẩu tại đây'}
@@ -126,7 +110,7 @@ export class SettingsScreen extends Component {
               chevron
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>this.props.navigation.navigate('EditProfile')}>
           <ListItem
               title={"Thông tin cá nhân"}
               subtitle={'Thay đổi thông tin cá nhân tại đây'}

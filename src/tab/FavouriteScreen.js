@@ -1,136 +1,240 @@
-
 import React, { Component } from 'react'
-
-import { Text, View, SafeAreaView, TouchableOpacity, Image, } from 'react-native'
-// import { CustomHeader } from '../index'
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TouchableOpacity,
+    FlatList,
+    Dimensions,
+    Alert,
+    SafeAreaView,AsyncStorage
+  } from 'react-native';
+import { CustomHeader } from '../index'
 import { IMAGE } from '../constants/Image'
 
-import { Icon,ListItem} from 'react-native-elements'
+import { Icon, ListItem } from 'react-native-elements'
 
 import { ScrollView } from 'react-native-gesture-handler'
 
 export class FavouriteScreen extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            modalVisible: false,
+            userSelected: [],
+            data:'',
+            user_id:null,
+            product_id:''
+            
+        };
+        
+    }
+    componentDidMount(){
+      
+      try {
+        const val = AsyncStorage.multiGet(["id_user","email","name",'avatar']).then(result => {
+            this.setState({
+              user_id:result[0][1],
+              email:result[1][1],
+              name:result[2][1],
+              avatar:result[3][1],
+              
+            })
+              fetch('https://smartbuy01.gq/api/favourites/favourite-by-userid/'+result[0][1]).
+              then((res)=>res.json()).then((res)=>{
+                console.log(res.msg)
+                if(res.msg=='ok'){
+                  fetch('https://smartbuy01.gq/api/favourites/favourite-by-userid/'+result[0][1]).
+                  then((res01)=>res01.json()).then((res01)=>{
+                    this.setState({
+                      data:res01.result
+                    })
+                  })
+                }
+                this.setState({
+                  data:res.result
+                })
+            })
+            
+          }) 
+      } catch (error) {
+            console.log(error)
+      }
+    
+    }
+    clickEventListener = () => {
+        Alert.alert('Message', 'Item clicked');
+    }
+    _AlertDelete = (item) =>{
+      this.setState({
+        product_id:item.id
+      })
+      Alert.alert("Thông báo!", "Bạn có muốn xóa sản phẩm này khỏi danh sách yêu thích không?",
+      [
+        
+        {text:'Cancel'},
+        { text:'OK', onPress:this.delete
+        
+        }
+      ],
+        {cancelable: false},)
+      
+    }
+    delete=() => { 
+      const val = AsyncStorage.multiGet(["id_user","email","name",'avatar']).then(result => {
+        this.setState({
+          user_id:result[0][1],
+          email:result[1][1],
+          name:result[2][1],
+          avatar:result[3][1],
+          
+        })
+        fetch('https://smartbuy01.gq/api/favourites/delete/'+result[0][1]+'/product/'+this.state.product_id,{
+              method: 'DELETE',
+              headers:{
+              'Accept': 'application/json',
+              'Content-type': 'application/json',
+              
+              }
+        }
+        ).then((res)=>res.json()).then((res)=>{
+          console.log(res)
+          if(res.msg=='ok'){
+            fetch('https://smartbuy01.gq/api/favourites/favourite-by-userid/'+result[0][1])
+            .then((list_favourite) =>list_favourite.json())
+            .then((list_favourite) => {
+              console.log(list_favourite)
+              this.setState({
+                data:list_favourite.result,
+              })
+            })
+            .catch((error) =>{
+              console.error(error);
+            })
+          
+          }
+        })
+
+      })
+      
+    }
     render() {
         let { navigation, isHome, title } = this.props
         return (
 
             <SafeAreaView style={{ flex: 1, }}>
-                {/* <CustomHeader title="Favourite" navigation={this.props.navigation} /> */}
-
-                <View style={{ flexDirection: 'row', height: 50 }}>
-                    <View style={{ flex: 1, justifyContent: 'center' }}>
-                        {
-                            isHome ?
-                                <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                                    <Image style={{ width: 30, height: 30, marginLeft: 5 }}
-                                        source={IMAGE.ICON_MENU}
-                                        resizeMode='contain' />
+                <CustomHeader title="Favourite" navigation={this.props.navigation} />
+                <View style={styles.container}>
+                    <FlatList
+                        style={styles.contentList}
+                        columnWrapperStyle={styles.listContainer}
+                        data={this.state.data}
+                        keyExtractor={(item,index) => index.toString() }
+                        renderItem={({ item }) => {
+                            return (
+                                <TouchableOpacity style={styles.card} onPress={() => { this.props.navigation.navigate('HomeDetail',{product:item}) }}>
+                                    <Image style={styles.image} source={{ uri: item.image }} />
+                                    <View style={styles.cardContent}>
+                                        <Text style={styles.name}>{item.name}</Text>
+                                        <Text style={styles.count}>{item.price} VNĐ</Text>
+                                        <View style={{flexDirection:"row"}}>
+                                        <TouchableOpacity style={styles.followButton} onPress={() => this.clickEventListener()}>
+                                            <Text style={styles.followButtonText}>Add to cart</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.followButton} onPress={()=>this._AlertDelete(item)}>
+                                            <Text style={styles.followButtonText}>Delete</Text>
+                                        </TouchableOpacity>
+                                        </View>
+                                    </View>
                                 </TouchableOpacity>
-                                :
-                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
-                                    onPress={() => this.props.navigation.goBack()}
-                                >
-                                    <Image style={{ width: 25, height: 25, marginLeft: 5 }}
-                                        source={IMAGE.ICON_BACK}
-                                        resizeMode="contain"
-                                    />
-                                    {/* <Text>Back</Text> */}
-                                </TouchableOpacity>
-                        }
-                    </View>
-
-
-                    <View style={{ flex: 1.5, justifyContent: 'center' }}>
-                        <Text style={{ textAlign: 'center' ,fontWeight:"bold",marginRight:50}}>Favourite</Text>
-                     
-
-                    </View>
-                    <View style={{ flex: 0.1, marginTop: 3,marginRight:-60}}>
-                            {/* <TouchableOpacity>
-                                <Icon
-                                    raised
-                                    reverse
-                                    name='history'
-                                    type='font-awesome'
-                                    size='13'
-                                    color='#2196F3'
-                                />
-                            </TouchableOpacity> */}
-
-                    </View>
-                    <View style={{ flex: 1 }}></View>
-
+                            )
+                        }} />
                 </View>
-                {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                    <Text>FavouriteScreen</Text>
-                </View> */}
-                <ScrollView>
-                    <TouchableOpacity>
-                        <ListItem
-                            title='Limited supply! Its like digital gold!'
-                            subtitle={
-                                <View style={styles.subtitleView}>
-                                    <Image source={require('../images/logo-Sb.png')} style={styles.ratingImage} />
-                                    <Text style={styles.ratingText}>5 months ago</Text>
-                                </View>
-                            }
-                            leftAvatar={{ source: require('../images/Linh.jpg') }}
-                        />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <ListItem
-                            title='Limited supply! Its like digital gold!'
-                            subtitle={
-                                <View style={styles.subtitleView}>
-                                    <Image source={require('../images/logo-Sb.png')} style={styles.ratingImage} />
-                                    <Text style={styles.ratingText}>5 months ago</Text>
-                                </View>
-                            }
-                            leftAvatar={{ source: require('../images/Linh.jpg') }}
-                        />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <ListItem
-                            title='Limited supply! Its like digital gold!'
-                            subtitle={
-                                <View style={styles.subtitleView}>
-                                    <Image source={require('../images/logo-Sb.png')} style={styles.ratingImage} />
-                                    <Text style={styles.ratingText}>5 months ago</Text>
-                                </View>
-                            }
-                            leftAvatar={{ source: require('../images/Linh.jpg') }}
-                        />
-
-                    </TouchableOpacity>
-
-                    <TouchableOpacity>
-                        <ListItem
-                            title='Limited supply! Its like digital gold!'
-                            subtitle={
-                                <View style={styles.subtitleView}>
-                                    <Image source={require('../images/logo-Sb.png')} style={styles.ratingImage} />
-                                    <Text style={styles.ratingText}>5 months ago</Text>
-                                </View>
-                            }
-                            leftAvatar={{ source: require('../images/Linh.jpg') }}
-                        />
-
-                    </TouchableOpacity>
-                </ScrollView>
-
 
             </SafeAreaView>
 
 
 
         )
-        
+
     }
 }
 
-
+const styles = StyleSheet.create({
+    container:{
+      flex:1,
+      marginTop:15,
+      backgroundColor:"#ebf0f7",
+      
+    },
+    contentList:{
+      flex:1,
+    },
+    cardContent: {
+      marginLeft:20,
+      marginTop:5,
+      width:200
+    },
+    image:{
+      width:90,
+      height:90,
+      borderRadius:45,
+      borderWidth:2,
+      borderColor:"#ebf0f7"
+    },
+  
+    card:{
+      shadowColor: '#00000021',
+      shadowOffset: {
+        width: 0,
+        height: 6,
+      },
+      shadowOpacity: 0.37,
+      shadowRadius: 7.49,
+      elevation: 12,
+      marginBottom:25,
+      marginLeft: 20,
+      marginRight: 20,
+      marginTop:20,
+      backgroundColor:"white",
+      padding: 10,
+      flexDirection:'row',
+      borderRadius:30,
+    },
+  
+    name:{
+      fontSize:18,
+      flex:1,
+      
+      color:"#3399ff",
+      fontWeight:'bold'
+    },
+    count:{
+      fontSize:14,
+      flex:1,
+      
+      color:"#6666ff"
+    },
+    followButton: {
+      marginTop:10,
+      height:35,
+      width:90,
+      marginLeft:5,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius:30,
+      backgroundColor: "white",
+      borderWidth:1,
+      borderColor:"#dcdcdc",
+    },
+    followButtonText:{
+      color: "#FF5757",
+      fontSize:12,
+    },
+  });  
 
 
 
@@ -161,22 +265,3 @@ export class FavouriteScreen extends Component {
     //             </View>
     //         );
     //     }
-
-const styles ={
-    subtitleView: {
-        flexDirection: 'row',
-        paddingLeft: 10,
-        paddingTop: 5
-    },
-    ratingImage: {
-        height: 100,
-        width: 100
-    },
-    ratingText: {
-        paddingLeft: 10,
-        color: 'grey'
-    }
-
-}
-
-

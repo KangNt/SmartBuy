@@ -1,55 +1,13 @@
-// 'use strict';
-
-// import React, {
-//     StyleSheet,
-//     View,
-//     TouchableHighlight,
-//     Text,
-//     Dimensions,
-
-// } from 'react-native';
-
-// var NextPage = require('./ScanQrCodeScreen.js');
-
-// var rootPage = React.createClass({
-//     goDerper: function () {
-//         this.props.navigator.push({
-//             title: 'nextPage',
-//             component: NextPage,
-//             navigationBarHidden: true,
-//             passProps: { myElement: 'text' }
-//         });
-//     },
-//     render: function () {
-//         return (
-//             <View style={styles.container}>
-//                 <TouchableHighlight
-//                     onPress={() => this.goDerper()}>
-//                     <MaterialCommunityIcons name="qrcode-scan" size={35} color="#FFF" />
-//                 </TouchableHighlight>
-//             </View>
-//         );
-//     }
-// })
-
-// var styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         marginTop: 20
-//     }
-// });
-// module.exports = rootPage;
-
-
-
-
-
-
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity,TouchableHighlight, Alert } from 'react-native';
 // import { FontAwesome5 } from '@expo/vector-icons';
-
+import { View, StyleSheet, TouchableOpacity,TouchableHighlight, Alert } from 'react-native';
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
+import { CustomHeader} from '../src/index'
+
+import Scanner from '../src'
+
+import {BarcodeScannerExample}  from '../src'
+
 
 
 
@@ -57,14 +15,14 @@ export class AddButton extends Component {
         // _onPressButton = () =>{
         //    this.props.navigation.navigate('ScanQrCode')
         // }
-
+    
     render() {
 
         return (
 
             <View style={StyleSheet.container}>
                  <TouchableOpacity style={styles.button}
-                //  onPress={ () =>this.props.navigation.navigate('ScanQrCode')}
+                 onPress={ () =>this.props.navigate('ScanQrCode')}
                 >
                     <MaterialCommunityIcons name="qrcode-scan" size={35} color="#FFF" /> 
                 </TouchableOpacity>

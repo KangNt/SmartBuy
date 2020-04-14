@@ -27,7 +27,7 @@ export class HomeScreen extends Component {
           categories:[],
           selectCate:"",
           search: '',
-          id:'',
+          user_id:'',
           name:'',
           email:'',
           password:'',
@@ -35,23 +35,6 @@ export class HomeScreen extends Component {
           quantity:null,
           total:null
         }
-       
-        try {
-            const val = AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
-                // alert(result[0][1]+" "+result[1][1])
-                // alert(result[2][1])
-                this.setState({
-                  email:result[0][1],
-                  name:result[1][1],
-                  avatar:result[2][1],
-                  
-                })
-                
-              }) 
-        } catch (error) {
-              
-        }
-
     }
     componentDidMount(){
         Promise.all([fetch('https://smartbuy01.gq/api/slider'),fetch('https://smartbuy01.gq/api/products'),fetch('https://smartbuy01.gq/api/categories')])
@@ -74,24 +57,6 @@ export class HomeScreen extends Component {
          
     }
   
-    getInfo = async () => {
-        try {
-           AsyncStorage.multiGet(["email", "name",'avatar']).then(result => {
-                alert(result[0][1]+" "+result[1][1])
-                alert(result[2][1])
-                this.setState({
-                  email:result[0][1],
-                  name:result[1][1],
-                  avatar:result[2][1],
-                  
-                })
-                
-              }) 
-         } catch (error) {
-             
-         }
-      }
-
     renderPro(item){
        
             return(
