@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Text, View, SafeAreaView, TouchableOpacity, Image, ImageBackground} from 'react-native'
+import { Text, View, SafeAreaView, TouchableOpacity, Image, ImageBackground,AsyncStorage} from 'react-native'
 import { CustomHeader } from '../index'
 
 import { IMAGE } from '../constants/Image'
@@ -32,55 +32,46 @@ function Item({ id, title, selected, onSelect }) {
 
 
 export class SettingsScreen extends Component {
-
-  keyExtractor = (item, index) => index.toString()
-
-  renderItem = ({ item }) => (
-    <ListItem
-      title={item.name}
-      subtitle={item.subtitle}
-      leftAvatar={{
-        source: item.avatar_url && { uri: item.avatar_url },
+  constructor(props){
+    super(props)
+    this.state = {
+      email:"",
+      name:"",
+      avatar:""
+  
+    }
+    AsyncStorage.multiGet(["id_user","email", "name",'avatar']).then(result => {
+      this.setState({
+        id_user:result[0][1],
+        email:result[1][1],
+        name:result[2][1],
+        avatar:result[3][1],
         
-      }}
-     
-    />
-
-  )
-
-
+      })
+      
+    }) 
+  }
   render() {
 
-    const list = [
-      {
-        name: 'KidPlaza',
-        avatar_url: 'https://i1.sndcdn.com/avatars-000703955956-xs2oh0-t500x500.jpg',
-        subtitle: 'nam@123.com'
-      },
-      // {
-      //   name: 'Invoice',
-      //   icon: 'bookmark'
-      // },
-      // {
-      //   name: 'Password',
-      //   icon: 'fingerprint'
-      // },
-      // {
-      //   name: 'Update',
-      //   icon: 'update'
-      // },
-      // {
-      //   name: 'Notifications',
-      //   icon: 'notifications'
-      // },
-      // {
-      //   name: 'History',
-      //   icon: 'history'
-      // }
+    if(this.state.email==null){
+      return(
+      <SafeAreaView style={{ flex: 1, }}
+      horizontal={true}
+      >
+            
+        {/* <View style={{ flexDirection: 'row', height: 50, height: 150,}}> */}
+          {/* <ImageBackground source={IMAGE.ICON_BACKGROUND} style={{ width: '100%', height: '100%' }}> */}
+         <CustomHeader isHome={false} title="Settings" navigation={this.props.navigation} />
+          {/* </ImageBackground> */}
+        {/* </View> */}
+        <View>
+          <Text style={{textAlign:"center"}}>Bạn cần đăng nhập để sử dụng chức năng này</Text>
+        </View>
 
-    ]
-
-   //update Scrollview animated
+      </SafeAreaView>
+      )
+    }
+    else{
     let { navigation, isHome, title } = this.props
     return (
 
@@ -95,11 +86,15 @@ export class SettingsScreen extends Component {
         {/* </View> */}
 
         <TouchableOpacity>
-          <FlatList
-            keyExtractor={this.keyExtractor}
-            data={list}
-            renderItem={this.renderItem}
-          />
+        <ListItem
+          title={this.state.name}
+          subtitle={this.state.email}
+          leftAvatar={{
+            source: this.state.avatar && { uri: this.state.avatar },
+            
+          }}
+        
+        />
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>this.props.navigation.navigate('ChangePassword')}>
           <ListItem
@@ -139,5 +134,6 @@ export class SettingsScreen extends Component {
 
 
     )
+    }
   }
 }

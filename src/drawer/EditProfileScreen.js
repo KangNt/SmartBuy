@@ -85,7 +85,7 @@ export class EditProfileScreen extends Component {
                     <View style={styles.textInput}>
                         <TextInput
                             label="Name"
-                            leftIcon="diff-renamed"
+                            leftIcon="person"
                             leftIconType="oct"
                             rippleColor="blue"
                             rightIcon="react"
