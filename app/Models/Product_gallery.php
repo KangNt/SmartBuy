@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class Product_gallery extends Model
 {
     protected $fillable = [
-        'content',
-        'product_id ',
-        'user_id',
-        'reply_for'
+        'product_id',
+        'image_url',
+        'image_text',
     ];
+
 }
