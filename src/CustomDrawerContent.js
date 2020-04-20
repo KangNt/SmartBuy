@@ -37,14 +37,14 @@ export class CustomDrawerContent extends Component {
             
     }
            
-    // componentDidMount(){
-    //    this.getInfo()
+    componentDidMount(){
+       this.getInfo()
             
       
-    // }
-    getInfo = async() =>{
+    }
+    getInfo(){
         const val = AsyncStorage.multiGet(["id_user","email", "name",'avatar']).then(result => {
-            alert(result[0][1])
+            // alert(result[0][1])
             // alert(result[1][1])
             // alert(result[2][1])
             // alert(result[3][1])
@@ -64,7 +64,6 @@ export class CustomDrawerContent extends Component {
     _AlertLogout =()=>{
         Alert.alert("Thông báo!", "Bạn có chắc chắn muốn Logout không?",
         [
-          
           {text:'Cancel'},
           { text:'OK', onPress:this._Logout
           
@@ -93,8 +92,9 @@ export class CustomDrawerContent extends Component {
       }
       
     render() {
+        
         return (
-            <SafeAreaView style={{ flex: 1,marginTop:40 }}>
+            <SafeAreaView style={styles.container}>
             <View style={{ height: 150, alignItems: 'center', justifyContent: 'center' }}>
                 <TouchableOpacity onPress={()=>this.getInfo()}
                 
@@ -126,7 +126,7 @@ export class CustomDrawerContent extends Component {
                     onPress={() => this.props.navigation.navigate('MenuTab')}
                 >
                     <Text style={styles.text}>
-                        <FontAwesome5 name="home" size={24} color={"#CDCCCE"} />   Trang Chủ</Text>
+        <FontAwesome5 name="home" size={24} color={"#CDCCCE"} />  Trang Chủ</Text>
                     
                 </TouchableOpacity>
 
@@ -190,6 +190,11 @@ export class CustomDrawerContent extends Component {
 }
 
 const styles = StyleSheet.create({
+    container:{
+        flex: 1,
+        marginTop:0,
+        // backgroundColor:""
+    },
     text: {
         marginLeft: 10,
         flexDirection: "row",

@@ -1,62 +1,85 @@
 import React, { Component } from 'react'
 
-import { Text, View, SafeAreaView, StyleSheet, Button, TouchableOpacity } from 'react-native'
+import { Text, View, SafeAreaView, StyleSheet, Button, TouchableOpacity,AsyncStorage,Alert } from 'react-native'
 import { CustomHeader } from '../index'
 
 import TextInput from 'react-native-textinput-with-icons'
 import { ScrollView } from 'react-native-gesture-handler'
-
-// import t from 'tcomb-form-native' // 0.6.9
-
-// const Form = t.form.Form;
-
-// const User = t.struct({
-//   oldPassword: t.String,
-//   newPasswword: t.String,
-//   confirm: t.String,
-//   terms: t.Boolean
-// });
-
-// const options = {
-//   fields: {
-//     oldPassword: {
-//       error: 'Mật khẩu cũ null hoặc không chính xác?'
-//     },
-//     newPasswword: {
-//       error: 'New pasord không được để trống'
-//     },
-//     confirm: {
-//       error: 'Mật khẩu không khớp'
-//     },
-//     terms: {
-//       label: 'Agree to Terms',
-//     },
-//   },
-// };
-
-
 export class ChangePasswordScreen extends Component {
 
-
-  // handleSubmit = () => {
-  //   const value = this._form.getValue(); // use that ref to get the form value
-  //   console.log('value: ', value);
-  // }
-
-
-  state = {
-    oldPassword: '',
-    newPassword: '',
-    conFirm: '',
-
+  constructor(props){
+    super(props)
+    this.state = {
+      oldPassword: '',
+      newPassword: '',
+      conFirm: '',
+      email:"",
+      err_password:"",
+      err_new_password:"",
+      err_cfpassword:""
+  
+    }
   }
 
+  
+  Submit_change(){
+    AsyncStorage.multiGet(["id_user","email", "name",'avatar']).then(result => {
+      this.setState({
+        id_user:result[0][1],
+        email:result[1][1],
+        name:result[2][1],
+        avatar:result[3][1],
+        
+      })
+      
+    }) 
+    fetch('https://smartbuy01.gq/api/users/change-password',{
+            method: 'PUT',
+            headers:{
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            },
+          
+            body:JSON.stringify({
+            email: this.state.email,
+            password:this.state.oldPassword,
+            new_password:this.state.newPassword,
+            cf_password:this.state.conFirm
+            })
+        }).then((response) => response.json())
+        .then((responseJson) =>{
+            
+            this.setState({
+                
+                err_password:responseJson.password,
+                err_new_password:responseJson.new_password,
+                err_cfpassword:responseJson.cf_password
+            })
+            if(responseJson.msg =="ok"){
+
+                Alert.alert("Thông báo!","Cập nhật mật khẩu thành công")
+                this.setState({
+                  oldPassword:"",
+                  newPassword:"",
+                  conFirm:""
+                })
+            }
+            else if(responseJson.msg =="Mật khẩu cũ ko chính xác"){
+              this.setState({
+                
+                err_password:responseJson.msg,
+               
+              })
+            }
+         
+        })   
+  }
   render() {
 
     let { oldPassword, newPassword, conFirm } = this.state
     return (
       <SafeAreaView style={{ flex: 1, }}   >
-        <CustomHeader title="Change Password" navigation={this.props.navigation} />
+        <CustomHeader title="Đổi mật khẩu" navigation={this.props.navigation} />
 
         <View style={styles.container}>
         <ScrollView>
@@ -70,9 +93,9 @@ export class ChangePasswordScreen extends Component {
 
           <TextInput
             secureTextEntry={true}
-            label="Old Password"
-            leftIcon="device-mobile"
-            leftIconType="oct"
+            label="Mật khẩu cũ"
+            leftIcon="key"
+            leftIconType="awesome"
             rippleColor="blue"
             
             rightIconType="material"
@@ -83,12 +106,14 @@ export class ChangePasswordScreen extends Component {
             onChangeText={oldPassword => this.setState({ oldPassword })}
 
           />
-
+          <Text style={{color:'red'}}>
+            {this.state.err_password}
+          </Text>
           <TextInput
             secureTextEntry={true}
-            label="New Password "
-            leftIcon="device-mobile"
-            leftIconType="oct"
+            label="Mật khẩu mới "
+            leftIcon="lock"
+            leftIconType="awesome"
             rippleColor="blue"
             
             rightIconType="material"
@@ -98,12 +123,14 @@ export class ChangePasswordScreen extends Component {
             }}
             onChangeText={newPassword => this.setState({ newPassword })}
           />
-
+           <Text style={{color:'red'}}>
+            {this.state.err_new_password}
+          </Text>
           <TextInput
             secureTextEntry={true}
-            label="ConFirm"
-            leftIcon="device-mobile"
-            leftIconType="oct"
+            label="Xác nhận lại mật khẩu mới"
+            leftIcon="lock"
+            leftIconType="awesome"
             rippleColor="blue"
             
             rightIconType="material"
@@ -113,12 +140,14 @@ export class ChangePasswordScreen extends Component {
             }}
             onChangeText={conFirm => this.setState({ conFirm })}
           />
-
+           <Text style={{color:'red'}}>
+            {this.state.err_cfpassword}
+          </Text>
 
           
-              <TouchableOpacity style={styles.submitContainer} >
-                            <Text style={[styles.text, { color: "#ffff", fontSize: 16, }]}>Save Change</Text>
-                        </TouchableOpacity>
+              <TouchableOpacity onPress={()=>this.Submit_change()} style={styles.submitContainer} >
+                            <Text style={[styles.text, { color: "#ffff", fontSize: 16, }]}>Lưu thay đổi</Text>
+              </TouchableOpacity>
           
           </ScrollView>
 

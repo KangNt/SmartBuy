@@ -13,7 +13,15 @@ import { CustomHeader } from '../index'
 import {FontAwesome5 }from '@expo/vector-icons'
 
 export class ProfileScreen extends Component {
-
+    constructor(props){
+        super(props)
+        this.state = {
+          email:"",
+          name:""
+      
+        }
+      }
+  
     render() {
         return (
             

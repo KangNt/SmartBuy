@@ -49,17 +49,17 @@ export class ShowScan extends Component {
           modalVisible: false,
           userSelected: [],
           product: {
-            name: "Ch510-sony",
-            description: "Thiết kế gọn nhẹ, nghe không dây thật lâu với thời lượng pin lên đến 35 giờ Khả năng sạc nhanh 10 phút cho 90 phút sử dụng qua cổng USB Type-C",
+            name: "Thuốc là Sài Gòn Bạc",
+            description: "Thuốc là Sài Gòn bạc- 352. Gu thuốc: Công ty hiện đang sản xuất các dòng sản phẩm thuộc gu Virginia truyền thống, Virginia cải tiến, gu Mỹ, gu Menthol, gu đặc biệ",
             created: "",
             images: [
-              "https://salt.tikicdn.com/cache/w1200/ts/product/42/b3/30/9899385a6d821a948167cd1dd0eed190.jpg",
-              "https://vcdn.tikicdn.com/ts/review/69/37/6b/527998850c75518c6cc4b733cdbdf16b.jpg",
-              "https://vcdn.tikicdn.com/ts/review/b9/b9/7e/37d5eb931efbb1beca09aaafed4fc98d.jpg",
+              "https://nghingamart.vn/assets/san-pham/hang-tieu-dung/13854.png",
+              "https://hotelmart.vn/uploads/share-images/2019/03/25/1016_i5c989cfe07bf7.jpg",
+              "https://vn.all.biz/img/vn/catalog/more/4626_saigon_silver.jpeg",
             ],
             colors: [
-              "black",
-              "#0099FF"
+              "#B0B9DB",
+              "#506F60"
             ]
           }
         };

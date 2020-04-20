@@ -163,11 +163,7 @@ export class HomeScreenDetail extends Component {
       this.setState({
         content_comment:''
       })
-      
-      
-      
     }
-    
   }
   _renderRevealedFooter = (handlePress) => {
     return (
@@ -198,6 +194,7 @@ export class HomeScreenDetail extends Component {
             
           </View>
           <View style={styles.starContainer}>
+            
             <Image style={styles.star} source={{uri:"https://img.icons8.com/color/40/000000/star.png"}}/>
             <Image style={styles.star} source={{uri:"https://img.icons8.com/color/40/000000/star.png"}}/>
             <Image style={styles.star} source={{uri:"https://img.icons8.com/color/40/000000/star.png"}}/>
@@ -212,7 +209,6 @@ export class HomeScreenDetail extends Component {
             <TouchableOpacity style={[styles.btnColor, {backgroundColor:"#20B2AA"}]}></TouchableOpacity> 
             <TouchableOpacity style={[styles.btnColor, {backgroundColor:"#FF4500"}]}></TouchableOpacity> 
           </View>
-          
           <View style={styles.contentSize}>
             <TouchableOpacity style={styles.btnSize}><Text>S</Text></TouchableOpacity> 
             <TouchableOpacity style={styles.btnSize}><Text>M</Text></TouchableOpacity> 
@@ -444,7 +440,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentHeader: {
-    flexDirection: 'row',
+    flexDirection: 'row', 
     justifyContent: 'space-between',
     marginBottom: 6
   },

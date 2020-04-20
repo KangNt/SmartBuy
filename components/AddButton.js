@@ -22,8 +22,7 @@ export class AddButton extends Component {
 
             <View style={StyleSheet.container}>
                  <TouchableOpacity style={styles.button}
-                 onPress={ () =>this.props.navigate('ScanQrCode')}
-                >
+                 onPress={ () =>this.props.navigate('ScanQrCode')}>
                     <MaterialCommunityIcons name="qrcode-scan" size={35} color="#FFF" /> 
                 </TouchableOpacity>
             </View>

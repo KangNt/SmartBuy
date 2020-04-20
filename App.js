@@ -11,7 +11,7 @@ import Cart from './src/Cart'
 import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen,CategoryDetail, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
 import { NotificationsScreen, ProfileScreen, ContactScreen,EditProfileScreen,ChangePasswordScreen} from './src/drawer'
 
-import { LoginScreen, RegisterScreen,ShowScan } from './src/auth'
+import { LoginScreen, RegisterScreen,ShowScan,ShowScan1 } from './src/auth'
 import { AddButton } from './components/AddButton'
 // import { Ionicons, Feather } from '@expo/vector-icons';
 
@@ -91,7 +91,6 @@ function ScanQrCodeStack() {
     <StackScanQrCode.Navigator initialRouteName="ScanQrCode" >
       <StackScanQrCode.Screen name="ScanQrCode" component={BarcodeScannerExample} options={navOptionHandler} />
       <StackScanQrCode.Screen name="showscan" component={ShowScan} options={navOptionHandler} />
-      
     </StackScanQrCode.Navigator>
 
   )
