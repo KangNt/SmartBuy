@@ -6,7 +6,8 @@ import {
     View,
     Image,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
+    SafeAreaView
 } from 'react-native';
 import { CustomHeader } from '../index'
 
@@ -24,7 +25,7 @@ export class ProfileScreen extends Component {
   
     render() {
         return (
-            
+            <SafeAreaView style={{ flex: 1, }}>
             <View style={styles.container}>
                 <CustomHeader title="Profile" navigation={this.props.navigation}  />
                 <View style={styles.header}>
@@ -72,7 +73,7 @@ export class ProfileScreen extends Component {
                     </View>
                 </ScrollView>
             </View>
-            
+            </SafeAreaView>
         );
     }
 }

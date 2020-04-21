@@ -8,3 +8,5 @@ export * from './ChangePasswordScreen'
 // export * from  './ForgotPasswordScreen'
 
 export * from './ContactScreen'
+
+export * from './IntroduceScreen'

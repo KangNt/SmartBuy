@@ -8,14 +8,16 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { FontAwesome5 } from '@expo/vector-icons';
 import {CustomDrawerContent,BarcodeScannerExample} from './src'
 import Cart from './src/Cart'
+import Checkout from './src/Checkout'
 import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen,CategoryDetail, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
-import { NotificationsScreen, ProfileScreen, ContactScreen,EditProfileScreen,ChangePasswordScreen} from './src/drawer'
+import { NotificationsScreen, ProfileScreen, ContactScreen,EditProfileScreen,ChangePasswordScreen, IntroduceScreen} from './src/drawer'
 
 import { LoginScreen, RegisterScreen,ShowScan,ShowScan1 } from './src/auth'
 import { AddButton } from './components/AddButton'
 // import { Ionicons, Feather } from '@expo/vector-icons';
 
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
+
 
 // import { FontAwesome5 } from '@expo/vector-icons';
 // import { IMAGE } from './src/constants/Image';
@@ -41,6 +43,7 @@ function HomeStack() {
       <StackHome.Screen name="Menu" component={CustomDrawerContent} options={navOptionHandler} /> 
       <StackHome.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
       <StackHome.Screen name="CategoryDetail" component={CategoryDetail} options={navOptionHandler} />
+      <StackHome.Screen name="Checkout" component={Checkout} options={navOptionHandler} />
     </StackHome.Navigator>
   );
 };
@@ -180,9 +183,8 @@ function DrawerNavigator({ navigation }) {
       <Drawer.Screen name="Menu" component={CustomDrawerContent} />
       <Drawer.Screen name="Notifications" component={NotificationsScreen} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
-     
       <Drawer.Screen name="Contact" component={ContactScreen} />
-
+      <Drawer.Screen name="Introduce" component={IntroduceScreen} />
     </Drawer.Navigator>
   )
 }
