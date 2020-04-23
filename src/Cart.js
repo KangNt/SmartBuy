@@ -110,7 +110,7 @@ export default class Cart extends Component {
                 fontSize: 24,
                 fontWeight: "bold",
                 color: 'white'
-              }}  >
+              }}  onPress={() => this.props.navigation.navigate('Checkout')} >
                 CHECKOUT
                   </Text>
             </TouchableOpacity>

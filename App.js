@@ -93,7 +93,7 @@ function ScanQrCodeStack() {
   return (
     <StackScanQrCode.Navigator initialRouteName="ScanQrCode" >
       <StackScanQrCode.Screen name="ScanQrCode" component={BarcodeScannerExample} options={navOptionHandler} />
-      <StackScanQrCode.Screen name="showscan" component={ShowScan} options={navOptionHandler} />
+      <StackScanQrCode.Screen name="showscan" component={ShowScan} options={navOptionHandler} />      
     </StackScanQrCode.Navigator>
 
   )
