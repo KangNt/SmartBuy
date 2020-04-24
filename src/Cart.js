@@ -181,7 +181,7 @@ export default class Cart extends Component {
             <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, }}>
             <View style={{marginLeft:10,marginTop:10}}>
                 <TouchableOpacity
-                 onPress={()=>this.del_cart()}>
+                 onPress={()=>this.confirm_del()}>
                 <Text style={{fontSize:16,color:'red'}}><FontAwesome5 name={'trash-alt'} size={25}></FontAwesome5></Text>
                 </TouchableOpacity>
             </View>
