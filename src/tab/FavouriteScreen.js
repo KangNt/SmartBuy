@@ -16,7 +16,7 @@ import { IMAGE } from '../constants/Image'
 import { Icon, ListItem } from 'react-native-elements'
 
 import { ScrollView } from 'react-native-gesture-handler'
-
+var cart =[]
 export class FavouriteScreen extends Component {
 
     constructor(props) {
@@ -64,8 +64,47 @@ export class FavouriteScreen extends Component {
       }
     
     }
-    clickEventListener = () => {
-        Alert.alert('Message', 'Item clicked');
+    clickEventListener (data){
+     
+        var itemcart = {
+          proID:data.id,
+          productName: data.name,
+          price: data.price,
+          image:data.image
+        }
+        console.log(itemcart.proID)
+        console.log(cart)
+            var flag = false
+            for(var i = 0;i<cart.length;i++){
+                if(cart[i].proID==itemcart.proID){
+                  flag=true
+                  
+                  break
+                }
+            }
+            console.log(flag) 
+            if (flag === false) {
+              // We have data!!
+              itemcart.quantity=1
+              // const cart = JSON.parse(datacart)
+              cart.push(itemcart)
+              console.log(itemcart)
+              AsyncStorage.setItem('cart',JSON.stringify(cart));
+              Alert.alert("Thành công", "Sản phẩm đã được thêm vào giỏ hàng")
+            }
+            else{
+              if(cart[i].quantity>=10){
+                alert('Bạn chỉ được thêm tối đa 10 sản phẩm')
+              }else{
+                cart[i].quantity +=1
+                console.log(itemcart)
+                // cart.push(itemcart)
+                AsyncStorage.setItem('cart',JSON.stringify(cart));
+                Alert.alert("Thành công", "Sản phẩm đã được thêm vào giỏ hàng")
+              }
+              
+            }
+      
     }
     _AlertDelete = (item) =>{
       this.setState({
@@ -140,7 +179,7 @@ export class FavouriteScreen extends Component {
                                         <Text style={styles.name}>{item.name}</Text>
                                         <Text style={styles.count}>{item.price} VNĐ</Text>
                                         <View style={{flexDirection:"row"}}>
-                                        <TouchableOpacity style={styles.followButton} onPress={() => this.clickEventListener()}>
+                                        <TouchableOpacity style={styles.followButton} onPress={() => this.clickEventListener(item)}>
                                             <Text style={styles.followButtonText}>Add to cart</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity style={styles.followButton} onPress={()=>this._AlertDelete(item)}>

@@ -33,9 +33,11 @@ export class HomeScreen extends Component {
           password:'',
           avatar:"",
           quantity:null,
-          total:null
+          total:null,
+          quantity:0
         }
     }
+   
     componentDidMount(){
         Promise.all([fetch('https://smartbuy01.gq/api/slider'),fetch('https://smartbuy01.gq/api/products'),fetch('https://smartbuy01.gq/api/categories')])
          .then(([req1,req2,req3]) => {
@@ -60,13 +62,13 @@ export class HomeScreen extends Component {
     renderPro(item){
        
             return(
-              <TouchableHighlight onPress={()=>this.props.navigation.navigate('HomeDetail',{product:item})}>
+              <TouchableOpacity onPress={()=>this.props.navigation.navigate('HomeDetail',{product:item})}>
               <View style={styles.container1}>
                 <Image style={styles.photo} source={{ uri: item.image }} />
                 <Text style={styles.title}>{item.name}</Text>
-                <Text style={styles.category}>{item.price}</Text>
+                <Text style={styles.category}>{item.price} VNĐ</Text>
               </View>
-            </TouchableHighlight>
+            </TouchableOpacity>
                 
                 // <TouchableOpacity style={styles.divListProduct} onPress={()=>this.props.navigation.navigate('HomeDetail',{product:item})}>
                 //     <Image
@@ -128,7 +130,7 @@ export class HomeScreen extends Component {
         return (
             <SafeAreaView style={{ flex: 1,flexDirection:"column", }}>
               {/* <CustomDrawerContent></CustomDrawerContent> */}
-                <CustomHeader title="Home" isHome={true} cart={true} navigation={this.props.navigation} />
+                <CustomHeader ref="addtocart" title="Home" isHome={true} cart={true} navigation={this.props.navigation} />
                 <SearchBar platform="android" containerStyle={{height:40,width:width,justifyContent:"center"}} inputStyle={{fontSize:15,}}
                     placeholder="Search..."
                     onChangeText={val => this.setState({search:val})}

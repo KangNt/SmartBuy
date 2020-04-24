@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { Text, View, SafeAreaView, TouchableOpacity, Image, ImageBackground,AsyncStorage} from 'react-native'
+import { Text, View, SafeAreaView, TouchableOpacity, Image, ImageBackground,AsyncStorage,Dimensions} from 'react-native'
 import { CustomHeader } from '../index'
 
 import { IMAGE } from '../constants/Image'
@@ -10,27 +10,7 @@ import { IMAGE } from '../constants/Image'
 import { ListItem } from 'react-native-elements'
 
 import { FlatList } from 'react-native-gesture-handler'
-
-
-
-
-
-
-function Item({ id, title, selected, onSelect }) {
-  return (
-    <TouchableOpacity
-      onPress={() => onSelect(id)}
-      style={[
-        styles.item,
-        { backgroundColor: selected ? '#6e3b6e' : '#f9c2ff' },
-      ]}
-    >
-      <Text style={styles.title}>{title}</Text>
-    </TouchableOpacity>
-  );
-}
-
-
+var {width,height} = Dimensions.get('window');
 export class SettingsScreen extends Component {
   constructor(props){
     super(props)
@@ -51,6 +31,18 @@ export class SettingsScreen extends Component {
       
     }) 
   }
+  Login(){
+    AsyncStorage.multiGet(["id_user","email", "name",'avatar']).then(result => {
+      this.setState({
+        id_user:result[0][1],
+        email:result[1][1],
+        name:result[2][1],
+        avatar:result[3][1],
+        
+      })
+      this.props.navigation.navigate('Login')
+    }) 
+  }
   render() {
 
     if(this.state.email==null){
@@ -64,8 +56,13 @@ export class SettingsScreen extends Component {
          <CustomHeader isHome={false} title="Settings" navigation={this.props.navigation} />
           {/* </ImageBackground> */}
         {/* </View> */}
-        <View>
+        <View style={{alignItems:'center'}}>
           <Text style={{textAlign:"center"}}>Bạn cần đăng nhập để sử dụng chức năng này</Text>
+          <TouchableOpacity onPress={()=>this.Login()} style={{backgroundColor:"#9fd236",
+                    width:width-200,
+                    alignItems:'center',
+                    padding:10,
+                    borderRadius:5}}><Text style={{textAlign:"center"}}>Đăng Nhập</Text></TouchableOpacity>
         </View>
 
       </SafeAreaView>
@@ -90,7 +87,7 @@ export class SettingsScreen extends Component {
           title={this.state.name}
           subtitle={this.state.email}
           leftAvatar={{
-            source: this.state.avatar && { uri: this.state.avatar },
+            source: this.state.avatar && { uri:this.state.avatar},
             
           }}
         

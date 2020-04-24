@@ -11,7 +11,7 @@ import {CustomDrawerContent,BarcodeScannerExample} from './src'
 import Cart from './src/Cart'
 import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen,CategoryDetail, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
 import { NotificationsScreen, ProfileScreen, ContactScreen,EditProfileScreen,ChangePasswordScreen} from './src/drawer'
-
+import Test from "./src/Test"
 import { LoginScreen, RegisterScreen,ShowScan } from './src/auth'
 import { AddButton } from './components/AddButton'
 // import { Ionicons, Feather } from '@expo/vector-icons';
@@ -37,6 +37,7 @@ function HomeStack() {
     <StackHome.Navigator initialRouteName="Home">
       <StackHome.Screen name="Home" component={HomeScreen} options={navOptionHandler} />
       <StackHome.Screen name="cart" component={Cart} options={navOptionHandler} />
+      <StackSetting.Screen name="Test" component={Test} options={navOptionHandler} />
       <StackHome.Screen name="Login" component={LoginScreen} options={navOptionHandler} /> 
       <StackHome.Screen name="Register" component={RegisterScreen} options={navOptionHandler} /> 
       <StackHome.Screen name="Menu" component={CustomDrawerContent} options={navOptionHandler} /> 
@@ -70,6 +71,8 @@ function SettingStack() {
       <StackSetting.Screen name="Profile" component={ProfileScreen} options={navOptionHandler} />
       <StackSetting.Screen name="ChangePassword" component={ChangePasswordScreen} options={navOptionHandler} />
       <StackSetting.Screen name="EditProfile" component={EditProfileScreen} options={navOptionHandler} />
+      <StackSetting.Screen name="Login" component={LoginScreen} options={navOptionHandler} />
+      
     </StackSetting.Navigator>
   )
 }
@@ -81,6 +84,7 @@ function FavouriteStack() {
     <StackFavourite.Navigator initialRouteName="Favourite">
       <StackFavourite.Screen name="Favourite" component={FavouriteScreen} options={navOptionHandler} />
       <StackFavourite.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
+      
     </StackFavourite.Navigator>
   )
 }
@@ -132,7 +136,6 @@ function TabNavigator({navigation}) {
           ),
         }}
         component={HomeStack} />
-
       <Tab.Screen
         
         options={{
@@ -169,6 +172,7 @@ function TabNavigator({navigation}) {
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="settings" color={color} size={size} />),
         }}
         name="Settings" component={SettingStack} />
+        
     </Tab.Navigator>
   )
 }

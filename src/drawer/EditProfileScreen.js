@@ -1,47 +1,12 @@
 import React, { Component } from 'react'
 
-import { Text, View, SafeAreaView, Image, StyleSheet, Button, TouchableOpacity } from 'react-native'
+import { Text, View, SafeAreaView, Image, StyleSheet, Button, TouchableOpacity,AsyncStorage,Alert } from 'react-native'
 import { CustomHeader } from '../index'
-
-// import t from 'tcomb-form-native' // 0.6.9
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 import TextInput from 'react-native-textinput-with-icons'
 
 import { ScrollView } from 'react-native-gesture-handler';
-
-// const Form = t.form.Form;
-
-// const User = t.struct({
-//     Name: t.String,
-//     Email: t.String,
-//     Address: t.String,
-//     Phone: t.String,
-//     terms: t.Boolean
-// });
-
-
-
-
-// const options = {
-//     fields: {
-//         Name: {
-//         error: 'Không được để trống?'
-//       },
-//       Email: {
-//         error: 'Null hoặc sai cú pháp?'
-//       },
-//       Address: {
-//         error: 'không được để trống?'
-//       },
-//       Phone: {
-//         error: 'Sai định dạng '
-//       },
-//       terms: {
-//         label: 'Agree to Terms',
-//       },
-//     },
-//   };
 
 export class EditProfileScreen extends Component {
 
@@ -49,14 +14,82 @@ export class EditProfileScreen extends Component {
     //     const value = this._form.getValue(); // use that ref to get the form value
     //     console.log('value: ', value);
     // }
+    constructor(props){
+        super(props)
+        this.state = {
+            name: '',
+            email: '',
+            address: '',
+            phone: '',
+            avatar:"",
+            id_user:'',
 
-    state = {
-        name: '',
-        email: '',
-        address: '',
-        phone: '',
-
+    
+        }
     }
+    componentDidMount(){
+        try {
+            AsyncStorage.multiGet(["id_user","email", "name",'avatar']).then(result => {
+                this.setState({
+                  id_user:result[0][1], 
+                })
+                // alert('https://smartbuy01.gq/api/users/detail/'+this.state.id_user)
+                fetch('https://smartbuy01.gq/api/users/detail/'+this.state.id_user)
+                .then((res)=>res.json())
+                .then((Res)=>{
+                    this.setState({
+                        name:Res.name,
+                        email:Res.email,
+                        address:Res.address_user,
+                        avatar:Res.avatar,
+                        phone:Res.phone_number
+                    })
+                    
+                })
+                
+              }) 
+         } catch (error) {
+             
+         }
+           
+    }
+    
+    UpdateInfo(){
+        // fetch('https://smartbuy01.gq/api/users/editUser/'+this.state.id_user,{
+        //     method: 'POST',
+        //     headers:{
+        //     'Accept': 'application/json',
+        //     'Content-type': 'application/json',
+        //     },
+          
+        //     body:JSON.stringify({
+        //         email: this.state.email,
+        //         name:this.state.name,
+        //         address_user:this.state.address,
+        //         avatar:this.state.avatar,
+        //         phone_number:this.state.phone
+        //     })
+        // }).then((response) => response.json())
+        // .then((responseJson) =>{
+        //     // alert(responseJson.info_user.phone)
+        //     // Alert.alert('Thông báo',responseJson.result)
+        //     this.setState({
+                
+        //         phone:responseJson.info_user.phone_number,
+               
+        //     })
+        //     if(responseJson.result =="ok"){
+
+        //         Alert.alert("Thông báo!","Cập nhật thành công")
+                
+        //     }
+            
+         
+        // })
+        alert('lick')
+        
+    }
+    
     render() {
         let { name, email, address, phone } = this.state
         return (
@@ -68,14 +101,18 @@ export class EditProfileScreen extends Component {
                     <ScrollView showsVerticalScrollIndicator={false}>
                         <TouchableOpacity style={{ marginTop: 10 }}>
                             <View style={styles.profileImage}>
-                                <Image source={require("../images/Linh.jpg")} style={styles.image} resizeMode="center"></Image>
+                                <Image source={{uri:this.state.avatar}} style={styles.image} resizeMode="center"></Image>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={()=>this.UpdateInfo()}>
                             <View style={styles.add}  >
                                 <Ionicons name="ios-add" size={40} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2 }}></Ionicons>
                             </View>
+                            
                         </TouchableOpacity>
+                        <View>
+                            {/* <Image style={{width:40,height:50}} source={this.state.avatar}/> */}
+                        </View>
                         {/* <Form
                         ref={c => this._form = c}
                         type={User}
@@ -88,8 +125,8 @@ export class EditProfileScreen extends Component {
                             leftIcon="person"
                             leftIconType="oct"
                             rippleColor="blue"
-                            rightIcon="react"
-                            rightIconType="material"
+                            
+                            
                             value={name}
                             refrance={(refrance) => {
                                 this.input = refrance;
@@ -103,8 +140,8 @@ export class EditProfileScreen extends Component {
                             leftIcon="mail"
                             leftIconType="oct"
                             rippleColor="blue"
-                            rightIcon="react"
-                            rightIconType="material"
+                            
+                            
                             value={email}
                             refrance={(refrance) => {
                                 this.input = refrance;
@@ -117,8 +154,8 @@ export class EditProfileScreen extends Component {
                             leftIcon="location"
                             leftIconType="oct"
                             rippleColor="blue"
-                            rightIcon="react"
-                            rightIconType="material"
+                            
+                            
                             value={address}
                             refrance={(refrance) => {
                                 this.input = refrance;
@@ -130,17 +167,18 @@ export class EditProfileScreen extends Component {
                             leftIcon="device-mobile"
                             leftIconType="oct"
                             rippleColor="blue"
-                            rightIcon="react"
-                            rightIconType="material"
-                            value={phone}
+                            
+                            
+                            value={phone==null ? '': `${phone}`}
                             refrance={(refrance) => {
                                 this.input = refrance;
                             }}
                             onChangeText={phone => this.setState({ phone })}
                         />
+                        
                         <View style={styles.styleButton}>
-                            <TouchableOpacity style={styles.submitContainer} onPress={this.handleSubmit} >
-                                <Text style={[styles.text, { color: "#ffff", fontSize: 16, }]}>Save Update</Text>
+                            <TouchableOpacity style={styles.submitContainer}  onPress={()=>this.UpdateInfo()}>
+                                <Text style={[styles.text, { color: "#ffff", fontSize: 16, }]}>Lưu thay đổi</Text>
                             </TouchableOpacity>
                         </View>
                     </View> 
