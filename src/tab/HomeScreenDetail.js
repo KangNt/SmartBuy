@@ -20,6 +20,8 @@ import {CustomHeader} from '../index'
 // import {Comments} from '../drawer'
 // import TextInput from "react-native-paper"
 var {width,height} = Dimensions.get('window');
+var cart =[]
+
 export class HomeScreenDetail extends Component {
  
   constructor(props) {
@@ -34,14 +36,14 @@ export class HomeScreenDetail extends Component {
       product_id:'',
       data:'',
       comment:[],
+      cart:[],
+      totalCart:0
 
     }
+    
      try {
           const val = AsyncStorage.multiGet(["id_user","email","name",'avatar']).then(result => {
-             console.log(result[0][1])
-             console.log(result[1][1])
-             console.log(result[2][1])
-             console.log(result[3][1])
+            
 
               this.setState({
                 user_id:result[0][1],
@@ -61,6 +63,7 @@ export class HomeScreenDetail extends Component {
   //   Alert.alert("Success", "Product has beed added to cart")
   // }
   componentDidMount(){
+    
     const {product} =this.props.route.params
     fetch('https://smartbuy01.gq/api/comments/comments-by-product/'+product.id)
      .then((cmt) =>cmt.json())
@@ -163,8 +166,13 @@ export class HomeScreenDetail extends Component {
       this.setState({
         content_comment:''
       })
+      
+      
+      
     }
+    
   }
+  
   _renderRevealedFooter = (handlePress) => {
     return (
       <View style={{alignItems:"center",justifyContent:"center"}}>
@@ -184,7 +192,7 @@ export class HomeScreenDetail extends Component {
     
     return (
       <SafeAreaView style={{ flex: 1, }}>
-        <CustomHeader title='Chi Tiết' cart={true} navigation={this.props.navigation} />
+        <CustomHeader title='Chi Tiết' Total={this.state.totalCart} cart={true} navigation={this.props.navigation} />
       <View style={styles.container}>
         <ScrollView>
           <View style={{alignItems:'center', justifyContent:'center',marginHorizontal:30}}>
@@ -194,7 +202,6 @@ export class HomeScreenDetail extends Component {
             
           </View>
           <View style={styles.starContainer}>
-            
             <Image style={styles.star} source={{uri:"https://img.icons8.com/color/40/000000/star.png"}}/>
             <Image style={styles.star} source={{uri:"https://img.icons8.com/color/40/000000/star.png"}}/>
             <Image style={styles.star} source={{uri:"https://img.icons8.com/color/40/000000/star.png"}}/>
@@ -209,6 +216,7 @@ export class HomeScreenDetail extends Component {
             <TouchableOpacity style={[styles.btnColor, {backgroundColor:"#20B2AA"}]}></TouchableOpacity> 
             <TouchableOpacity style={[styles.btnColor, {backgroundColor:"#FF4500"}]}></TouchableOpacity> 
           </View>
+          
           <View style={styles.contentSize}>
             <TouchableOpacity style={styles.btnSize}><Text>S</Text></TouchableOpacity> 
             <TouchableOpacity style={styles.btnSize}><Text>M</Text></TouchableOpacity> 
@@ -296,35 +304,63 @@ export class HomeScreenDetail extends Component {
       </SafeAreaView>
     );
   }
+  
   clickEventListener(data){
-
-    const itemcart = {
-      product: data,
-      quantity:  1,
-      price: data.price
+    this.setState({
+      totalCart:this.state.totalCart +1
+    })
+    var itemcart = {
+      proID:data.id,
+      productName: data.name,
+      price: data.price,
+      image:data.image
     }
- 
-    AsyncStorage.getItem('cart').then((datacart)=>{
-        if (datacart !== null) {
-          // We have data!!
-          const cart = JSON.parse(datacart)
-          cart.push(itemcart)
-          AsyncStorage.setItem('cart',JSON.stringify(cart));
+        var flag = false
+        for(var i = 0;i<cart.length;i++){
+            if(cart[i].proID==itemcart.proID){
+              flag=true
+              
+              break
+            }
         }
-        else{
-          const cart  = []
-          cart.push(itemcart)
-          AsyncStorage.setItem('cart',JSON.stringify(cart));
-        }
-        Alert.alert("Thành công", "Sản phẩm đã được thêm vào giỏ hàng")
-        this.setState({
-          in_cart:this.state.in_cart + 1
+        console.log(flag) 
+        AsyncStorage.getItem('cart').then((res)=>{
+          
+          if(res==null || res=='' ){
+            cart.length = 0
+            flag=false
+          }
+          if(flag === false) {
+            
+            // We have data!!
+            itemcart.quantity=1
+            // const cart = JSON.parse(datacart)
+            cart.push(itemcart)
+            AsyncStorage.setItem('cart',JSON.stringify(cart));
+            Alert.alert("Thành công", "Sản phẩm đã được thêm vào giỏ hàng")
+            
+            
+          }
+          else{
+            
+            if(cart[i].quantity>=10){
+              alert('Bạn chỉ được thêm tối đa 10 sản phẩm')
+            }else{
+              cart[i].quantity +=1
+              console.log(itemcart)
+              // cart.push(itemcart)
+              
+              AsyncStorage.setItem('cart',JSON.stringify(cart));
+              Alert.alert("Thành công", "Sản phẩm đã được thêm vào giỏ hàng")
+            }
+          }
         })
-      })
-      .catch((err)=>{
-        alert(err)
-      })
-  }
+        
+        
+        
+  }    
+        
+  
 }
 
 const styles = StyleSheet.create({
@@ -440,7 +476,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentHeader: {
-    flexDirection: 'row', 
+    flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 6
   },

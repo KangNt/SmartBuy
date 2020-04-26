@@ -8,9 +8,10 @@ import {
     FlatList,
     StyleSheet,
     Alert,
-    Dimensions
+    Dimensions,AsyncStorage
 } from 'react-native'
-// import { CustomHeader } from '../index'
+import { FontAwesome5 } from '@expo/vector-icons';
+import { CustomHeader } from '../index'
 
 import { IMAGE } from '../constants/Image'
 import { RVText } from '../core/RVText'
@@ -21,99 +22,127 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { Card, ListItem, Button, Icon, ButtonGroup } from 'react-native-elements'
 
 var { height, width } = Dimensions.get('window');
-
+var STT_order =[
+    {
+        value:"0",
+        method:'Đã hủy',
+        color:"red"
+    },
+    {
+        value:"1",
+        method:'Đang chờ xử lí',
+        color:"#ff7e3f"
+    },
+    {
+        value:"2",
+        method:'Đang chuyển',
+        color:"orange"
+    },
+    {
+        value:"3",
+        method:'Đã nhận hàng',
+        color:"green"
+    },
+]
+var STT_payment =[
+    {
+        value:"1",
+        method:'Chuyển Khoản Ngân Hàng'
+    },
+    {
+        value:"2",
+        method:'COD'
+    },
+    {
+        value:"3",
+        method:'VISA/MASTER CARD'
+    },
+]
 export class HistoryScreen extends Component {
-    // constructor() {
-    //     super()
-    //     this.state = {
-    //         selectedIndex: 2
-    //     }
-    //     this.updateIndex = this.updateIndex.bind(this)
-    // }
-    // updateIndex(selectedIndex) {
-    //     this.setState({ selectedIndex })
-    // }
-
-    //   const component1 = () => <Text>Hello</Text>
-    //   const component2 = () => <Text>World</Text>
-    //   const component3 = () => <Text>ButtonGroup</Text>
-
-
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                { id: 1, title: "exp://192.168.0.106:19000", color: "#F2FAFD", image: "https://vi.qr-code-generator.com/wp-content/themes/qr/new_structure/markets/basic_market/generator/dist/generator/assets/images/websiteQRCode_noFrame.png" },
-                { id: 2, title: "exp://192.168.0.106:19000", color: "#F2FAFD", image: "https://vi.qr-code-generator.com/wp-content/themes/qr/new_structure/markets/basic_market/generator/dist/generator/assets/images/websiteQRCode_noFrame.png" },
-                { id: 3, title: "exp://192.168.0.106:19000", color: "#F2FAFD", image: "https://vi.qr-code-generator.com/wp-content/themes/qr/new_structure/markets/basic_market/generator/dist/generator/assets/images/websiteQRCode_noFrame.png" },
-                { id: 4, title: "exp://192.168.0.106:19000", color: "#F2FAFD", image: "https://vi.qr-code-generator.com/wp-content/themes/qr/new_structure/markets/basic_market/generator/dist/generator/assets/images/websiteQRCode_noFrame.png" },
-                { id: 5, title: "exp://192.168.0.106:19000", color: "#F2FAFD", image: "https://vi.qr-code-generator.com/wp-content/themes/qr/new_structure/markets/basic_market/generator/dist/generator/assets/images/websiteQRCode_noFrame.png" },
-                { id: 6, title: "exp://192.168.0.106:19000", color: "#F2FAFD", image: "https://vi.qr-code-generator.com/wp-content/themes/qr/new_structure/markets/basic_market/generator/dist/generator/assets/images/websiteQRCode_noFrame.png" },
-                { id: 7, title: "exp://192.168.0.106:19000", color: "#F2FAFD", image: "https://vi.qr-code-generator.com/wp-content/themes/qr/new_structure/markets/basic_market/generator/dist/generator/assets/images/websiteQRCode_noFrame.png" },
-                { id: 8, title: "exp://192.168.0.106:19000", color: "#F2FAFD", image: "https://vi.qr-code-generator.com/wp-content/themes/qr/new_structure/markets/basic_market/generator/dist/generator/assets/images/websiteQRCode_noFrame.png" },
-                { id: 9, title: "exp://192.168.0.106:19000", color: "#F2FAFD", image: "https://vi.qr-code-generator.com/wp-content/themes/qr/new_structure/markets/basic_market/generator/dist/generator/assets/images/websiteQRCode_noFrame.png" },
-                { id: 10, title: "exp://192.168.0.106:19000", color: "#F2FAFD", image: "https://vi.qr-code-generator.com/wp-content/themes/qr/new_structure/markets/basic_market/generator/dist/generator/assets/images/websiteQRCode_noFrame.png" },
-            ]
+            user_id:"",
+            data: [],
+            payment_method:""
         };
+        
     }
-
-    clickEventListener(item) {
-        Alert.alert(item.title)
+    componentDidMount(){
+        
+        try {
+            const val = AsyncStorage.multiGet(["id_user","email","name",'avatar']).then(result => {
+                this.setState({
+                  user_id:result[0][1] 
+                })
+                fetch('https://smartbuy01.gq/api/history/history-by-user/'+this.state.user_id,{
+                    method: 'GET',
+                    headers:{
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                    
+                    },
+              }
+            ).then((res)=>res.json()).then((res)=>{
+                  this.setState({
+                      data:res.result
+                  })
+                  console.log(this.state.data)
+                  
+            })
+              }) 
+          } catch (error) {
+                console.log(error)
+          }
+       
+      console.log(this.state.user_id)
     }
-
+    confirm_cancel(item){
+        this.setState({
+            idOrder:item.id
+        })
+        Alert.alert("Thông báo!", "Bạn có muốn hủy đơn hàng này không?",
+        [
+          
+          {text:'Cancel'},
+          { text:'OK', onPress:this.submit_cancel_order
+          
+          }
+        ],
+          {cancelable: false},)
+    }
+    submit_cancel_order= ()=> {
+        fetch('https://smartbuy01.gq/api/orders/cancel-order/'+this.state.user_id+'/'+this.state.idOrder,{
+            method: 'PUT',
+            headers:{
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            },
+        }).then((res)=>res.json()).then((res)=>{
+               if(res.result=='ok'){
+                fetch('https://smartbuy01.gq/api/history/history-by-user/'+this.state.user_id)
+                .then((resHistory)=>resHistory.json()).then((resHistory)=>{
+                    this.setState({
+                        data:resHistory.result
+                    })
+                    Alert.alert("Thành Công", "Đã hủy đơn hàng thành công") 
+               })   
+            }
+        })
+    }
 
     render() {
         const buttons = ['Scan', 'Oders',]
         const { selectedIndex } = this.state
         let { navigation, isHome, title } = this.props
         return (
-
+            
             <SafeAreaView style={{ flex: 1, }} >
-                {/* <CustomHeader title="History" isHome={true} navigation={this.props.navigation} /> */}
-                <View style={{ flexDirection: 'row', height: 50 }}>
-                    <View style={{ flex: 1, justifyContent: 'center' }}>
-                        {
-                            isHome ?
-                                <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                                    <Image style={{ width: 30, height: 30, marginLeft: 5 }}
-                                        source={IMAGE.ICON_DELETE}
-                                        resizeMode='contain' />
-                                </TouchableOpacity>
-                                :
-                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
-                                    onPress={() => this.props.navigation.goBack()}
-                                >
-                                    <Image style={{ width: 24, height: 24, marginLeft: 5 }}
-                                        source={IMAGE.ICON_DELETE}
-                                        resizeMode="contain"
-                                    />
-                                    {/* <Text>Back</Text> */}
-                                </TouchableOpacity>
-                        }
-                    </View>
-
-
-                    <View style={{ flex: 1.5, justifyContent: 'center' }}>
-                        <Text style={{ textAlign: 'center', fontWeight: 'bold', marginRight: 70 }}>History</Text>
-                    </View>
-                    <View style={{ flex: 0.1, marginTop: 3, marginRight: -75 }}>
-                        <TouchableOpacity>
-                            <Icon
-                                raised
-                                reverse
-                                name='history'
-                                type='font-awesome'
-                                size={13}
-                                color='#2196F3'
-                            />
-                        </TouchableOpacity>
-
-                    </View>
-
-                    <View style={{ flex: 1 }}></View>
-
-                </View>
-
+            {/* <ScrollView style={{flex:1}}> */}
+                <CustomHeader title="History" navigation={this.props.navigation} />
+                
+                
+                
                 <ButtonGroup
                     onPress={this.updateIndex}
                     selectedIndex={selectedIndex}
@@ -121,30 +150,75 @@ export class HistoryScreen extends Component {
                     containerStyle={{ height: 50, borderRadius: 30 }}
                 />
 
-                <View style={styles.container}>
-                    <FlatList style={styles.list}
+                <View style={{flex:1,alignItems:'center'}}>
+                    <FlatList style={styles.list} showsVerticalScrollIndicator={false}
                         contentContainerStyle={styles.listContainer}
                         data={this.state.data}  
                         horizontal={false}
-                        keyExtractor={(item) => {
-                            return item.id;
-                        }}
                         renderItem={({ item }) => {
                             return (
-                                <TouchableOpacity style={[styles.card, { backgroundColor: item.color }]} onPress={() => { this.clickEventListener(item) }}>
-                                    <Image style={styles.cardImage} source={{ uri: item.image }} />
-                                    <Text style={styles.title}>{item.title}</Text>
+                                <TouchableOpacity style={styles.card} onPress={()=>this.props.navigation.navigate('DetailHistory',{item:item})}>
+                                    {/* <Image style={styles.cardImage} source={{ uri: item.image }} /> */}
+                                    <View style={{alignContent:"center",width:width-50,top:17}}>
+                                    <Text style={styles.title}>Mã Đơn Hàng: {item.id}</Text>
+                                    <Text style={styles.title}>Tên Khách Hàng: {item.customer_name}</Text>
+                                    {
+                                        STT_order.map((stt)=>{
+                                            if(item.status==stt.value){
+                                                return(
+                                                    <Text style={styles.title}>Trạng Thái: 
+                                                        <Text style={{color:stt.color,fontSize:15,
+                                                            fontWeight:'bold',
+                                                            marginLeft:40,}}> {stt.method}
+                                                        </Text>
+                                                    </Text>
+                                                ) 
+                                            }
+                                        })
+                                    }
+                                    <Text style={styles.title}>Tổng Tiền: {item.total_price} VNĐ</Text>
+                                    <Text style={styles.title}>Ngày Đặt: {item.day_buy}</Text>
+                                    
+                                    <Text style={{position:"absolute",right:5,top:40,fontWeight:"bold",color:"#3399f0",fontSize:40}}>
+                                        <FontAwesome5 name='chevron-right' size={20}></FontAwesome5>
+                                    </Text>
+                                    </View>
+                                    {/* <Text style={styles.title}>Địa chỉ nhận hàng: {item.customer_address}</Text>
+                                    <Text style={styles.title}>Số điện thoại: {item.customer_phone}</Text>
+                                    {
+                                        STT_payment.map((stt)=>{
+                                            if(item.payment_method==stt.value){
+                                                return(
+                                                    <Text style={styles.title}>Phương Thức Thanh Toán: {stt.method}</Text>
+                                                ) 
+                                            }
+                                        })
+                                    } */}
+                                   {item.status!=1 ? <Text></Text>
+                                        :  
+                                        <View style={{alignItems:"flex-end"}}>
+                                            <TouchableOpacity onPress={() => this.confirm_cancel(item)} style={{width:80,height:30,borderRadius:30,
+                                                justifyContent:"center",backgroundColor: "white",
+                                                borderWidth:1,borderColor:"#dcdcdc",marginBottom:3}}>
+                                                <Text style={{textAlign:"center",color:'red'}}>Hủy</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        
+                                    }
+                                    
                                 </TouchableOpacity>
+                                
                             )
                         }} />
                 </View>
+                
+                
 
-
-
-
-
+               
+            {/* </ScrollView> */}
             </SafeAreaView>
-
+            
+            
 
         )
     }
@@ -169,19 +243,25 @@ const styles = StyleSheet.create({
         marginTop:20,
       },
       list: {
+        //   alignItems:"center"
         //paddingHorizontal: 5,
-        backgroundColor:"#E6E6E6",
       },
     
       /******** card **************/
       card:{
-        width: width,
-        height:150,
-        flexDirection:'row',
-        padding:20,
-    
-        justifyContent: 'center', 
-        alignItems: 'center' 
+        position:"relative",
+        backgroundColor:'white',
+        marginTop:10,
+        marginBottom:20,
+        width: width-30,
+        // height:150,
+        // flexDirection:'column',
+        // padding:20,
+        borderBottomWidth:2,
+        borderBottomColor:"#3399f0",
+        
+        
+        
       },
       cardImage:{
         height: 70,
@@ -189,10 +269,10 @@ const styles = StyleSheet.create({
       },
       title:{
         fontSize:15,
-        flex:1,
+        
         color:"#333",
         fontWeight:'bold',
-        marginLeft:40
+        marginLeft:35
       },
       subTitle:{
         fontSize:12,

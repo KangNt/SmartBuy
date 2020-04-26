@@ -4,7 +4,7 @@ import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, ScrollView, Ima
 
 import { CustomHeader } from '../index'
 import InputTextField from "../../components/InputTextField"
-
+import Test from "../Test.js"
 import AddButton from '../../components/AddButton'
 export class LoginScreen extends Component {
   constructor(props){
@@ -23,6 +23,7 @@ export class LoginScreen extends Component {
 }
 
 Login(){
+  
     if(this.state.email==''){
         alert('Email không được để trống');
       }
@@ -55,6 +56,7 @@ Login(){
           else{
             AsyncStorage.multiSet([['id_user',`${responseJson.user_info.id}`],['email',responseJson.user_info.email],['name',responseJson.user_info.name],['avatar',responseJson.user_info.avatar]])
             this.props.navigation.navigate('Home')
+            
           }
           
           
@@ -78,6 +80,7 @@ Login(){
     return (
       
       <ScrollView style={styles.container}>
+        
         <KeyboardAvoidingView style={{flex:1,marginBottom:200,}}>
         {/* <CustomHeader title="Login" navigation={this.props.navigation} /> */}
         <View>
@@ -122,8 +125,8 @@ Login(){
           <TouchableOpacity style={styles.submitContainer} onPress={this.Login.bind(this)}>
             <Text style={[styles.text, { color: "#ffff", ontWeight: "600", fontSize: 16 }]}>Login</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity   onPress={() => this.props.navigation.navigate('Register')}>
+          
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')}>
           <Text style={[styles.text, { fontSize: 14, color: "#ABB4BD", textAlign: "center", marginTop: 24 }]}>
             Don't have an account? <Text style={[styles.text, styles.link]}>Register now</Text>
           </Text>

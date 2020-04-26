@@ -10,7 +10,7 @@ export class CustomHeader extends Component {
   render() {
     let { navigation, isHome, title,cart } = this.props
     return (
-      <View style={{ flexDirection: 'row', height: 70,marginTop:-20, backgroundColor:"#1DFFFF" }}>
+      <View style={{ flexDirection: 'row', height: 70,marginTop:-20, backgroundColor:"#1CF8F8" }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           {
             isHome ?
@@ -34,15 +34,15 @@ export class CustomHeader extends Component {
          
         </View>
 
-        <View style={{ flex: 4, justifyContent: 'center'}}>
+        <View style={{ flex: 15, justifyContent: 'center'}}>
           <Text style={{ textAlign: 'center',fontSize:19, marginTop:7 }}>{title}</Text>
           {cart 
           ?
           <TouchableOpacity onPress={()=> navigation.navigate('cart')} style={{position:'absolute',right:0,}}>
-            <FontAwesome5 name="cart-plus" size={20} ></FontAwesome5>
-            <View style={{borderRadius:15,shadowOpacity:0.5,width:20,height:20,backgroundColor:'red',justifyContent:"center",alignItems:"center",position:"absolute",top:-5,left:15, }}>
+            <FontAwesome5 name="cart-plus" size={20}  style={{marginTop:10, marginLeft:"89%"}}></FontAwesome5>
+            {/* <View style={{borderRadius:15,shadowOpacity:0.5,width:20,height:20,backgroundColor:'red',justifyContent:"center",alignItems:"center",position:"absolute",top:-5,left:15, }}>
               <Text style={{color:'white',fontSize:11}}>0</Text>
-            </View>
+            </View> */}
           </TouchableOpacity>
           : null
           }
