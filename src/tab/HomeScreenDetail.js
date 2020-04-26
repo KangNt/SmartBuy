@@ -37,10 +37,22 @@ export class HomeScreenDetail extends Component {
       data:'',
       comment:[],
       cart:[],
-      totalCart:0
+      totalCart:0,
+      data: [
+        //data-fake
+        { id: 1, title: "Product 1", price: "$ 25.00 USD", image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" },
+        { id: 2, title: "Product 2", price: "$ 10.13 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
+        { id: 3, title: "Product 3", price: "$ 12.12 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
+        { id: 4, title: "Product 4", price: "$ 11.00 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
+      
+      ]
 
     }
-    
+
+    addProductToCart = () => {
+      Alert.alert('Success', 'The product has been added to your cart')
+    }
+  
      try {
           const val = AsyncStorage.multiGet(["id_user","email","name",'avatar']).then(result => {
             
@@ -248,6 +260,59 @@ export class HomeScreenDetail extends Component {
             </ReadMore>
             
           </View>
+      
+          <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}>Sản phẩm tương tự <FontAwesome5 name="check-double" size={24} color={"#FF0C0C"} /> </Text>
+          <FlatList style={styles.list}
+            contentContainerStyle={styles.listContainer}
+            data={this.state.data}
+            horizontal={false}
+            numColumns={2}
+            keyExtractor={(item) => {
+              return item.id;
+            }}
+            ItemSeparatorComponent={() => {
+              return (
+                <View style={styles.separator} />
+              )
+            }}
+            renderItem={(post) => {
+              const item = post.item;
+              return (
+                <View style={styles.card}>
+
+                  <View style={styles.cardHeader}>
+                    <View>
+                      <Text style={styles.title}>{item.title}</Text>
+                      <Text style={styles.price}>{item.price}</Text>
+                    </View>
+                  </View>
+
+                  <Image style={styles.cardImage} source={{ uri: item.image }} />
+
+                  <View style={styles.cardFooter}>
+                    <View style={styles.socialBarContainer}>
+                      <View style={styles.socialBarSection}>
+                        <TouchableOpacity style={styles.socialBarButton} onPress={() => this.addProductToCart()}>
+                          <Image style={styles.icon} source={require('../images/add-to-cart.png')} />
+                          <Text style={[styles.socialBarLabel, styles.buyNow]}>Buy Now</Text>
+                        </TouchableOpacity>
+                      </View>
+                      <View style={styles.socialBarSection}>
+                        <TouchableOpacity style={styles.socialBarButton}>
+                        
+                          <Text style={styles.socialBarLabel}>125 l</Text>
+                        </TouchableOpacity>
+                       </View>
+                    </View>
+                  </View>
+                </View>
+              )
+            }} />
+
+
+
+
+
           <View>
             <Text style={{fontWeight:"bold",fontSize:18,paddingLeft:10,color:"#696969"}}>Bình Luận</Text>
           </View>
@@ -298,9 +363,14 @@ export class HomeScreenDetail extends Component {
               keyExtractor = { (item,index) => index.toString() } 
             />
           </View>
-          
+
+
+
         </ScrollView>
+        
       </View>
+      
+      
       </SafeAreaView>
     );
   }
@@ -338,7 +408,7 @@ export class HomeScreenDetail extends Component {
             cart.push(itemcart)
             AsyncStorage.setItem('cart',JSON.stringify(cart));
             Alert.alert("Thành công", "Sản phẩm đã được thêm vào giỏ hàng")
-            
+             
             
           }
           else{
@@ -498,4 +568,96 @@ const styles = StyleSheet.create({
     fontSize:16,
     fontWeight:"bold",
   },
+
+  list: {
+    paddingHorizontal: 5,
+    backgroundColor: "#E6E6E6",
+  },
+  listContainer: {
+    alignItems: 'center'
+  },
+  separator: {
+    marginTop: 10,
+  },
+  /******** card **************/
+  card: {
+    shadowColor: '#00000021',
+    shadowOffset: {
+      width: 2
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    marginVertical: 8,
+    backgroundColor: "white",
+    flexBasis: '47%',
+    marginHorizontal: 5,
+    borderRadius: 15
+  },
+  cardHeader: {
+    paddingVertical: 17,
+    paddingHorizontal: 16,
+    borderTopLeftRadius: 1,
+    borderTopRightRadius: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  cardContent: {
+    paddingVertical: 12.5,
+    paddingHorizontal: 16,
+  },
+  cardFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 12.5,
+    paddingBottom: 25,
+    paddingHorizontal: 16,
+    borderBottomLeftRadius: 1,
+    borderBottomRightRadius: 1,
+  },
+  cardImage: {
+    flex: 1,
+    height: 150,
+    width: null,
+  },
+  /******** card components **************/
+  title: {
+    fontSize: 18,
+    flex: 1,
+  },
+  price: {
+    fontSize: 16,
+    color: "green",
+    marginTop: 5
+  },
+  buyNow: {
+    color: "purple",
+  },
+  icon: {
+    width: 15,
+    height: 15,
+    marginLeft:5,
+  
+  },
+  /******** social bar ******************/
+  socialBarContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flex: 1
+  },
+  socialBarSection: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flex: 1,
+  },
+  socialBarlabel: {
+    marginLeft: 8,
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
+  },
+  socialBarButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });     

@@ -268,7 +268,7 @@ export class HomeScreen extends Component {
                         
                           <Text style={styles.socialBarLabel}>125 l</Text>
                         </TouchableOpacity>
-                      </View>
+                       </View>
                     </View>
                   </View>
                 </View>
