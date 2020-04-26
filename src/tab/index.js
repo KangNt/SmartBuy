@@ -3,7 +3,7 @@ export * from './HomeScreenDetail'
 
 export * from './SettingsScreen'
 export * from './SettingsScreenDetail'
-
+export * from './DetailHistoryScreen'
 export * from './FavouriteScreen'
 
 export * from './HistoryScreen'

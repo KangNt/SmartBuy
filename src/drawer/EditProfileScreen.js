@@ -55,38 +55,38 @@ export class EditProfileScreen extends Component {
     }
     
     UpdateInfo(){
-        // fetch('https://smartbuy01.gq/api/users/editUser/'+this.state.id_user,{
-        //     method: 'POST',
-        //     headers:{
-        //     'Accept': 'application/json',
-        //     'Content-type': 'application/json',
-        //     },
+        fetch('https://smartbuy01.gq/api/users/editUser/'+this.state.id_user,{
+            method: 'POST',
+            headers:{
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            },
           
-        //     body:JSON.stringify({
-        //         email: this.state.email,
-        //         name:this.state.name,
-        //         address_user:this.state.address,
-        //         avatar:this.state.avatar,
-        //         phone_number:this.state.phone
-        //     })
-        // }).then((response) => response.json())
-        // .then((responseJson) =>{
-        //     // alert(responseJson.info_user.phone)
-        //     // Alert.alert('Thông báo',responseJson.result)
-        //     this.setState({
+            body:JSON.stringify({
+                email: this.state.email,
+                name:this.state.name,
+                address_user:this.state.address,
+                avatar:this.state.avatar,
+                phone_number:this.state.phone
+            })
+        }).then((response) => response.json())
+        .then((responseJson) =>{
+            // alert(responseJson.info_user.phone)
+            // Alert.alert('Thông báo',responseJson.result)
+            this.setState({
                 
-        //         phone:responseJson.info_user.phone_number,
+                phone:responseJson.info_user.phone_number,
                
-        //     })
-        //     if(responseJson.result =="ok"){
+            })
+            
 
-        //         Alert.alert("Thông báo!","Cập nhật thành công")
+            Alert.alert("Thông báo!",responseJson.result)
                 
-        //     }
+            
             
          
-        // })
-        alert('lick')
+        })
+        
         
     }
     

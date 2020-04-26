@@ -9,7 +9,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { FontAwesome5 } from '@expo/vector-icons';
 import {CustomDrawerContent,BarcodeScannerExample} from './src'
 import Cart from './src/Cart'
-import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen,CategoryDetail, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
+import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen,
+  DetailHistoryScreen,CategoryDetail, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
 import { NotificationsScreen, ProfileScreen, ContactScreen,EditProfileScreen,ChangePasswordScreen} from './src/drawer'
 import Test from "./src/Test"
 import { LoginScreen, RegisterScreen,ShowScan } from './src/auth'
@@ -53,6 +54,7 @@ function HistoryStack() {
   return (
     <StackHistory.Navigator initialRouteName="History" >
       <StackHistory.Screen name="History" component={HistoryScreen} options={navOptionHandler} />
+      <StackHistory.Screen name="DetailHistory" component={DetailHistoryScreen} options={navOptionHandler} />
     </StackHistory.Navigator>
   );
 };
