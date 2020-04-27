@@ -139,10 +139,9 @@ export class HistoryScreen extends Component {
             
             <SafeAreaView style={{ flex: 1, }} >
             {/* <ScrollView style={{flex:1}}> */}
-                <CustomHeader title="History" navigation={this.props.navigation} />
+                <CustomHeader title="Lịch Sử" navigation={this.props.navigation} />
                 
-                
-                
+        
                 <ButtonGroup
                     onPress={this.updateIndex}
                     selectedIndex={selectedIndex}

@@ -10,9 +10,9 @@ import {
   FlatList,
   Button,
   TextInput,
-  Dimensions
-  ,
-  SafeAreaView,AsyncStorage
+  Dimensions,
+  SafeAreaView,
+  AsyncStorage
 } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 import ReadMore from 'react-native-read-more-text';
@@ -31,7 +31,7 @@ export class HomeScreenDetail extends Component {
       content_comment:'',
       user_id:'',
       email:'',
-      avatar:'',
+      avatar:'', 
       name:'',
       product_id:'',
       data:'',

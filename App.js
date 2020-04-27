@@ -129,9 +129,8 @@ function TabNavigator({navigation}) {
 
       <Tab.Screen
         name="Home"
-        
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Trang Chủ',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
@@ -140,7 +139,7 @@ function TabNavigator({navigation}) {
       <Tab.Screen
         
         options={{
-          tabBarLabel: 'History',
+          tabBarLabel: 'Lịch Sử',
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="clock" color={color} size={size} />),
         }}
         name="History" component={HistoryStack} />
@@ -148,7 +147,7 @@ function TabNavigator({navigation}) {
       <Tab.Screen
         
         options={{
-          tabBarLabel: 'Scan',
+          tabBarLabel: 'Quét QR',
           tabBarIcon: () => <AddButton {...navigation} />,
           
           
@@ -162,6 +161,7 @@ function TabNavigator({navigation}) {
       <Tab.Screen
         
         options={{
+          tabBarLabel: 'Ưa Thích',
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="charity" color={color} size={size} />),
         }}
         name="favourite" component={FavouriteStack} />
@@ -170,6 +170,7 @@ function TabNavigator({navigation}) {
       <Tab.Screen
         
         options={{
+          tabBarLabel: 'Cài Đặt',
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="settings" color={color} size={size} />),
         }}
         name="Settings" component={SettingStack} />

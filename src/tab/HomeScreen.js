@@ -184,12 +184,13 @@ export class HomeScreen extends Component {
     return (
       <SafeAreaView style={{ flex: 1, flexDirection: "column", }}>
         {/* <CustomDrawerContent></CustomDrawerContent> */}
-        <CustomHeader ref="addtocart" title="Home" isHome={true} cart={true} navigation={this.props.navigation} />
+        <CustomHeader ref="addtocart" title="Trang Chủ" isHome={true} cart={true} navigation={this.props.navigation} />
         <SearchBar platform="android" containerStyle={{ height: 40, width: width, justifyContent: "center" }} inputStyle={{ fontSize: 15, }}
           placeholder="Search..."
           onChangeText={val => this.setState({ search: val })}
           value={this.state.search}
         />
+
         <ScrollView
           showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
           <View style={{ flex: 1 }}>
@@ -279,6 +280,7 @@ export class HomeScreen extends Component {
 
 
           <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}>Sản phẩm được ưa thích  <FontAwesome5 name="heartbeat" size={24} color={"#FF0C0C"} /> </Text>
+          
           <FlatList style={styles.list}
             contentContainerStyle={styles.listContainer}
             data={this.state.data}
@@ -303,8 +305,9 @@ export class HomeScreen extends Component {
                       <Text style={styles.price}>{item.price}</Text>
                     </View>
                   </View>
-
+               
                   <Image style={styles.cardImage} source={{ uri: item.image }} />
+
 
                   <View style={styles.cardFooter}>
                     <View style={styles.socialBarContainer}>
@@ -325,6 +328,7 @@ export class HomeScreen extends Component {
                 </View>
               )
             }} />
+            
 
         </ScrollView>
 
