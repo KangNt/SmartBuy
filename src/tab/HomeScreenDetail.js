@@ -14,6 +14,7 @@ import {
   ,
   SafeAreaView,AsyncStorage
 } from 'react-native';
+import Carousel, { ParallaxImage, Pagination } from 'react-native-snap-carousel';
 import { FontAwesome5 } from '@expo/vector-icons';
 import ReadMore from 'react-native-read-more-text';
 import {CustomHeader} from '../index' 
@@ -37,10 +38,13 @@ export class HomeScreenDetail extends Component {
       data:'',
       comment:[],
       cart:[],
-      totalCart:0
+      totalCart:0,
+      relate_products:""
 
     }
+    console.log(this.state.data1)
     
+  
      try {
           const val = AsyncStorage.multiGet(["id_user","email","name",'avatar']).then(result => {
             
@@ -58,10 +62,45 @@ export class HomeScreenDetail extends Component {
               console.log(error)
         }
   }
-
-  // clickEventListener() {
-  //   Alert.alert("Success", "Product has beed added to cart")
-  // }
+  addProductToCart = (data) => {
+    var itemcart = {
+      proID:data.id,
+      productName: data.name,
+      price: data.price,
+      image:data.image
+    }
+        var flag = false
+        for(var i = 0;i<cart.length;i++){
+            if(cart[i].proID==itemcart.proID){
+              flag=true
+              
+              break
+            }
+        }
+        console.log(flag) 
+        AsyncStorage.getItem('cart').then((res)=>{
+          
+          if(res==null || res=='' ){
+            cart.length = 0
+            flag=false
+          }
+          if(flag === false) {
+            
+            // We have data!!
+            itemcart.quantity=1
+            // const cart = JSON.parse(datacart)
+            cart.push(itemcart)
+            AsyncStorage.setItem('cart',JSON.stringify(cart));
+            this.props.navigation.navigate('cart') 
+            
+          }
+          else{
+               cart[i].quantity +=1
+              AsyncStorage.setItem('cart',JSON.stringify(cart)); 
+              this.props.navigation.navigate('cart') 
+          }
+        })
+}
   componentDidMount(){
     
     const {product} =this.props.route.params
@@ -71,6 +110,19 @@ export class HomeScreenDetail extends Component {
        this.setState({
        
          data:cmt,
+     
+         
+       })
+     })
+     .catch((error) =>{
+       console.error(error);
+     });
+     fetch('https://smartbuy01.gq/api/products/relate-products/'+product.id)
+     .then((relate_pros) =>relate_pros.json())
+     .then((relate_pros) => {
+       this.setState({
+       
+        relate_products:relate_pros.result,
      
          
        })
@@ -248,6 +300,13 @@ export class HomeScreenDetail extends Component {
             </ReadMore>
             
           </View>
+      
+          
+
+
+
+
+
           <View>
             <Text style={{fontWeight:"bold",fontSize:18,paddingLeft:10,color:"#696969"}}>Bình Luận</Text>
           </View>
@@ -297,10 +356,61 @@ export class HomeScreenDetail extends Component {
               }}
               keyExtractor = { (item,index) => index.toString() } 
             />
+            <View style={this.state.relate_products=='' ? {display:"none"}:{}}>
+                <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10,marginTop:10,marginBottom:10,textAlign:'center'}}>
+                  Sản phẩm liên quan <FontAwesome5 name="check-double" size={24} color={"#FF0C0C"} /> </Text>
+                <Carousel
+                  layout={'default'} loop={true}
+                  autoplay={true} autoplayInterval={2500}
+                  inactiveSlideOpacity={0.7}
+                  loopClonesPerSide={3}
+                  vertical={false}
+                  // ref={(c) => { this._carousel = c; }}
+                  data={this.state.relate_products}
+                  renderItem={({item}) => {
+                    
+                    return (
+                      <View style={styles.card}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeDetail', { product: item })}>
+                        <View style={styles.cardHeader}>
+                          <View>
+                            <Text style={styles.title}>{item.name}</Text>
+                            <Text style={styles.price}>{item.price} VNĐ</Text>
+                          </View>
+                        </View>
+      
+                        <Image style={styles.cardImage} source={{ uri: item.image }} />
+      
+                        <View style={styles.cardFooter}>
+                          <View style={styles.socialBarContainer}>
+                            <View style={styles.socialBarSection}>
+                              <TouchableOpacity style={styles.socialBarButton} onPress={() => this.addProductToCart(item)}>
+                                <Image style={styles.icon} source={require('../images/add-to-cart.png')} />
+                                <Text style={[styles.socialBarLabel, styles.buyNow]}> Mua ngay</Text>
+                              </TouchableOpacity>
+                            </View>   
+                          </View>
+                        </View>
+                        </TouchableOpacity>
+                      </View>
+                    )
+                  }}
+                  sliderWidth={width}
+                  itemWidth={width-200}
+                  sliderHeight={100}
+                  itemHeight={30}>
+                  
+                </Carousel>
+              </View>
           </View>
-          
+
+
+
         </ScrollView>
+        
       </View>
+      
+      
       </SafeAreaView>
     );
   }
@@ -338,7 +448,7 @@ export class HomeScreenDetail extends Component {
             cart.push(itemcart)
             AsyncStorage.setItem('cart',JSON.stringify(cart));
             Alert.alert("Thành công", "Sản phẩm đã được thêm vào giỏ hàng")
-            
+             
             
           }
           else{
@@ -498,4 +608,97 @@ const styles = StyleSheet.create({
     fontSize:16,
     fontWeight:"bold",
   },
+
+  list: {
+    paddingHorizontal: 5,
+    backgroundColor: "#E6E6E6",
+  },
+  listContainer: {
+    alignItems: 'center'
+  },
+  separator: {
+    marginTop: 10,
+  },
+  /******** card **************/
+  card: {
+    shadowColor: '#00000021',
+    shadowOffset: {
+      width: 2
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    marginBottom:20,
+    marginVertical: 8,
+    backgroundColor: "white",
+    flexBasis: '47%',
+    marginHorizontal: 5,
+    borderRadius: 15
+  },
+  cardHeader: {
+    paddingVertical: 17,
+    paddingHorizontal: 16,
+    borderTopLeftRadius: 1,
+    borderTopRightRadius: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  cardContent: {
+    paddingVertical: 12.5,
+    paddingHorizontal: 16,
+  },
+  cardFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 12.5,
+    paddingBottom: 25,
+    paddingHorizontal: 16,
+    borderBottomLeftRadius: 1,
+    borderBottomRightRadius: 1,
+  },
+  cardImage: {
+    flex: 1,
+    height: 150,
+    width: null,
+  },
+  /******** card components **************/
+  title: {
+    fontSize: 18,
+    flex: 1,
+  },
+  price: {
+    fontSize: 16,
+    color: "green",
+    marginTop: 5
+  },
+  buyNow: {
+    color: "purple",
+  },
+  icon: {
+    width: 15,
+    height: 15,
+    marginLeft:5,
+  
+  },
+  /******** social bar ******************/
+  socialBarContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    flex: 1
+  },
+  socialBarSection: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    flex: 1,
+  },
+  socialBarlabel: {
+    marginLeft: 8,
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
+  },
+  socialBarButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });     

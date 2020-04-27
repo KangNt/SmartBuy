@@ -18,7 +18,7 @@ import { RVText } from '../core/RVText'
 
 // import { Icon, ListItem } from 'react-native-elements'
 import { ScrollView } from 'react-native-gesture-handler'
-
+import { NavigationActions,StackActions } from 'react-navigation';
 import { Card, ListItem, Button, Icon, ButtonGroup } from 'react-native-elements'
 
 var { height, width } = Dimensions.get('window');
@@ -58,6 +58,7 @@ var STT_payment =[
         method:'VISA/MASTER CARD'
     },
 ]
+
 export class HistoryScreen extends Component {
     constructor(props) {
         super(props);
@@ -97,6 +98,9 @@ export class HistoryScreen extends Component {
        
       console.log(this.state.user_id)
     }
+    
+
+       
     confirm_cancel(item){
         this.setState({
             idOrder:item.id
@@ -149,7 +153,6 @@ export class HistoryScreen extends Component {
                     buttons={buttons}
                     containerStyle={{ height: 50, borderRadius: 30 }}
                 />
-
                 <View style={{flex:1,alignItems:'center'}}>
                     <FlatList style={styles.list} showsVerticalScrollIndicator={false}
                         contentContainerStyle={styles.listContainer}

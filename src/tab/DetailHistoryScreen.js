@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { Text, View,TouchableOpacity,Dimensions,Image,ScrollView,AsyncStorage,Alert,Picker } from 'react-native'
+import { Text, View,TouchableOpacity,Dimensions,Image,ScrollView,AsyncStorage,Alert,Picker,SafeAreaView } from 'react-native'
 import {CustomHeader} from '../index'
 var { width,height } = Dimensions.get("window")
 var cart =[]
@@ -18,6 +18,10 @@ var STT_payment =[
       value:"3",
       method:'VISA/MASTER CARD'
   },
+  {
+    value:"4",
+    method:'Tiền mặt'
+}
 ]
 export class DetailHistoryScreen extends Component {
   constructor(props) {
@@ -37,6 +41,7 @@ export class DetailHistoryScreen extends Component {
                 console.log(this.state.data)      
         })
         return ( 
+            <SafeAreaView style={{ flex: 1, }}>
             <View style={{ flex: 1, }}>
             <CustomHeader title="Chi Tiết Đơn Hàng" isHome={false} navigation={this.props.navigation} />
             <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, }}>
@@ -101,9 +106,8 @@ export class DetailHistoryScreen extends Component {
           </View>
           </ScrollView>
           </View>
+          </SafeAreaView>
         )
       }
 }
    
-
-

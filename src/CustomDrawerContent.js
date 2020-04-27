@@ -37,17 +37,11 @@ export class CustomDrawerContent extends Component {
             
     }
            
-    componentDidMount(){
-       this.getInfo()
-            
-      
-    }
+    
     getInfo(){
         const val = AsyncStorage.multiGet(["id_user","email", "name",'avatar']).then(result => {
             // alert(result[0][1])
-            // alert(result[1][1])
-            // alert(result[2][1])
-            // alert(result[3][1])
+            
 
             this.setState({
               id_user:result[0][1],
@@ -64,7 +58,6 @@ export class CustomDrawerContent extends Component {
     _AlertLogout =()=>{
         Alert.alert("Thông báo!", "Bạn có chắc chắn muốn Logout không?",
         [
-          
           {text:'Cancel'},
           { text:'OK', onPress:this._Logout
           
@@ -75,18 +68,20 @@ export class CustomDrawerContent extends Component {
       }
      
      
-      _Logout = async () => {
-        try {
-          AsyncStorage.clear();
-          this.setState({
-            email:'',
-            name:""
+      _Logout=()=>{
+        AsyncStorage.clear();
+        this.setState({
+            id_user:null,
+            email:null,
+            name:null,
+            avatar:null,
+            
           })
-          this.props.navigation.navigate('Home')
-        } catch (error) {
-          alert(error)
+            
           
-        }
+
+         
+
       }
       Register(){
         this.props.navigation.navigate('Register')
@@ -95,7 +90,7 @@ export class CustomDrawerContent extends Component {
     render() {
         
         return (
-            <SafeAreaView style={{ flex: 1,marginTop:40 }}>
+            <SafeAreaView style={styles.container}>
             <View style={{ height: 150, alignItems: 'center', justifyContent: 'center' }}>
                 <TouchableOpacity onPress={()=>this.getInfo()}
                 
@@ -146,44 +141,60 @@ export class CustomDrawerContent extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
-                    onPress={() => this.props.navigation.navigate('MenuTab')}
+                    onPress={() => this.props.navigation.navigate('Introduce')}
                 >
-
                     <Text style={styles.text}><FontAwesome5 name="comment-dots" size={24} color={"#CDCCCE"} />   <Text style={styles.texts}>Giới Thiệu</Text></Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    style={this.state.email != null ? {display:'none'} : {marginTop:25}}
+                
+                {this.state.email == null ?
+                    <TouchableOpacity
+                    style={{marginTop:25}}
                     onPress={() => this.props.navigation.navigate('Login')}
-                >
+                    >
                     <Text style={styles.text}><FontAwesome5 name="sign-in-alt" size={24} color={"#CDCCCE"} />
                         <Text style={styles.texts}>   Đăng Nhập</Text>
                     </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={this.state.email != null ? {marginTop:25} : {display:'none'}}
-                    onPress={this._Logout}
-                >
+                    </TouchableOpacity>
+                    :
+                    null
+                }
+                {this.state.email == null ?
+                    null
+                    :
+                    <TouchableOpacity
+                        style={{marginTop:25}}
+                        onPress={()=> this._AlertLogout()}
+                    >
                     <Text style={styles.text}><FontAwesome5 name="sign-in-alt" size={24} color={"#CDCCCE"} />
                         <Text style={styles.texts}>   Đăng Xuất</Text>
                     </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={this.state.email != null ? {display:'none'} : {marginTop:25}}
+                    </TouchableOpacity>
+                }
+                {this.state.email == null ?
+                    <TouchableOpacity
+                    style={{marginTop:25}}
                     onPress={()=> this.Register()}
-                >
+                    >
                     <Text style={styles.text}><FontAwesome5 name="registered" size={24} color={"#CDCCCE"} />
                         <Text style={styles.texts}>   Đăng Kí</Text>
                     </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={this.state.email != null ? {display:'none'} : {marginTop:25}}
-                    onPress={()=> this.props.navigation.navigate('ForgotPassword')}
-                >
-                    <Text style={styles.text}><FontAwesome5 name="lock-open" size={24} color={"#CDCCCE"} />
-                        <Text style={styles.texts}>   Quên Mật Khẩu</Text>
-                    </Text>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                    :
+                    null
+                }
+                {this.state.email == null ?
+                    <TouchableOpacity
+                        style={{marginTop:25}}
+                        onPress={()=> this.props.navigation.navigate('ForgotPassword')}
+                    >
+                        <Text style={styles.text}><FontAwesome5 name="lock-open" size={24} color={"#CDCCCE"} />
+                            <Text style={styles.texts}>   Quên Mật Khẩu</Text>
+                        </Text>
+                    </TouchableOpacity>
+                    :
+                    null
+                }
+                
             </ScrollView>
         </SafeAreaView>
         )
@@ -191,6 +202,11 @@ export class CustomDrawerContent extends Component {
 }
 
 const styles = StyleSheet.create({
+    container:{
+        flex: 1,
+        marginTop:0,
+        // backgroundColor:""
+    },
     text: {
         marginLeft: 10,
         flexDirection: "row",

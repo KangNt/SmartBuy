@@ -69,7 +69,6 @@ export class SettingsScreen extends Component {
       )
     }
     else{
-    let { navigation, isHome, title } = this.props
     return (
 
       <SafeAreaView style={{ flex: 1, }}

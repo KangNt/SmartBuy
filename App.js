@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 // import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -11,9 +10,9 @@ import {CustomDrawerContent,BarcodeScannerExample} from './src'
 import Cart from './src/Cart'
 import { HomeScreen, HomeScreenDetail, SettingsScreen, SettingsScreenDetail, HistoryScreen,
   DetailHistoryScreen,CategoryDetail, FavouriteScreen, ScanQrCodeScreen} from './src/tab'
-import { NotificationsScreen, ProfileScreen, ContactScreen,EditProfileScreen,ChangePasswordScreen} from './src/drawer'
+import { NotificationsScreen, ProfileScreen, ContactScreen,EditProfileScreen,ChangePasswordScreen,ForgotPasswordScreen, IntroduceScreen} from './src/drawer'
 import Test from "./src/Test"
-import { LoginScreen, RegisterScreen,ShowScan } from './src/auth'
+import { LoginScreen, RegisterScreen,ShowScan, } from './src/auth'
 import { AddButton } from './components/AddButton'
 // import { Ionicons, Feather } from '@expo/vector-icons';
 
@@ -40,6 +39,8 @@ function HomeStack() {
       <StackHome.Screen name="cart" component={Cart} options={navOptionHandler} />
       <StackSetting.Screen name="Test" component={Test} options={navOptionHandler} />
       <StackHome.Screen name="Login" component={LoginScreen} options={navOptionHandler} /> 
+      
+      <StackHome.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={navOptionHandler} /> 
       <StackHome.Screen name="Register" component={RegisterScreen} options={navOptionHandler} /> 
       <StackHome.Screen name="Menu" component={CustomDrawerContent} options={navOptionHandler} /> 
       <StackHome.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
@@ -55,6 +56,7 @@ function HistoryStack() {
     <StackHistory.Navigator initialRouteName="History" >
       <StackHistory.Screen name="History" component={HistoryScreen} options={navOptionHandler} />
       <StackHistory.Screen name="DetailHistory" component={DetailHistoryScreen} options={navOptionHandler} />
+      <StackHome.Screen name="Home" component={HomeScreen} options={navOptionHandler} />
     </StackHistory.Navigator>
   );
 };
@@ -68,7 +70,7 @@ const StackSetting = createStackNavigator();
 function SettingStack() {
   return (
     <StackSetting.Navigator initialRouteName="Setting">
-      <StackSetting.Screen name="Setting" component={SettingsScreen} options={navOptionHandler} />
+       <StackSetting.Screen name="Setting" component={SettingsScreen} options={navOptionHandler} />
       <StackSetting.Screen name="SettingDetail" component={SettingsScreenDetail} options={navOptionHandler} />
       <StackSetting.Screen name="Profile" component={ProfileScreen} options={navOptionHandler} />
       <StackSetting.Screen name="ChangePassword" component={ChangePasswordScreen} options={navOptionHandler} />
@@ -188,7 +190,7 @@ function DrawerNavigator({ navigation }) {
       <Drawer.Screen name="Menu" component={CustomDrawerContent} />
       <Drawer.Screen name="Notifications" component={NotificationsScreen} />
       <Drawer.Screen name="Profile" component={ProfileScreen} />
-     
+      <Drawer.Screen name="Introduce" component={IntroduceScreen} />
       <Drawer.Screen name="Contact" component={ContactScreen} />
 
     </Drawer.Navigator>
@@ -209,162 +211,3 @@ export default function App() {
 
   );
 }
-
-// import React from "react";
-// import { createAppContainer } from "react-navigation";
-// import { createDrawerNavigator } from "react-navigation-drawer";
-// import { Dimensions } from "react-native";
-// import { Feather } from "@expo/vector-icons";
-// import {
-//   ProfileScreen,
-//   SignOutScreen,
-//   HomeScreen,
-//   HistoryScreen
-// } from "./screens";
-
-// import SideBar from "./components/SideBar";
-// // //**----------------------------------------- */
-// // import { createBottomTabNavigator } from 'react-navigation-tabs';
-
-// // import { NavigationContainer } from '@react-navigation/native';
-// // import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-// // import { createStackNavigator } from 'react-navigation-stack';
-// // import { NavigationContainer } from '@react-navigation/native';
-
-// import HomeScreen from './screens/HomeScreen'
-// import ProfileScreen from './screens/ProfileScreen'
-
-
-
-// const DrawerNavigator = createDrawerNavigator(
-//   {
-//     Home: {
-//       screen: HomeScreen,
-//       navigationOptions: {
-//         drawerIcon: ({ tintColor }) => <Feather name="home"  size={16} color={tintColor}  />
-//       }
-//     },
-
-//     Profile: {
-//       screen: ProfileScreen,
-//       navigationOptions: {
-//         drawerIcon: ({ tintColor }) => <Feather name="user" size={16} color={tintColor} />
-//       }
-//     },
-//     History: {
-//       screen: HistoryScreen,
-//       navigationOptions: {
-//         drawerIcon: ({ tintColor }) => <Feather name="clock" size={16} color={tintColor} />
-//       }
-//     },
-
-
-//     SignOut: {
-//       screen: SignOutScreen,
-//       navigationOptions: {
-//         title: "Sign Out",
-//         drawerIcon: ({ tintColor }) => <Feather name="log-out" size={16} color={tintColor} />
-//       }
-//     },
-
-//   },
-//   {
-//     contentComponent: props => <SideBar {...props} />,
-//     drawerWidth: Dimensions.get("window").width * 0.85,
-//     hideStatusBar: true,
-
-//     contentOptions: {
-//       activeBackgroundColor: "rgba(212,118,207, 0.2)",
-//       activeTintColor: "#53115B",
-//       itemsContainerStyle: {
-//         marginTop: 16,
-//         marginHorizontal: 8
-//       },
-//       itemStyle: {
-//         borderRadius: 4
-//       }
-//     }
-//   }
-// );
-
-
-
-
-// export default createAppContainer(DrawerNavigator);
-
-
-
-/***************************************************************************************** */
-
-// import React from 'react';
-// import { createBottomTabNavigator } from 'react-navigation-tabs';
-// // import { createStackNavigator } from 'react-navigation-stack';//
-// // import {createSwitchNavigator} from 'react-navigation';//
-// import { FontAwesome5 } from '@expo/vector-icons';
-// import { createAppContainer} from 'react-navigation'
-// import { JournalScreen, MeasuresScreen, TreamentScreen, ProfileScreen } from './screens';
-// import AddButton from './components/AddButton';
-
-// // import SettingScreen from './screens/SettingScreen'
-// import HistoryScreen from './screens/HistoryScreen'
-
-// // import LoginScreen from './components/InputTextField'
-
-
-
-// const TabNavigator = createBottomTabNavigator(
-//   {
-//     Journal: {
-//       screen: JournalScreen,
-//       navigationOptions: {
-//         tabBarIcon: <HistoryScreen/>
-//         //  () =>  <FontAwesome5 name="clock" size={24} color={"#CDCCCE"} />
-
-//       }
-//     },
-
-//     Measures: {
-//       screen: MeasuresScreen,
-//       navigationOptions: {
-//         tabBarIcon: () => <FontAwesome5 name="qrcode" size={24} color={"#CDCCCE"} />
-
-//       }
-//     },
-//     Add: {
-//       screen: () => null,
-//       navigationOptions: {
-//         tabBarIcon: <AddButton />
-//       }
-//     },
-//     Treament: {
-//       screen: TreamentScreen,
-//       navigationOptions: {
-//         tabBarIcon: () => <FontAwesome5 name="star" size={24} color={"#CDCCCE"} />
-
-//       }
-//     },
-//     Profile: {
-//       screen: ProfileScreen,
-//       navigationOptions: {
-//         tabBarIcon: () => <FontAwesome5 name="cog" size={24} color={"#CDCCCE"} />
-
-//       }
-//     }
-//   },
-//   {
-//     tabBarOptions: {
-//       showLabel: false
-//     }
-//   }
-
-
-
-
-// );//end-export
-
-// export default createAppContainer(TabNavigator);
-
-
-
-
