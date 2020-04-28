@@ -10,7 +10,7 @@ export class CustomHeader extends Component {
   render() {
     let { navigation, isHome, title,cart } = this.props
     return (
-      <View style={{ flexDirection: 'row', height: 70,marginTop:20, backgroundColor:"#1CF8F8" }}>
+      <View style={{ flexDirection: 'row', height: 70,marginTop:0, backgroundColor:"#1CF8F8" }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           {
             isHome ?

@@ -167,6 +167,37 @@ export class HomeScreen extends Component {
 
 
   }
+  PulltoRefresh=()=>{
+    this.setState({
+      loading:true
+    })
+    Promise.all([fetch('https://smartbuy01.gq/api/slider'), fetch('https://smartbuy01.gq/api/products'),
+                fetch('https://smartbuy01.gq/api/categories'),fetch('https://smartbuy01.gq/api/products/list-favorite-products')
+                ,fetch('https://smartbuy01.gq/api/products/most-list-bought-products'),
+                fetch('https://smartbuy01.gq/api/products/list-new-products')
+    ])
+      .then(([res1, res2, res3,res4,res5,res6]) => {
+        return Promise.all([res1.json(), res2.json(), res3.json(),res4.json(),res5.json(),res6.json()])
+      })
+      .then(([res1, res2, res3,res4,res5,res6]) => {
+        this.setState({
+          sliders: res1,
+          products: res2,
+          categories: res3,
+          list_favorite_products:res4.result,
+          mostList_bought_Products:res5.result,
+          listNewProducts:res6,
+          loading:false
+        })
+        console.log(this.state.categories.category)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  
+        
+        
+  }
   renderCate(item) {
     return (
       <TouchableOpacity style={{backgroundColor:"#70c1ae"}} onPress={() => this.props.navigation.navigate('CategoryDetail', { category: item })}>
@@ -208,15 +239,20 @@ export class HomeScreen extends Component {
 
     // if(is)const {email} = this.props.route.params  
     return (
-      <SafeAreaView style={{ flex: 1, flexDirection: "column", }}>
-        {/* <CustomDrawerContent></CustomDrawerContent> */}
+      <SafeAreaView  style={{ flex: 1, flexDirection: "column", }}>
+        <ScrollView refreshControl={
+          <RefreshControl
+          onRefresh={this.PulltoRefresh}
+          refreshing={this.state.loading}
+          />
+        }>
         <CustomHeader ref="addtocart" title="Home" isHome={true} cart={true} navigation={this.props.navigation} />
         <SearchBar platform="android" containerStyle={{ height: 40, width: width, justifyContent: "center" }} inputStyle={{ fontSize: 15, }}
           placeholder="Search..."
           onChangeText={val => this.setState({ search: val })}
           value={this.state.search}
         />
-        <ScrollView
+        <ScrollView 
           showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
           <View style={{ flex: 1 }}>
 
@@ -273,7 +309,11 @@ export class HomeScreen extends Component {
                   keyExtractor={(item, index) => index.toString()}>
                 </FlatList>
                 :
-                <FlatList data={this.state.listNewProducts} numColumns={2}
+                <FlatList 
+                 data={this.state.listNewProducts}
+                 
+                 
+                 numColumns={2}
                   renderItem={({ item }) => this.renderProNew(item)}
                   keyExtractor={(item, index) => index.toString()}>
                 </FlatList>
@@ -286,6 +326,7 @@ export class HomeScreen extends Component {
            
              <Text style={{ fontSize: 17,color:"#677ba6", fontWeight: "bold", marginLeft: 10 }}>Sản phẩm được mua nhiều <FontAwesome5 name="jedi-order" size={24} color={"#FF0C0C"} /> </Text>
              <FlatList style={styles.list}
+            
                contentContainerStyle={styles.listContainer}
                data={this.state.mostList_bought_Products}
                horizontal={false}
@@ -341,6 +382,7 @@ export class HomeScreen extends Component {
             contentContainerStyle={styles.listContainer}
             data={this.state.list_favorite_products}
             horizontal={false}
+            
             numColumns={2}
             keyExtractor={(item) => {
               return item.id;
@@ -387,21 +429,7 @@ export class HomeScreen extends Component {
             </View>
 
         </ScrollView>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        </ScrollView>     
       </SafeAreaView>
     )
   }

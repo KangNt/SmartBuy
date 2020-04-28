@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, SafeAreaView, Image,TouchableOpacity,ScrollView,StyleSheet,AsyncStorage,Alert} from 'react-native'
+import { Text, View, SafeAreaView,RefreshControl, Image,TouchableOpacity,ScrollView,StyleSheet,AsyncStorage,Alert} from 'react-native'
 import { IMAGE } from './constants/Image'
 import { FontAwesome5 } from '@expo/vector-icons';
 export class CustomDrawerContent extends Component {
@@ -86,7 +86,20 @@ export class CustomDrawerContent extends Component {
       Register(){
         this.props.navigation.navigate('Register')
       }
+      PulltoRefresh=()=>{
+        this.setState({
+          loading:true
+        })
+        this.getInfo()
+          this.setState({
+
+            loading:false
+          })
+
       
+            
+            
+      }
     render() {
         
         return (
@@ -116,7 +129,12 @@ export class CustomDrawerContent extends Component {
 
 
             </View>
-            <ScrollView style={{ marginLeft: 5 }}>
+            <ScrollView refreshControl={
+        <RefreshControl
+        onRefresh={this.PulltoRefresh}
+        refreshing={this.state.loading}
+        />
+      }  style={{ marginLeft: 5 }}>
                 <TouchableOpacity
                     style={{ marginTop: 10,flexDirection:"row"}}
                     onPress={() => this.props.navigation.navigate('MenuTab')}

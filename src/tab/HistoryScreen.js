@@ -8,7 +8,7 @@ import {
     FlatList,
     StyleSheet,
     Alert,
-    Dimensions,AsyncStorage
+    Dimensions,AsyncStorage,RefreshControl
 } from 'react-native'
 import { FontAwesome5 } from '@expo/vector-icons';
 import { CustomHeader } from '../index'
@@ -65,7 +65,8 @@ export class HistoryScreen extends Component {
         this.state = {
             user_id:"",
             data: [],
-            payment_method:""
+            payment_method:"",
+            loading:false
         };
         
     }
@@ -98,7 +99,43 @@ export class HistoryScreen extends Component {
        
       console.log(this.state.user_id)
     }
-    
+    PulltoRefresh=()=>{
+        this.setState({
+            loading:true
+        })
+        try {
+            const val = AsyncStorage.multiGet(["id_user","email","name",'avatar']).then(result => {
+                this.setState({
+                  user_id:result[0][1],
+
+                })
+                fetch('https://smartbuy01.gq/api/history/history-by-user/'+this.state.user_id,{
+                    method: 'GET',
+                    headers:{
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                    
+                    },
+              }
+            ).then((res)=>res.json()).then((res)=>{
+                  this.setState({
+                      data:res.result,
+                      loading:false
+                      
+                  })
+                  
+                  console.log(this.state.data)
+                  
+            })
+              }) 
+          } catch (error) {
+                console.log(error)
+          }
+
+      
+            
+            
+      }
 
        
     confirm_cancel(item){
@@ -141,7 +178,12 @@ export class HistoryScreen extends Component {
         let { navigation, isHome, title } = this.props
         return (
             
-            <SafeAreaView style={{ flex: 1, }} >
+            <ScrollView refreshControl={
+                <RefreshControl
+                onRefresh={this.PulltoRefresh}
+                refreshing={this.state.loading}
+                />
+              }   style={{ flex: 1, }} >
             {/* <ScrollView style={{flex:1}}> */}
                 <CustomHeader title="History" navigation={this.props.navigation} />
                 
@@ -154,7 +196,8 @@ export class HistoryScreen extends Component {
                     containerStyle={{ height: 50, borderRadius: 30 }}
                 />
                 <View style={{flex:1,alignItems:'center'}}>
-                    <FlatList style={styles.list} showsVerticalScrollIndicator={false}
+                    <FlatList
+                     style={styles.list} showsVerticalScrollIndicator={false}
                         contentContainerStyle={styles.listContainer}
                         data={this.state.data}  
                         horizontal={false}
@@ -219,7 +262,7 @@ export class HistoryScreen extends Component {
 
                
             {/* </ScrollView> */}
-            </SafeAreaView>
+            </ScrollView>
             
             
 
