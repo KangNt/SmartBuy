@@ -10,10 +10,11 @@ import {
   FlatList,
   Button,
   TextInput,
-  Dimensions,
-  SafeAreaView,
-  AsyncStorage
+  Dimensions
+  ,
+  SafeAreaView,AsyncStorage
 } from 'react-native';
+import Carousel, { ParallaxImage, Pagination } from 'react-native-snap-carousel';
 import { FontAwesome5 } from '@expo/vector-icons';
 import ReadMore from 'react-native-read-more-text';
 import {CustomHeader} from '../index' 
@@ -31,27 +32,18 @@ export class HomeScreenDetail extends Component {
       content_comment:'',
       user_id:'',
       email:'',
-      avatar:'', 
+      avatar:'',
       name:'',
       product_id:'',
       data:'',
       comment:[],
       cart:[],
       totalCart:0,
-      data: [
-        //data-fake
-        { id: 1, title: "Product 1", price: "$ 25.00 USD", image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" },
-        { id: 2, title: "Product 2", price: "$ 10.13 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
-        { id: 3, title: "Product 3", price: "$ 12.12 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
-        { id: 4, title: "Product 4", price: "$ 11.00 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
-      
-      ]
+      relate_products:""
 
     }
-
-    addProductToCart = () => {
-      Alert.alert('Success', 'The product has been added to your cart')
-    }
+    console.log(this.state.data1)
+    
   
      try {
           const val = AsyncStorage.multiGet(["id_user","email","name",'avatar']).then(result => {
@@ -70,10 +62,45 @@ export class HomeScreenDetail extends Component {
               console.log(error)
         }
   }
-
-  // clickEventListener() {
-  //   Alert.alert("Success", "Product has beed added to cart")
-  // }
+  addProductToCart = (data) => {
+    var itemcart = {
+      proID:data.id,
+      productName: data.name,
+      price: data.price,
+      image:data.image
+    }
+        var flag = false
+        for(var i = 0;i<cart.length;i++){
+            if(cart[i].proID==itemcart.proID){
+              flag=true
+              
+              break
+            }
+        }
+        console.log(flag) 
+        AsyncStorage.getItem('cart').then((res)=>{
+          
+          if(res==null || res=='' ){
+            cart.length = 0
+            flag=false
+          }
+          if(flag === false) {
+            
+            // We have data!!
+            itemcart.quantity=1
+            // const cart = JSON.parse(datacart)
+            cart.push(itemcart)
+            AsyncStorage.setItem('cart',JSON.stringify(cart));
+            this.props.navigation.navigate('cart') 
+            
+          }
+          else{
+               cart[i].quantity +=1
+              AsyncStorage.setItem('cart',JSON.stringify(cart)); 
+              this.props.navigation.navigate('cart') 
+          }
+        })
+}
   componentDidMount(){
     
     const {product} =this.props.route.params
@@ -83,6 +110,19 @@ export class HomeScreenDetail extends Component {
        this.setState({
        
          data:cmt,
+     
+         
+       })
+     })
+     .catch((error) =>{
+       console.error(error);
+     });
+     fetch('https://smartbuy01.gq/api/products/relate-products/'+product.id)
+     .then((relate_pros) =>relate_pros.json())
+     .then((relate_pros) => {
+       this.setState({
+       
+        relate_products:relate_pros.result,
      
          
        })
@@ -261,53 +301,7 @@ export class HomeScreenDetail extends Component {
             
           </View>
       
-          <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}>Sản phẩm tương tự <FontAwesome5 name="check-double" size={24} color={"#FF0C0C"} /> </Text>
-          <FlatList style={styles.list}
-            contentContainerStyle={styles.listContainer}
-            data={this.state.data}
-            horizontal={false}
-            numColumns={2}
-            keyExtractor={(item) => {
-              return item.id;
-            }}
-            ItemSeparatorComponent={() => {
-              return (
-                <View style={styles.separator} />
-              )
-            }}
-            renderItem={(post) => {
-              const item = post.item;
-              return (
-                <View style={styles.card}>
-
-                  <View style={styles.cardHeader}>
-                    <View>
-                      <Text style={styles.title}>{item.title}</Text>
-                      <Text style={styles.price}>{item.price}</Text>
-                    </View>
-                  </View>
-
-                  <Image style={styles.cardImage} source={{ uri: item.image }} />
-
-                  <View style={styles.cardFooter}>
-                    <View style={styles.socialBarContainer}>
-                      <View style={styles.socialBarSection}>
-                        <TouchableOpacity style={styles.socialBarButton} onPress={() => this.addProductToCart()}>
-                          <Image style={styles.icon} source={require('../images/add-to-cart.png')} />
-                          <Text style={[styles.socialBarLabel, styles.buyNow]}>Buy Now</Text>
-                        </TouchableOpacity>
-                      </View>
-                      <View style={styles.socialBarSection}>
-                        <TouchableOpacity style={styles.socialBarButton}>
-                        
-                          <Text style={styles.socialBarLabel}>125 l</Text>
-                        </TouchableOpacity>
-                       </View>
-                    </View>
-                  </View>
-                </View>
-              )
-            }} />
+          
 
 
 
@@ -362,6 +356,52 @@ export class HomeScreenDetail extends Component {
               }}
               keyExtractor = { (item,index) => index.toString() } 
             />
+            <View style={this.state.relate_products=='' ? {display:"none"}:{}}>
+                <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10,marginTop:10,marginBottom:10,textAlign:'center'}}>
+                  Sản phẩm liên quan <FontAwesome5 name="check-double" size={24} color={"#FF0C0C"} /> </Text>
+                <Carousel
+                  layout={'default'} loop={true}
+                  autoplay={true} autoplayInterval={2500}
+                  inactiveSlideOpacity={0.7}
+                  loopClonesPerSide={3}
+                  vertical={false}
+                  // ref={(c) => { this._carousel = c; }}
+                  data={this.state.relate_products}
+                  renderItem={({item}) => {
+                    
+                    return (
+                      <View style={styles.card}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeDetail', { product: item })}>
+                        <View style={styles.cardHeader}>
+                          <View>
+                            <Text style={styles.title}>{item.name}</Text>
+                            <Text style={styles.price}>{item.price} VNĐ</Text>
+                          </View>
+                        </View>
+      
+                        <Image style={styles.cardImage} source={{ uri: item.image }} />
+      
+                        <View style={styles.cardFooter}>
+                          <View style={styles.socialBarContainer}>
+                            <View style={styles.socialBarSection}>
+                              <TouchableOpacity style={styles.socialBarButton} onPress={() => this.addProductToCart(item)}>
+                                <Image style={styles.icon} source={require('../images/add-to-cart.png')} />
+                                <Text style={[styles.socialBarLabel, styles.buyNow]}> Mua ngay</Text>
+                              </TouchableOpacity>
+                            </View>   
+                          </View>
+                        </View>
+                        </TouchableOpacity>
+                      </View>
+                    )
+                  }}
+                  sliderWidth={width}
+                  itemWidth={width-200}
+                  sliderHeight={100}
+                  itemHeight={30}>
+                  
+                </Carousel>
+              </View>
           </View>
 
 
@@ -587,6 +627,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.5,
     shadowRadius: 4,
+    marginBottom:20,
     marginVertical: 8,
     backgroundColor: "white",
     flexBasis: '47%',

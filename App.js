@@ -155,7 +155,6 @@ function TabNavigator({navigation}) {
 
         name="ScanQrCode" component={ScanQrCodeStack}
         
-        
       />
 
       <Tab.Screen

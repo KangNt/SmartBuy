@@ -118,6 +118,12 @@ export default class Cart extends Component {
 
           }).then((res) => res.json()).then((res01) => {
             if (res01.msg == 'ok') {
+              fetch('https://smartbuy01.gq/api/orders/send-email').
+              then((resEmail) => resEmail.json()).then((resEmail) => {
+                  if(resEmail.result=='ok'){
+                    console.log('Gửi email thành công')
+                  }
+              })
               setTimeout(() => {
                 AsyncStorage.removeItem('cart')
                 this.setState({

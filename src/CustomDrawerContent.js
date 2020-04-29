@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, SafeAreaView, Image,TouchableOpacity,ScrollView,StyleSheet,AsyncStorage,Alert} from 'react-native'
+import { Text, View, SafeAreaView,RefreshControl, Image,TouchableOpacity,ScrollView,StyleSheet,AsyncStorage,Alert} from 'react-native'
 import { IMAGE } from './constants/Image'
 import { FontAwesome5 } from '@expo/vector-icons';
 export class CustomDrawerContent extends Component {
@@ -37,17 +37,11 @@ export class CustomDrawerContent extends Component {
             
     }
            
-    componentDidMount(){
-       this.getInfo()
-            
-      
-    }
+    
     getInfo(){
         const val = AsyncStorage.multiGet(["id_user","email", "name",'avatar']).then(result => {
             // alert(result[0][1])
-            // alert(result[1][1])
-            // alert(result[2][1])
-            // alert(result[3][1])
+            
 
             this.setState({
               id_user:result[0][1],
@@ -74,23 +68,38 @@ export class CustomDrawerContent extends Component {
       }
      
      
-      _Logout = async () => {
-        try {
-          AsyncStorage.clear();
-          this.setState({
-            email:'',
-            name:""
+      _Logout=()=>{
+        AsyncStorage.clear();
+        this.setState({
+            id_user:null,
+            email:null,
+            name:null,
+            avatar:null,
+            
           })
-          this.props.navigation.navigate('Home')
-        } catch (error) {
-          alert(error)
+            
           
-        }
+
+         
+
       }
       Register(){
         this.props.navigation.navigate('Register')
       }
+      PulltoRefresh=()=>{
+        this.setState({
+          loading:true
+        })
+        this.getInfo()
+          this.setState({
+
+            loading:false
+          })
+
       
+            
+            
+      }
     render() {
         
         return (
@@ -120,13 +129,18 @@ export class CustomDrawerContent extends Component {
 
 
             </View>
-            <ScrollView style={{ marginLeft: 5 }}>
+            <ScrollView refreshControl={
+        <RefreshControl
+        onRefresh={this.PulltoRefresh}
+        refreshing={this.state.loading}
+        />
+      }  style={{ marginLeft: 5 }}>
                 <TouchableOpacity
                     style={{ marginTop: 10,flexDirection:"row"}}
                     onPress={() => this.props.navigation.navigate('MenuTab')}
                 >
                     <Text style={styles.text}>
-        <FontAwesome5 name="home" size={24} color={"#202020"} />  Trang Chủ</Text>
+        <FontAwesome5 name="home" size={24} color={"#CDCCCE"} />  Trang Chủ</Text>
                     
                 </TouchableOpacity>
 
@@ -134,54 +148,71 @@ export class CustomDrawerContent extends Component {
                     style={{ marginTop: 25 }}
                     onPress={() => this.props.navigation.navigate('Profile')}
                 >
-                    <Text style={styles.text} ><FontAwesome5 name="user" size={24} color={"#202020"} />    <Text style={styles.texts}>Thông Báo</Text></Text>
+                    <Text style={styles.text} ><FontAwesome5 name="user" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Thông Báo</Text></Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
                     onPress={() => this.props.navigation.navigate('Contact')}
                 >
-                    <Text style={styles.text}><FontAwesome5 name="list-alt" size={24} color={"#202020"} />   <Text style={styles.texts}>Liên Hệ</Text></Text>
+                    <Text style={styles.text}><FontAwesome5 name="list-alt" size={24} color={"#CDCCCE"} />   <Text style={styles.texts}>Liên Hệ</Text></Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
                     onPress={() => this.props.navigation.navigate('Introduce')}
                 >
-                    <Text style={styles.text}><FontAwesome5 name="comment-dots" size={24} color={"#202020"} />   <Text style={styles.texts}>Giới Thiệu</Text></Text>
+                    <Text style={styles.text}><FontAwesome5 name="comment-dots" size={24} color={"#CDCCCE"} />   <Text style={styles.texts}>Giới Thiệu</Text></Text>
                 </TouchableOpacity>
-                <TouchableOpacity
-                    style={this.state.email != null ? {display:'none'} : {marginTop:25}}
+                
+                {this.state.email == null ?
+                    <TouchableOpacity
+                    style={{marginTop:25}}
                     onPress={() => this.props.navigation.navigate('Login')}
-                >
-                    <Text style={styles.text}><FontAwesome5 name="sign-in-alt" size={24} color={"#202020"} />
+                    >
+                    <Text style={styles.text}><FontAwesome5 name="sign-in-alt" size={24} color={"#CDCCCE"} />
                         <Text style={styles.texts}>   Đăng Nhập</Text>
                     </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={this.state.email != null ? {marginTop:25} : {display:'none'}}
-                    onPress={this._Logout}
-                >
-                    <Text style={styles.text}><FontAwesome5 name="sign-in-alt" size={24} color={"#202020"} />
+                    </TouchableOpacity>
+                    :
+                    null
+                }
+                {this.state.email == null ?
+                    null
+                    :
+                    <TouchableOpacity
+                        style={{marginTop:25}}
+                        onPress={()=> this._AlertLogout()}
+                    >
+                    <Text style={styles.text}><FontAwesome5 name="sign-in-alt" size={24} color={"#CDCCCE"} />
                         <Text style={styles.texts}>   Đăng Xuất</Text>
                     </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={this.state.email != null ? {display:'none'} : {marginTop:25}}
+                    </TouchableOpacity>
+                }
+                {this.state.email == null ?
+                    <TouchableOpacity
+                    style={{marginTop:25}}
                     onPress={()=> this.Register()}
-                >
-                    <Text style={styles.text}><FontAwesome5 name="registered" size={24} color={"#202020"} />
+                    >
+                    <Text style={styles.text}><FontAwesome5 name="registered" size={24} color={"#CDCCCE"} />
                         <Text style={styles.texts}>   Đăng Kí</Text>
                     </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={this.state.email != null ? {display:'none'} : {marginTop:25}}
-                    onPress={()=> this.props.navigation.navigate('ForgotPassword')}
-                >
-                    <Text style={styles.text}><FontAwesome5 name="lock-open" size={24} color={"#202020"} />
-                        <Text style={styles.texts}>   Quên Mật Khẩu</Text>
-                    </Text>
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                    :
+                    null
+                }
+                {this.state.email == null ?
+                    <TouchableOpacity
+                        style={{marginTop:25}}
+                        onPress={()=> this.props.navigation.navigate('ForgotPassword')}
+                    >
+                        <Text style={styles.text}><FontAwesome5 name="lock-open" size={24} color={"#CDCCCE"} />
+                            <Text style={styles.texts}>   Quên Mật Khẩu</Text>
+                        </Text>
+                    </TouchableOpacity>
+                    :
+                    null
+                }
+                
             </ScrollView>
         </SafeAreaView>
         )

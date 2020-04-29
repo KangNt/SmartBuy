@@ -20,6 +20,7 @@ const recipeNumColums = 2;
 // item size
 const RECIPE_ITEM_HEIGHT = 150;
 const RECIPE_ITEM_MARGIN = 20;
+var cart =[]
 export class HomeScreen extends Component {
 
   //**Sản phẩm ưa thích  */
@@ -43,66 +44,70 @@ export class HomeScreen extends Component {
       quantity: null,
       total: null,
       quantity: 0,
-      //end api
-      data: [
-        //data-fake
-        { id: 1, title: "Product 1", price: "$ 25.00 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
-        { id: 2, title: "Product 2", price: "$ 10.13 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
-        { id: 3, title: "Product 3", price: "$ 12.12 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
-        { id: 4, title: "Product 4", price: "$ 11.00 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
-        { id: 5, title: "Product 5", price: "$ 20.00 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
-        { id: 6, title: "Product 6", price: "$ 33.00 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
-        { id: 7, title: "Product 7", price: "$ 20.95 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
-        { id: 8, title: "Product 8", price: "$ 13.60 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
-        { id: 9, title: "Product 9", price: "$ 15.30 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
-        { id: 9, title: "Product 10", price: "$ 21.30 USD", image: "https://vapechinhhang.com/wp-content/uploads/2018/06/Asvape-Michael-VO200-TC-Box-Mod-chinh-hang-5.jpg" },
-      ]
-    };
+      listNewProducts:"",
+      mostList_bought_Products:'',
+      list_favorite_products:"",
+     
+    }
   }
 
-  addProductToCart = () => {
-    Alert.alert('Success', 'The product has been added to your cart')
-  }
-
-
-
-
-  //**--------------------------------------------------------------------- */
-
-
-
-  // constructor(props){
-  //     super(props);
-  //     this.state ={ 
-  //       loading:false,
-  //       products:[],
-  //       sliders:[],
-  //       categories:[],
-  //       selectCate:"",
-  //       search: '',
-  //       user_id:'',
-  //       name:'',
-  //       email:'',
-  //       password:'',
-  //       avatar:"",
-  //       quantity:null,
-  //       total:null,
-  //       quantity:0
-  //     }
-  // }
+  addProductToCart = (data) => {
+    var itemcart = {
+      proID:data.id,
+      productName: data.name,
+      price: data.price,
+      image:data.image
+    }
+        var flag = false
+        for(var i = 0;i<cart.length;i++){
+            if(cart[i].proID==itemcart.proID){
+              flag=true
+              
+              break
+            }
+        }
+        console.log(flag) 
+        AsyncStorage.getItem('cart').then((res)=>{
+          
+          if(res==null || res=='' ){
+            cart.length = 0
+            flag=false
+          }
+          if(flag === false) {
+            
+            // We have data!!
+            itemcart.quantity=1
+            // const cart = JSON.parse(datacart)
+            cart.push(itemcart)
+            AsyncStorage.setItem('cart',JSON.stringify(cart));
+            this.props.navigation.navigate('cart') 
+            
+          }
+          else{
+               cart[i].quantity +=1
+              AsyncStorage.setItem('cart',JSON.stringify(cart)); 
+              this.props.navigation.navigate('cart') 
+          }
+        })
+}
 
   componentDidMount() {
-    Promise.all([fetch('https://smartbuy01.gq/api/slider'), fetch('https://smartbuy01.gq/api/products'), fetch('https://smartbuy01.gq/api/categories')])
-      .then(([req1, req2, req3]) => {
-        return Promise.all([req1.json(), req2.json(), req3.json()])
+    Promise.all([fetch('https://smartbuy01.gq/api/slider'), fetch('https://smartbuy01.gq/api/products'),
+                fetch('https://smartbuy01.gq/api/categories'),fetch('https://smartbuy01.gq/api/products/list-favorite-products')
+                ,fetch('https://smartbuy01.gq/api/products/most-list-bought-products'),
+                fetch('https://smartbuy01.gq/api/products/list-new-products')
+    ])
+      .then(([res1, res2, res3,res4,res5,res6]) => {
+        return Promise.all([res1.json(), res2.json(), res3.json(),res4.json(),res5.json(),res6.json()])
       })
-      .then(([req001, req002, req003]) => {
+      .then(([res1, res2, res3,res4,res5,res6]) => {
         this.setState({
-
-          sliders: req001,
-          products: req002,
-          categories: req003
-
+          sliders: res1,
+          products: res2,
+          categories: res3,
+          list_favorite_products:res4.result,
+          mostList_bought_Products:res5.result,
+          listNewProducts:res6
         })
         console.log(this.state.categories.category)
       })
@@ -115,11 +120,32 @@ export class HomeScreen extends Component {
   renderPro(item) {
 
     return (
-      <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeDetail', { product: item })}>
+      <TouchableOpacity style={{position:'relative'}} onPress={() => this.props.navigation.navigate('HomeDetail', { product: item })}>
         <View style={styles.container1}>
           <Image style={styles.photo} source={{ uri: item.image }} />
-          <Text style={styles.title}>{item.name}</Text>
+          <Text style={styles.title1}>{item.name}</Text>
           <Text style={styles.category}>{item.price} VNĐ</Text>
+          {/* <Image  style={{position:'absolute',width:60,height:52,right:-8,top:-3,
+            }} source={require('../../assets/new.png')} /> */}
+          
+        </View>
+      </TouchableOpacity>
+
+    )
+
+  }
+  renderProNew(item) {
+
+    return (
+      <TouchableOpacity style={{position:'relative'}} onPress={() => this.props.navigation.navigate('HomeDetail', { product: item })}>
+        <View style={styles.container1}>
+          
+          <Image style={styles.photo} source={{ uri: item.image }} />
+          <Text style={styles.title1}>{item.name}</Text>
+          <Text style={styles.category}>{item.price} VNĐ</Text>
+          <Image  style={{position:'absolute',width:60,height:52,right:-8,top:-3,
+            }} source={require('../../assets/new.png')} />
+          
         </View>
       </TouchableOpacity>
 
@@ -141,12 +167,43 @@ export class HomeScreen extends Component {
 
 
   }
+  PulltoRefresh=()=>{
+    this.setState({
+      loading:true
+    })
+    Promise.all([fetch('https://smartbuy01.gq/api/slider'), fetch('https://smartbuy01.gq/api/products'),
+                fetch('https://smartbuy01.gq/api/categories'),fetch('https://smartbuy01.gq/api/products/list-favorite-products')
+                ,fetch('https://smartbuy01.gq/api/products/most-list-bought-products'),
+                fetch('https://smartbuy01.gq/api/products/list-new-products')
+    ])
+      .then(([res1, res2, res3,res4,res5,res6]) => {
+        return Promise.all([res1.json(), res2.json(), res3.json(),res4.json(),res5.json(),res6.json()])
+      })
+      .then(([res1, res2, res3,res4,res5,res6]) => {
+        this.setState({
+          sliders: res1,
+          products: res2,
+          categories: res3,
+          list_favorite_products:res4.result,
+          mostList_bought_Products:res5.result,
+          listNewProducts:res6,
+          loading:false
+        })
+        console.log(this.state.categories.category)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  
+        
+        
+  }
   renderCate(item) {
     return (
-      <TouchableOpacity onPress={() => this.props.navigation.navigate('CategoryDetail', { category: item })}>
+      <TouchableOpacity style={{backgroundColor:"#70c1ae"}} onPress={() => this.props.navigation.navigate('CategoryDetail', { category: item })}>
         <View style={this.state.selectCate == item.id ? styles.divtheme : styles.divtheme2}>
 
-          <Text>{item.cate_name}</Text>
+          <Text style={{color:"#677ba6",fontSize:15,fontWeight:'600'}}>{item.cate_name}</Text>
         </View>
       </TouchableOpacity>
     )
@@ -182,16 +239,20 @@ export class HomeScreen extends Component {
 
     // if(is)const {email} = this.props.route.params  
     return (
-      <SafeAreaView style={{ flex: 1, flexDirection: "column", }}>
-        {/* <CustomDrawerContent></CustomDrawerContent> */}
-        <CustomHeader ref="addtocart" title="Trang Chủ" isHome={true} cart={true} navigation={this.props.navigation} />
+      <SafeAreaView  style={{ flex: 1, flexDirection: "column", }}>
+        <ScrollView refreshControl={
+          <RefreshControl
+          onRefresh={this.PulltoRefresh}
+          refreshing={this.state.loading}
+          />
+        }>
+        <CustomHeader ref="addtocart" title="Home" isHome={true} cart={true} navigation={this.props.navigation} />
         <SearchBar platform="android" containerStyle={{ height: 40, width: width, justifyContent: "center" }} inputStyle={{ fontSize: 15, }}
           placeholder="Search..."
           onChangeText={val => this.setState({ search: val })}
           value={this.state.search}
         />
-
-        <ScrollView
+        <ScrollView 
           showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
           <View style={{ flex: 1 }}>
 
@@ -218,73 +279,110 @@ export class HomeScreen extends Component {
                 keyExtractor={(item, index) => index.toString()}>
               </FlatList>
             </View>
-            <View >
-              <FlatList data={searchPros} numColumns={2}
-                renderItem={({ item }) => this.renderPro(item)}
-                keyExtractor={(item, index) => index.toString()}>
-              </FlatList>
+            <View>
+              <View style={{alignItems:"center",marginTop:10}}>
+              
+                {this.state.search!='' ? 
+                <Text 
+                  style={searchPros =='' ? {display:"none"}:{textAlign:"center",fontSize:17,fontWeight:"bold",width:130,color:"#677ba6"}}>
+                  Kết quả tìm kiếm cho: "{this.state.search}"
+                </Text>
+                
+                : 
+                <Text style={{textAlign:"center",fontSize:17,fontWeight:"bold",width:130,color:"#677ba6", }}>
+                  Sản Phẩm Mới
+                </Text>}
+                <Text>
+                  {searchPros =='' ?
+                      <Text 
+                      style={{textAlign:"center",fontSize:17,fontWeight:"bold",width:130,color:"#677ba6",}}>
+                      Không tìm thấy sản phẩm
+                    </Text>
+                    :
+                    null
+                  }
+                </Text> 
+              </View>
+              {this.state.search!=''?
+                <FlatList data={searchPros} numColumns={2}
+                  renderItem={({ item }) => this.renderPro(item)}
+                  keyExtractor={(item, index) => index.toString()}>
+                </FlatList>
+                :
+                <FlatList 
+                 data={this.state.listNewProducts}
+                 
+                 
+                 numColumns={2}
+                  renderItem={({ item }) => this.renderProNew(item)}
+                  keyExtractor={(item, index) => index.toString()}>
+                </FlatList>
+              }
+              
               <View style={{ height: 20 }} />
             </View>
           </View>
-
-
-          <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}>Sản phẩm được mua nhiều <FontAwesome5 name="jedi-order" size={24} color={"#FF0C0C"} /> </Text>
-          <FlatList style={styles.list}
-            contentContainerStyle={styles.listContainer}
-            data={this.state.data}
-            horizontal={false}
-            numColumns={2}
-            keyExtractor={(item) => {
-              return item.id;
-            }}
-            ItemSeparatorComponent={() => {
-              return (
-                <View style={styles.separator} />
-              )
-            }}
-            renderItem={(post) => {
-              const item = post.item;
-              return (
-                <View style={styles.card}>
-
-                  <View style={styles.cardHeader}>
-                    <View>
-                      <Text style={styles.title}>{item.title}</Text>
-                      <Text style={styles.price}>{item.price}</Text>
-                    </View>
-                  </View>
-
-                  <Image style={styles.cardImage} source={{ uri: item.image }} />
-
-                  <View style={styles.cardFooter}>
-                    <View style={styles.socialBarContainer}>
-                      <View style={styles.socialBarSection}>
-                        <TouchableOpacity style={styles.socialBarButton} onPress={() => this.addProductToCart()}>
-                          <Image style={styles.icon} source={require('../images/add-to-cart.png')} />
-                          <Text style={[styles.socialBarLabel, styles.buyNow]}>Buy Now</Text>
-                        </TouchableOpacity>
-                      </View>
-                      <View style={styles.socialBarSection}>
-                        <TouchableOpacity style={styles.socialBarButton}>
-                        
-                          <Text style={styles.socialBarLabel}>125 l</Text>
-                        </TouchableOpacity>
+          <View style={this.state.search!='' ? {display:'none'} : {}}>
+           
+             <Text style={{ fontSize: 17,color:"#677ba6", fontWeight: "bold", marginLeft: 10 }}>Sản phẩm được mua nhiều <FontAwesome5 name="jedi-order" size={24} color={"#FF0C0C"} /> </Text>
+             <FlatList style={styles.list}
+            
+               contentContainerStyle={styles.listContainer}
+               data={this.state.mostList_bought_Products}
+               horizontal={false}
+               numColumns={2}
+               keyExtractor={(item) => {
+                 return item.id;
+               }}
+               ItemSeparatorComponent={() => {
+                 return (
+                   <View style={styles.separator} />
+                 )
+               }}
+               renderItem={(post) => {
+                 const item = post.item;
+                 return (
+                   
+                   <View style={styles.card}>
+                     <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeDetail', { product: item })}>
+                     <View style={styles.cardHeader}>
+                       <View>
+                         <Text style={styles.title}>{item.name}</Text>
+                         <Text style={styles.price}>{item.price} VNĐ</Text>
                        </View>
-                    </View>
-                  </View>
-                </View>
-              )
-            }} />
-
-
-
-
-          <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 10 }}>Sản phẩm được ưa thích  <FontAwesome5 name="heartbeat" size={24} color={"#FF0C0C"} /> </Text>
-          
+                     </View>
+   
+                     <Image style={styles.cardImage} source={{ uri: item.image }} />
+   
+                     <View style={styles.cardFooter}>
+                       <View style={styles.socialBarContainer}>
+                         <View style={styles.socialBarSection}>
+                           <TouchableOpacity style={styles.socialBarButton} onPress={() => this.addProductToCart(item)}>
+                             <Image style={styles.icon} source={require('../images/add-to-cart.png')} />
+                             <Text style={[styles.socialBarLabel, styles.buyNow]}> Mua ngay</Text>
+                           </TouchableOpacity>
+                         </View>
+                         <View style={styles.socialBarSection}>
+                           <TouchableOpacity style={styles.socialBarButton}>
+                           
+                             <Text style={styles.socialBarLabel}>{item.total_Buy} lượt</Text>
+                           </TouchableOpacity>
+                          </View>
+                       </View>
+                     </View>
+                     </TouchableOpacity>
+                   </View>
+                 )
+               }} />
+              
+          </View>
+          <View style={this.state.search!='' ? {display:'none'} : {}}>
+          <Text style={{ fontSize: 17, fontWeight: "bold",color:"#677ba6", marginLeft: 10 }}>Sản phẩm được ưa thích  <FontAwesome5 name="heartbeat" size={24} color={"#FF0C0C"} /> </Text>
           <FlatList style={styles.list}
             contentContainerStyle={styles.listContainer}
-            data={this.state.data}
+            data={this.state.list_favorite_products}
             horizontal={false}
+            
             numColumns={2}
             keyExtractor={(item) => {
               return item.id;
@@ -298,54 +396,40 @@ export class HomeScreen extends Component {
               const item = post.item;
               return (
                 <View style={styles.card}>
-
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('HomeDetail', { product: item })}>
                   <View style={styles.cardHeader}>
                     <View>
-                      <Text style={styles.title}>{item.title}</Text>
-                      <Text style={styles.price}>{item.price}</Text>
+                      <Text style={styles.title}>{item.name}</Text>
+                      <Text style={styles.price}>{item.price} VNĐ</Text>
                     </View>
                   </View>
-               
-                  <Image style={styles.cardImage} source={{ uri: item.image }} />
 
+                  <Image style={styles.cardImage} source={{ uri: item.image }} />
 
                   <View style={styles.cardFooter}>
                     <View style={styles.socialBarContainer}>
                       <View style={styles.socialBarSection}>
-                        <TouchableOpacity style={styles.socialBarButton} onPress={() => this.addProductToCart()}>
+                        <TouchableOpacity style={styles.socialBarButton} onPress={() => this.addProductToCart(item)}>
                           <Image style={styles.icon} source={require('../images/add-to-cart.png')} />
-                          <Text style={[styles.socialBarLabel, styles.buyNow]}>Buy Now</Text>
+                          <Text style={[styles.socialBarLabel, styles.buyNow]}> Mua ngay</Text>
                         </TouchableOpacity>
                       </View>
                       <View style={styles.socialBarSection}>
                         <TouchableOpacity style={styles.socialBarButton}>
                           <Image style={styles.icon} source={require('../images/heart.png')} />
-                          <Text style={styles.socialBarLabel}>25</Text>
+                          <Text style={styles.socialBarLabel}> {item.tong_so_luot_yeu_thich}</Text>
                         </TouchableOpacity>
                       </View>
                     </View>
                   </View>
+                  </TouchableOpacity>
                 </View>
               )
             }} />
-            
+            </View>
 
         </ScrollView>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        </ScrollView>     
       </SafeAreaView>
     )
   }
@@ -447,6 +531,17 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 0
   },
   title: {
+    flex: 1,
+    // fontFamily: 'FallingSky',
+    fontSize: 17,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#444444',
+    marginTop: 3,
+    marginRight: 5,
+    marginLeft: 5,
+  },
+  title1: {
     flex: 1,
     // fontFamily: 'FallingSky',
     fontSize: 17,

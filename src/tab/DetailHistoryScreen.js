@@ -18,6 +18,10 @@ var STT_payment =[
       value:"3",
       method:'VISA/MASTER CARD'
   },
+  {
+    value:"4",
+    method:'Tiền mặt'
+}
 ]
 export class DetailHistoryScreen extends Component {
   constructor(props) {

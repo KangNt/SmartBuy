@@ -13,9 +13,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon-logo.png",
     "splash": {
-      "image": "./assets/splash-demo.png",
+      "image": "./assets/splash-y.png",
       "resizeMode": "contain",
-      "backgroundColor": "#00FDDE"
+      "backgroundColor": "#F6FF09"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -25,6 +25,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "",
+    "githubUrl": "https://github.com/KangNt/SmartBuy/tree/20/4"
   }
 }
