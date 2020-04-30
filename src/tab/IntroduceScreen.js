@@ -11,7 +11,7 @@ import { CustomHeader } from '../index'
 import Swiper from 'react-native-swiper';
 import { ButtonGroup } from 'react-native-elements';
 
-export class TutorialScreen extends Component {
+export class IntroduceScreen extends Component {
 
   render() {
     return (
@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
     paddingRight: 12,
     textAlign: 'right',
   },
-
   paginationStyle: {
     position: 'absolute',
     bottom: 10,
@@ -139,26 +138,3 @@ const styles = StyleSheet.create({
 
 
 });
-
-
-
-
-// import React, { Component } from 'react'
-
-// import { Text, View, SafeAreaView } from 'react-native'
-// import { CustomHeader } from '../index'
-// export class TutorialScreen  extends Component {
-//     render() {
-//         return (
-
-//             <SafeAreaView style={{ flex: 1, }}>
-//                 <CustomHeader title="Hướng dẫn thanh toán" navigation={this.props.navigation} />
-//                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//                     <Text>TutorialScreen Screen</Text>
-//                 </View>
-//             </SafeAreaView>
-//         )
-//     }
-// }
-
-

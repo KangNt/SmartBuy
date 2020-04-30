@@ -18,7 +18,8 @@ import {
   CategoryDetail,
   FavouriteScreen,
   ScanQrCodeScreen,
-  TutorialScreen
+  TutorialScreen,
+  IntroduceScreen
 } from './src/tab'
 import {
   NotificationsScreen,
@@ -26,8 +27,8 @@ import {
   ContactScreen,
   EditProfileScreen,
   ChangePasswordScreen,
-  IntroduceScreen,
   PolicyScreen,
+  TutorialPaymentScreen,
 } from './src/drawer'
 import Test from "./src/Test"
 import { LoginScreen, RegisterScreen, ShowScan, } from './src/auth'
@@ -208,7 +209,8 @@ function DrawerNavigator({ navigation }) {
       <Drawer.Screen name="Introduce" component={IntroduceScreen} />
       <Drawer.Screen name="Contact" component={ContactScreen} />
       <Drawer.Screen name="Policy" component={PolicyScreen} />
-      <Drawer.Screen name="Tutorial" component={TutorialScreen} />
+      <Drawer.Screen name="TutorialPayment" component={TutorialPaymentScreen} />
+      
 
     </Drawer.Navigator>
   )
@@ -219,8 +221,8 @@ const StackApp = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <StackApp.Navigator initialRouteName="Tutorial">
-        <StackApp.Screen name="Tutorial" component={TutorialScreen} options={navOptionHandler} />
+      <StackApp.Navigator initialRouteName="Introduce">
+        <StackApp.Screen name="Introduce" component={IntroduceScreen} options={navOptionHandler} />
         <StackApp.Screen name="HomeApp" component={DrawerNavigator} options={navOptionHandler} />
         <StackApp.Screen name="Login" component={LoginScreen} options={navOptionHandler} />
         <StackApp.Screen name="Register" component={RegisterScreen} options={navOptionHandler} />

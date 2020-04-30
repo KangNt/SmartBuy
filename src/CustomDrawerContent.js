@@ -170,7 +170,7 @@ export class CustomDrawerContent extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
-                    onPress={() => this.props.navigation.navigate('Tutorial')}
+                    onPress={() => this.props.navigation.navigate('TutorialPayment')}
                 >
                     <Text style={styles.text}><FontAwesome5 name="credit-card" size={24} color={"#222222"} />   <Text style={styles.texts}>Hướng dẫn thanh toán</Text></Text>
                 </TouchableOpacity>
