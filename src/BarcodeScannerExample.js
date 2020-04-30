@@ -69,8 +69,8 @@ export class BarcodeScannerExample extends React.Component {
 
   handleBarCodeScanned = ({ type, data }) => {
     this.setState({ scanned: true });
-    alert(data);
-    this.props.navigation.navigate('showscan', { info: data })
+    // alert(data)
+    this.props.navigation.navigate('showscan', { idProduct: data })
   };
 }
 

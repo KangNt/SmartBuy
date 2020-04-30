@@ -1,6 +1,6 @@
 import * as React from 'react';
 // import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useScrollToTop } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
@@ -110,22 +110,36 @@ function TabNavigator({navigation}) {
   return (
     <Tab.Navigator
       initialRouteName="Home"
+      TabNavigatorConfig={{
+        animationEnabled:""
+      }}
       tabBarOptions={{
+        
         activeTintColor: '#e91e63',
-        // style:{
-        //   height:40,
-        //   marginBottom:20,
-        //   backgroundColor: 'blue', 
+        style:{
+          // top:40,
+          // height:50,
+          // position:'relative',
+          // height:'1%',
+          backgroundColor: 'white', 
           
-        // },
-        // labelStyle :{
-         
-        // },
-        // tabStyle:{
+        },
+        labelStyle :{
+          // height:50,
+          // position:'absolute',
+          // backgroundColor:"red",
+          // top:30,
+          fontSize: 12,        
+            lineHeight: 20,   
+        },
+        tabStyle:{
+          // height:30,
+          // position:'absolute',
+          // left:200
+          // backgroundColor:"blue",
+        //  top:30
           
-         
-        //   top:40
-        // }
+        }
         
       }}
     >

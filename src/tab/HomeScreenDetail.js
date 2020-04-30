@@ -419,6 +419,7 @@ export class HomeScreenDetail extends Component {
     this.setState({
       totalCart:this.state.totalCart +1
     })
+  
     var itemcart = {
       proID:data.id,
       productName: data.name,
