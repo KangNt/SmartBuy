@@ -10,7 +10,7 @@ export class CustomHeader extends Component {
   render() {
     let { navigation, isHome, title,cart } = this.props
     return (
-      <View style={{ flexDirection: 'row', height: 70,marginTop:0, backgroundColor:"#F6F8FA" }}>
+      <View style={{ flexDirection: 'row', height: 70,marginTop:-20, backgroundColor:"#F6F8FA" }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           {
             isHome ?
@@ -24,9 +24,8 @@ export class CustomHeader extends Component {
               <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
                 onPress={() => this.props.navigation.goBack()}
               >
-                <Image style={{ width: 25, height: 25, marginLeft:5,marginTop:5 }}
+                <Image style={{ width: 25, height: 25, marginLeft:5,marginTop:10 }}
                   source={IMAGE.ICON_BACK}
-                  resizeMode="contain"
                 />
                 {/* <Text>Back</Text> */}
               </TouchableOpacity>
@@ -34,12 +33,12 @@ export class CustomHeader extends Component {
          
         </View>
 
-        <View style={{ flex:4, justifyContent: 'center'}}>
-          <Text style={{ textAlign: 'center',fontSize:19, marginTop:7 }}>{title}</Text>
+        <View style={{ flex:15, justifyContent: 'center'}}>
+          <Text style={{ textAlign: 'center',fontSize:19, marginTop:7, }}>{title}</Text>
           {cart 
           ?
           <TouchableOpacity onPress={()=> navigation.navigate('cart')} style={{position:'absolute',right:0,}}>
-            <FontAwesome5 name="cart-plus" size={20}></FontAwesome5>
+            <FontAwesome5 name="cart-plus" size={20} style={{marginTop:10, marginLeft:"89%"}}></FontAwesome5>
             {/* <View style={{borderRadius:15,shadowOpacity:0.5,width:20,height:20,backgroundColor:'red',justifyContent:"center",alignItems:"center",position:"absolute",top:-5,left:15, }}>
               <Text style={{color:'white',fontSize:11}}>0</Text>
             </View> */}

@@ -10,3 +10,6 @@ export * from './ChangePasswordScreen'
 export * from './ContactScreen'
 
 export * from './IntroduceScreen'
+
+export * from './PolicyScreen'
+

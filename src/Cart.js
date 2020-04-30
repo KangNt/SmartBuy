@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import TextInput from 'react-native-textinput-with-icons'
-import { Text, View, TouchableOpacity, Dimensions, Image, ScrollView, AsyncStorage, Alert, Picker, SafeAreaView } from 'react-native'
+import { Text, View, TouchableOpacity, Dimensions, Image,ActivityIndicator ,ScrollView, AsyncStorage, Alert, Picker, SafeAreaView } from 'react-native'
 import { CustomHeader } from './index'
 import InputTextField from "../components/InputTextField"
 var { width, height } = Dimensions.get("window")
@@ -23,7 +23,9 @@ export default class Cart extends Component {
       err_address: "",
       err_name: "",
       payment_method: '',
-      err_payment_method: ""
+      err_payment_method: "",
+      wait_for_process:"Thanh Toán",
+      wait_for_reloading:true
     };
     try {
       const val = AsyncStorage.multiGet(["id_user", "email", "name", 'avatar']).then(result => {
@@ -38,24 +40,32 @@ export default class Cart extends Component {
 
   }
   componentDidMount() {
-
     AsyncStorage.getItem('cart').then((cart) => {
       console.log(cart)
       if (cart !== null) {
         // We have data!!
         const cartfood = JSON.parse(cart)
-        this.setState({ dataCart: cartfood })
-
+        this.setState({ 
+          dataCart: cartfood,
+          wait_for_reloading:false
+        })
       }
-    })
-      .catch((err) => {
+      else{
+        this.setState({   
+          wait_for_reloading:false
+        })
+      }
+    }).catch((err) => {
         // alert(err)
-      })
-
+    })
   }
   submit_order() {
+    // this.setState({
+    //   wait_for_process:"Đang chờ xử lí"
+    // })
     this.setState({
       disabled: true,
+      wait_for_process:"Đang chờ xử lí"
     })
     setTimeout(() => {
       this.setState({
@@ -86,14 +96,19 @@ export default class Cart extends Component {
       })
     }
     ).then((res) => res.json()).then((res) => {
+     
       this.setState({
         err_address: res.customer_address,
         err_name: res.customer_name,
         err_phone: res.customer_phone,
         err_email: res.customer_email,
-        err_payment_method: res.payment_method
+        err_payment_method: res.payment_method,
+        wait_for_process:"Thanh Toán"
       })
       if (res.msg == 'success') {
+        this.setState({
+          wait_for_process:"Đang chờ xử lí"
+        })
         Alert.alert("Thông báo", "Đặt Hàng Thành Công")
         var total_quantity = 0
         var pro_id = ''
@@ -167,18 +182,26 @@ export default class Cart extends Component {
   }
 
   render() {
+   
     if (this.state.dataCart == '' || this.state.dataCart == null) {
       return (
         <SafeAreaView style={{ flex: 1, }}>
+          
           <View style={{ flex: 1, }}>
             <CustomHeader title="Cart" isHome={false} navigation={this.props.navigation} />
             <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, }}>
+            {this.state.wait_for_reloading ? 
+              <ActivityIndicator animating={true} style={{marginTop:50}} size={50} color="#61dafb"> 
+              </ActivityIndicator> 
+              :
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:20 }}>
                 <Image source={require('./images/shopping-bag.png')}/>
                 <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 20 }}>Bạn chưa có sản phẩm nào trong giỏ hàng</Text>
               </View>
+            }
             </ScrollView>
           </View>
+      
         </SafeAreaView>
       )
     }
@@ -186,6 +209,7 @@ export default class Cart extends Component {
       let { name, address, phone, email } = this.state
       return (
         <SafeAreaView style={{ flex: 1, }}>
+          
           <View style={{ flex: 1, }}>
             {/* <CustomHeader title="Cart" isHome={false} navigation={this.props.navigation} /> */}
             <View style={{ marginLeft: 10, marginTop: 10, flexDirection:'row'}}>
@@ -340,7 +364,7 @@ export default class Cart extends Component {
                       fontWeight: "bold",
                       color: 'white'
                     }}>
-                      Thanh Toán
+                      {this.state.wait_for_process}
                     </Text>
                   </TouchableOpacity>
 

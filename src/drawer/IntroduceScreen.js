@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react'
 
 import { Text, View, SafeAreaView, Image, TouchableOpacity, StyleSheet } from 'react-native'
@@ -56,8 +57,13 @@ const styles = StyleSheet.create({
     //   shadowOpacity: 1,
       shadowRadius: 10,
       marginLeft: 85,
-      marginRight: 90,
+      marginRight: 90,  
       alignSelf: 'stretch',
-  
-    }
+
+    },
+    text: {
+      // fontFamily :"Avennir Next",
+      color: "#1D2029"
+    },
   })
+

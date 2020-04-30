@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {
   Text, View, SafeAreaView, TouchableOpacity,
   StyleSheet, Image, ScrollView, ImageBackground, AsyncStorage,
-  Dimensions, Button, RefreshControl, TextInput, TouchableHighlight, Alert
+  Dimensions, Button, RefreshControl, TextInput, TouchableHighlight, Alert,ActivityIndicator
 }
   from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient';
@@ -47,6 +47,7 @@ export class HomeScreen extends Component {
       listNewProducts:"",
       mostList_bought_Products:'',
       list_favorite_products:"",
+      wait_for_reloading:true
      
     }
   }
@@ -102,13 +103,16 @@ export class HomeScreen extends Component {
       })
       .then(([res1, res2, res3,res4,res5,res6]) => {
         this.setState({
+          wait_for_reloading:false,
           sliders: res1,
           products: res2,
           categories: res3,
           list_favorite_products:res4.result,
           mostList_bought_Products:res5.result,
-          listNewProducts:res6
+          listNewProducts:res6,
+         
         })
+        
         console.log(this.state.categories.category)
       })
       .catch((error) => {
@@ -240,22 +244,25 @@ export class HomeScreen extends Component {
     // if(is)const {email} = this.props.route.params  
     return (
       <SafeAreaView  style={{ flex: 1, flexDirection: "column", }}>
-        <ScrollView refreshControl={
-          <RefreshControl
-          onRefresh={this.PulltoRefresh}
-          refreshing={this.state.loading}
-          />
-        }>
         <CustomHeader ref="addtocart" title="Home" isHome={true} cart={true} navigation={this.props.navigation} />
         <SearchBar platform="android" containerStyle={{ height: 40, width: width, justifyContent: "center" }} inputStyle={{ fontSize: 15, }}
           placeholder="Search..."
           onChangeText={val => this.setState({ search: val })}
           value={this.state.search}
         />
-        <ScrollView 
+        {this.state.wait_for_reloading ? 
+        <ActivityIndicator animating={true} style={{marginTop:50}} size={50} color="#61dafb"> 
+        </ActivityIndicator> 
+        :
+        <ScrollView refreshControl={
+          <RefreshControl
+          onRefresh={this.PulltoRefresh}
+          refreshing={this.state.loading}
+          />
+          }
           showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
           <View style={{ flex: 1 }}>
-
+          
             <View>
               <Carousel
                 layout={'default'} loop={true}
@@ -429,7 +436,9 @@ export class HomeScreen extends Component {
             </View>
 
         </ScrollView>
-        </ScrollView>     
+           
+      }
+        
       </SafeAreaView>
     )
   }
@@ -647,4 +656,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   }
-})
+})  

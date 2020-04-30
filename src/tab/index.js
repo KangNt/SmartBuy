@@ -9,3 +9,5 @@ export * from './FavouriteScreen'
 export * from './HistoryScreen'
 export * from './CategoryDetail'
 export * from './ScanQrCodeScreen'
+
+export * from './TutorialScreen'

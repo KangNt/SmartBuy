@@ -220,8 +220,8 @@ const styles = StyleSheet.create({
         
     
       },
-      text: {
-        // fontFamily :"Avennir Next",
-        color: "#1D2029"
-      },
+        text: {
+            // fontFamily :"Avennir Next",
+            color: "#1D2029"
+        },
 });

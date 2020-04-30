@@ -106,7 +106,6 @@ export class CustomDrawerContent extends Component {
             <SafeAreaView style={styles.container}>
             <View style={{ height: 150, alignItems: 'center', justifyContent: 'center' }}>
                 <TouchableOpacity onPress={()=>this.getInfo()}
-                
                 >
                  
                     <Image source={this.state.avatar==null || this.state.avatar=='' 
@@ -140,7 +139,7 @@ export class CustomDrawerContent extends Component {
                     onPress={() => this.props.navigation.navigate('MenuTab')}
                 >
                     <Text style={styles.text}>
-        <FontAwesome5 name="home" size={24} color={"#CDCCCE"} />  Trang Chủ</Text>
+        <FontAwesome5 name="home" size={24} color={"#222222"} />  Trang Chủ</Text>
                     
                 </TouchableOpacity>
 
@@ -148,28 +147,41 @@ export class CustomDrawerContent extends Component {
                     style={{ marginTop: 25 }}
                     onPress={() => this.props.navigation.navigate('Profile')}
                 >
-                    <Text style={styles.text} ><FontAwesome5 name="user" size={24} color={"#CDCCCE"} />    <Text style={styles.texts}>Thông Báo</Text></Text>
+                    <Text style={styles.text} ><FontAwesome5 name="user" size={24} color={"#222222"} />    <Text style={styles.texts}>Thông Báo</Text></Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
                     onPress={() => this.props.navigation.navigate('Contact')}
                 >
-                    <Text style={styles.text}><FontAwesome5 name="list-alt" size={24} color={"#CDCCCE"} />   <Text style={styles.texts}>Liên Hệ</Text></Text>
+                    <Text style={styles.text}><FontAwesome5 name="list-alt" size={24} color={"#222222"} />   <Text style={styles.texts}>Liên Hệ</Text></Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ marginTop: 25 }}
                     onPress={() => this.props.navigation.navigate('Introduce')}
                 >
-                    <Text style={styles.text}><FontAwesome5 name="comment-dots" size={24} color={"#CDCCCE"} />   <Text style={styles.texts}>Giới Thiệu</Text></Text>
+                    <Text style={styles.text}><FontAwesome5 name="comment-dots" size={24} color={"#222222"} />   <Text style={styles.texts}>Giới Thiệu</Text></Text>
                 </TouchableOpacity>
-                
+                <TouchableOpacity
+                    style={{ marginTop: 25 }}
+                    onPress={() => this.props.navigation.navigate('Policy')}
+                >
+                    <Text style={styles.text}><FontAwesome5 name="exchange-alt" size={24} color={"#222222"} />   <Text style={styles.texts}>Chính sách</Text></Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={{ marginTop: 25 }}
+                    onPress={() => this.props.navigation.navigate('Tutorial')}
+                >
+                    <Text style={styles.text}><FontAwesome5 name="credit-card" size={24} color={"#222222"} />   <Text style={styles.texts}>Hướng dẫn thanh toán</Text></Text>
+                </TouchableOpacity>
+
+
                 {this.state.email == null ?
                     <TouchableOpacity
                     style={{marginTop:25}}
                     onPress={() => this.props.navigation.navigate('Login')}
                     >
-                    <Text style={styles.text}><FontAwesome5 name="sign-in-alt" size={24} color={"#CDCCCE"} />
+                    <Text style={styles.text}><FontAwesome5 name="sign-in-alt" size={24} color={"#222222"} />
                         <Text style={styles.texts}>   Đăng Nhập</Text>
                     </Text>
                     </TouchableOpacity>
@@ -183,7 +195,7 @@ export class CustomDrawerContent extends Component {
                         style={{marginTop:25}}
                         onPress={()=> this._AlertLogout()}
                     >
-                    <Text style={styles.text}><FontAwesome5 name="sign-in-alt" size={24} color={"#CDCCCE"} />
+                    <Text style={styles.text}><FontAwesome5 name="sign-in-alt" size={24} color={"#222222"} />
                         <Text style={styles.texts}>   Đăng Xuất</Text>
                     </Text>
                     </TouchableOpacity>
@@ -193,7 +205,7 @@ export class CustomDrawerContent extends Component {
                     style={{marginTop:25}}
                     onPress={()=> this.Register()}
                     >
-                    <Text style={styles.text}><FontAwesome5 name="registered" size={24} color={"#CDCCCE"} />
+                    <Text style={styles.text}><FontAwesome5 name="registered" size={24} color={"#222222"} />
                         <Text style={styles.texts}>   Đăng Kí</Text>
                     </Text>
                     </TouchableOpacity>
@@ -205,7 +217,7 @@ export class CustomDrawerContent extends Component {
                         style={{marginTop:25}}
                         onPress={()=> this.props.navigation.navigate('ForgotPassword')}
                     >
-                        <Text style={styles.text}><FontAwesome5 name="lock-open" size={24} color={"#CDCCCE"} />
+                        <Text style={styles.text}><FontAwesome5 name="lock-open" size={24} color={"#222222"} />
                             <Text style={styles.texts}>   Quên Mật Khẩu</Text>
                         </Text>
                     </TouchableOpacity>

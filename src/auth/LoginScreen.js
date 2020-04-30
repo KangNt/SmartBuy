@@ -207,17 +207,23 @@ const styles = StyleSheet.create({
     fontWeight: "500"
   },
   submitContainer: {
-    backgroundColor: "#C74241",
+    backgroundColor: "#314A86",
     fontSize: 16,
     borderRadius: 4,
     paddingVertical: 12,
-    marginTop: 32,
+    marginTop: 10,
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "rgba(255,22,84,0.24)",
+    shadowColor: "rgb(49, 74, 134)",
     shadowOffset: { width: 0, height: 9 },
-    shadowOpacity: 1,
-    shadowRadius: 20
+    shadowOpacity: 1,   
+    shadowRadius: 5,
+    alignSelf: 'stretch',
+    marginLeft: 85,
+    marginRight: 90,
+    marginBottom:20
+   
 
-  }
+
+  },
 })
