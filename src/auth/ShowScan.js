@@ -128,7 +128,14 @@ export class ShowScan extends Component {
               <ActivityIndicator animating={true} style={{marginTop:50}} size={50} color="#61dafb"> 
               </ActivityIndicator> 
               :
-            <Text>Sản phẩm không tồn tại</Text>
+            <View>
+              <Text style={{fontSize:18,}}>Sản phẩm không tồn tại! </Text>
+              <Image source={require('../images/business-and-finance.png')} style={{marginTop:20, marginLeft:30}} />
+            </View>
+          
+
+          
+            
             }
             </View>
           </SafeAreaView>

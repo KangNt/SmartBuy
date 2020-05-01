@@ -168,8 +168,6 @@ export class CustomDrawerContent extends Component {
                 >
                     <Text style={styles.text}><FontAwesome5 name="credit-card" size={24} color={"#222222"} />   <Text style={styles.texts}>Hướng dẫn thanh toán</Text></Text>
                 </TouchableOpacity>
-
-
                 {this.state.email == null ?
                     <TouchableOpacity
                     style={{marginTop:25}}

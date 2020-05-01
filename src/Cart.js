@@ -201,7 +201,7 @@ export default class Cart extends Component {
 
           <View style={{ flex: 1, }}>
             <CustomHeader title="Cart" isHome={false} navigation={this.props.navigation} />
-            <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, }}>
+            <ScrollView showsVerticalScrollIndicator={false} >
               {this.state.wait_for_reloading ?
                 <ActivityIndicator animating={true} style={{ marginTop: 50 }} size={50} color="#61dafb">
                 </ActivityIndicator>
@@ -239,6 +239,7 @@ export default class Cart extends Component {
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 {this.state.dataCart.map((item, i) => {
                   return (
+                    <SafeAreaView style={{ flex: 1, }}>
                     <View style={{ flex: 1 }}>
 
                       <View style={{
@@ -267,6 +268,7 @@ export default class Cart extends Component {
                         </View>
                       </View>
                     </View>
+                    </SafeAreaView>
                   )
                 })
 
@@ -341,6 +343,8 @@ export default class Cart extends Component {
                   <View style={{ alignItems: "flex-start", width: width - 65 }}>
                     <Text style={{ color: "red" }}>{this.state.err_phone}</Text>
                   </View>
+
+                  <SafeAreaView>
                   <View style={{ alignItems: "flex-start", width: width - 65 }}>
                     <Picker
                       enabled={true}
@@ -350,7 +354,7 @@ export default class Cart extends Component {
 
                       onValueChange={(itemValue, itemIndex) => this.setState({ payment_method: itemValue })}
                     >
-                      <Picker.Item label="Chọn Phương Thức Thanh Toán" value="" />
+                      <Picker.Item label="Chọn Phương Thức Thanh Toán" value="" color=""/>
                       <Picker.Item label="Chuyển Khoản Ngân Hàng" value="1" />
                       <Picker.Item label="COD" value="2" />
                       <Picker.Item label="VISA/MASTER CARD" value="3" />
@@ -358,6 +362,8 @@ export default class Cart extends Component {
                     </Picker>
                     <Text style={{ color: "red" }}>{this.state.err_payment_method}</Text>
                   </View>
+                  </SafeAreaView>
+                  
 
 
                   <TouchableOpacity disabled={this.state.disabled} onPress={() => this.submit_order()} style={this.state.dataCart == '' ? { display: "none" } :
