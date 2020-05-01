@@ -2,7 +2,19 @@ import React, { Component } from 'react'
 import Icon from 'react-native-vector-icons/Ionicons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import TextInput from 'react-native-textinput-with-icons'
-import { Text, View, TouchableOpacity, Dimensions, Image,ActivityIndicator ,ScrollView, AsyncStorage, Alert, Picker, SafeAreaView } from 'react-native'
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Dimensions,
+  Image,
+  ActivityIndicator,
+  ScrollView,
+  AsyncStorage,
+  Alert,
+  Picker,
+  SafeAreaView
+} from 'react-native'
 import { CustomHeader } from './index'
 import InputTextField from "../components/InputTextField"
 var { width, height } = Dimensions.get("window")
@@ -24,8 +36,8 @@ export default class Cart extends Component {
       err_name: "",
       payment_method: '',
       err_payment_method: "",
-      wait_for_process:"Thanh Toán",
-      wait_for_reloading:true
+      wait_for_process: "Thanh Toán",
+      wait_for_reloading: true
     };
     try {
       const val = AsyncStorage.multiGet(["id_user", "email", "name", 'avatar']).then(result => {
@@ -45,18 +57,18 @@ export default class Cart extends Component {
       if (cart !== null) {
         // We have data!!
         const cartfood = JSON.parse(cart)
-        this.setState({ 
+        this.setState({
           dataCart: cartfood,
-          wait_for_reloading:false
+          wait_for_reloading: false
         })
       }
-      else{
-        this.setState({   
-          wait_for_reloading:false
+      else {
+        this.setState({
+          wait_for_reloading: false
         })
       }
     }).catch((err) => {
-        // alert(err)
+      // alert(err)
     })
   }
   submit_order() {
@@ -65,7 +77,7 @@ export default class Cart extends Component {
     // })
     this.setState({
       disabled: true,
-      wait_for_process:"Đang chờ xử lí"
+      wait_for_process: "Đang chờ xử lí"
     })
     setTimeout(() => {
       this.setState({
@@ -96,18 +108,18 @@ export default class Cart extends Component {
       })
     }
     ).then((res) => res.json()).then((res) => {
-     
+
       this.setState({
         err_address: res.customer_address,
         err_name: res.customer_name,
         err_phone: res.customer_phone,
         err_email: res.customer_email,
         err_payment_method: res.payment_method,
-        wait_for_process:"Thanh Toán"
+        wait_for_process: "Thanh Toán"
       })
       if (res.msg == 'success') {
         this.setState({
-          wait_for_process:"Đang chờ xử lí"
+          wait_for_process: "Đang chờ xử lí"
         })
         Alert.alert("Thông báo", "Đặt Hàng Thành Công")
         var total_quantity = 0
@@ -134,11 +146,11 @@ export default class Cart extends Component {
           }).then((res) => res.json()).then((res01) => {
             if (res01.msg == 'ok') {
               fetch('https://smartbuy01.gq/api/orders/send-email').
-              then((resEmail) => resEmail.json()).then((resEmail) => {
-                  if(resEmail.result=='ok'){
+                then((resEmail) => resEmail.json()).then((resEmail) => {
+                  if (resEmail.result == 'ok') {
                     console.log('Gửi email thành công')
                   }
-              })
+                })
               setTimeout(() => {
                 AsyncStorage.removeItem('cart')
                 this.setState({
@@ -182,26 +194,26 @@ export default class Cart extends Component {
   }
 
   render() {
-   
+
     if (this.state.dataCart == '' || this.state.dataCart == null) {
       return (
         <SafeAreaView style={{ flex: 1, }}>
-          
+
           <View style={{ flex: 1, }}>
             <CustomHeader title="Cart" isHome={false} navigation={this.props.navigation} />
             <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, }}>
-            {this.state.wait_for_reloading ? 
-              <ActivityIndicator animating={true} style={{marginTop:50}} size={50} color="#61dafb"> 
-              </ActivityIndicator> 
-              :
-              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop:20 }}>
-                <Image source={require('./images/shopping-bag.png')}/>
-                <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 20 }}>Bạn chưa có sản phẩm nào trong giỏ hàng</Text>
-              </View>
-            }
+              {this.state.wait_for_reloading ?
+                <ActivityIndicator animating={true} style={{ marginTop: 50 }} size={50} color="#61dafb">
+                </ActivityIndicator>
+                :
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 20 }}>
+                  <Image source={require('./images/shopping-bag.png')} />
+                  <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 20 }}>Bạn chưa có sản phẩm nào trong giỏ hàng</Text>
+                </View>
+              }
             </ScrollView>
           </View>
-      
+
         </SafeAreaView>
       )
     }
@@ -209,20 +221,20 @@ export default class Cart extends Component {
       let { name, address, phone, email } = this.state
       return (
         <SafeAreaView style={{ flex: 1, }}>
-          
+
           <View style={{ flex: 1, }}>
             {/* <CustomHeader title="Cart" isHome={false} navigation={this.props.navigation} /> */}
-            <View style={{ marginLeft: 10, marginTop: 10, flexDirection:'row'}}>
-                <TouchableOpacity
-                   onPress={() => this.props.navigation.goBack()}>
-                  <Text style={{ fontSize: 16, color: 'red' }}><FontAwesome5 name={'arrow-left'} size={25}></FontAwesome5></Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                   onPress={() => this.confirm_del()}  style={{marginLeft:"80%" }}>
-                  <Text style={{ fontSize: 16, color: 'red',}}><FontAwesome5 name={'trash-restore'} size={25}></FontAwesome5></Text>
-                </TouchableOpacity>
-              </View>
-            <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1,marginBottom:10 }}>
+            <View style={{ marginLeft: 10, marginTop: 10, flexDirection: 'row' }}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.goBack()}>
+                <Text style={{ fontSize: 16, color: 'red' }}><FontAwesome5 name={'arrow-left'} size={25}></FontAwesome5></Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => this.confirm_del()} style={{ marginLeft: "80%" }}>
+                <Text style={{ fontSize: 16, color: 'red', }}><FontAwesome5 name={'trash-restore'} size={25}></FontAwesome5></Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, marginBottom: 10 }}>
 
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 {this.state.dataCart.map((item, i) => {
@@ -338,7 +350,7 @@ export default class Cart extends Component {
 
                       onValueChange={(itemValue, itemIndex) => this.setState({ payment_method: itemValue })}
                     >
-                      <Picker.Item label="Chọn Phương Thức Thanh Toán" value=""/>
+                      <Picker.Item label="Chọn Phương Thức Thanh Toán" value="" />
                       <Picker.Item label="Chuyển Khoản Ngân Hàng" value="1" />
                       <Picker.Item label="COD" value="2" />
                       <Picker.Item label="VISA/MASTER CARD" value="3" />
@@ -346,7 +358,7 @@ export default class Cart extends Component {
                     </Picker>
                     <Text style={{ color: "red" }}>{this.state.err_payment_method}</Text>
                   </View>
-                  
+
 
                   <TouchableOpacity disabled={this.state.disabled} onPress={() => this.submit_order()} style={this.state.dataCart == '' ? { display: "none" } :
                     {
