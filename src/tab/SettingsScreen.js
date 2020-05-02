@@ -89,7 +89,7 @@ export class SettingsScreen extends Component {
             source: this.state.avatar && { uri:this.state.avatar},
             
           }}
-        
+          onPress={()=>this.props.navigation.navigate('Profile')}
         />
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>this.props.navigation.navigate('ChangePassword')}>

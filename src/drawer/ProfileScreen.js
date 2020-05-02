@@ -96,17 +96,7 @@ export class ProfileScreen extends Component {
                                 chevron
                             />
                         </TouchableOpacity>
-                    
-                        <TouchableOpacity>
-                            <ListItem
-                                title={"Edit Profile"}
-                                subtitle={'Change profile'}
-                                leftIcon={{ name: 'edit' }}
-                                bottomDivider
-                                chevron
-                                onPress={() => this.props.navigation.navigate('EditProfile')}
-                            />
-                        </TouchableOpacity>
+            
 
 
 

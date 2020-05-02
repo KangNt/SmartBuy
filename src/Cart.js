@@ -273,8 +273,6 @@ export default class Cart extends Component {
                 })
 
                 }
-
-
                 <View style={{ height: 20 }} />
                 <Text style={{ fontSize: 28, color: "#9fd236" }}>{this.LoadTotalPrice()} VNĐ</Text>
                 <View style={{ alignItems: 'center' }}>
@@ -311,7 +309,7 @@ export default class Cart extends Component {
                   <View style={{ alignItems: "flex-start", width: width - 65 }}>
                     <Text style={{ color: "red" }}>{this.state.err_name}</Text>
                   </View>
-                  <TextInput
+                  <TextInput  
                     label="Nhập địa chỉ email"
                     leftIcon="mail"
                     leftIconType="oct"

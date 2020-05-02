@@ -105,7 +105,7 @@ export class CustomDrawerContent extends Component {
         return (
             <SafeAreaView style={styles.container}>
             <View style={{ height: 150, alignItems: 'center', justifyContent: 'center' }}>
-                <TouchableOpacity onPress={()=>this.getInfo()}
+                <TouchableOpacity onPress={()=>this.getInfo()}   onPress={()=>this.props.navigation.navigate('Profile')}
                 >
                  
                     <Image source={this.state.avatar==null || this.state.avatar=='' 
@@ -113,16 +113,20 @@ export class CustomDrawerContent extends Component {
                         : {uri:this.state.avatar}}
                         style={{ height: 70, width: 70, borderRadius: 60, marginRight: 180, marginTop: 5 }}
                         showEditButton
+                      
                     />
                 </TouchableOpacity>
 
 
                 <TouchableOpacity>
-                    <Text style={{ marginTop: 5, marginLeft: -120, fontSize: 18, fontWeight: "bold" }}>{this.state.name} </Text>
+                    <Text style={{ marginTop: 5, marginLeft: -120, fontSize: 18, fontWeight: "bold" }}
+                       onPress={()=>this.props.navigation.navigate('Profile')}>{this.state.name} </Text>
                 </TouchableOpacity>
+                
 
                 <TouchableOpacity>
-                    <Text style={{ marginTop: 5, marginLeft: -120, color: "#ABB4BD" }}>{this.state.email}</Text>
+                    <Text style={{ marginTop: 5, marginLeft: -120, color: "#ABB4BD" }}
+                       onPress={()=>this.props.navigation.navigate('Profile')}>{this.state.email}</Text>
 
                 </TouchableOpacity>
 

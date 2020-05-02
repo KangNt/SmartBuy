@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import * as Permissions from 'expo-permissions';
 
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('window')
 const qrSize = width * 0.7
@@ -46,15 +47,16 @@ export class BarcodeScannerExample extends React.Component {
           <Text style={styles.description}>Scan your QR code</Text>
           {/* <Image
             style={styles.qr}
-            source={require('./images/qr-scan.png')}
+            source={require('./images/white-scan.png')}
           /> */}
+          <TouchableOpacity  onPress={() => this.props.navigation.goBack()}>
           <Text
-            // onPress={() => this.props.navigation.pop('MenuTab')}
-            // onPress={() => this.props.navigation.navigate('MenuTab')}
-            style={styles.cancel}>
+            style={styles.cancel} 
+             >
             Cancel
         </Text>
-          {/* <Button  style={{marginTop:350}} title={'Cancel'}  /> */}
+        </TouchableOpacity>
+          
         </BarCodeScanner>
 
         {scanned && (
@@ -80,30 +82,32 @@ export class BarcodeScannerExample extends React.Component {
 const opacity = 'rgba(0, 0, 0, .6)';
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 4,
     alignItems: 'center',
     marginTop: '20%',
     marginBottom: '20%',
   },
   // qr: {
   //   marginTop: '20%',
-  //   marginBottom: '20%',
+  //   marginBottom: '30%',
   //   width: qrSize,
   //   height: qrSize,
+  //   color:"white"
   // },
   description: {
     fontSize: width * 0.09,
     fontSize: 20,
     marginTop: '10%',
     textAlign: 'center',
-    width: '70%',
-    color: 'white',
+    width: '100%',
+    color:"white"
+   
   },
   cancel: {
     fontSize: width * 0.05,
     textAlign: 'center',
-    width: '70%',
-    color: 'white',
+    width: '100%',
+    color: 'red',
     marginTop: 350
   },
 })
