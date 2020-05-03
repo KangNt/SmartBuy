@@ -105,7 +105,7 @@ export class CustomDrawerContent extends Component {
         return (
             <SafeAreaView style={styles.container}>
             <View style={{ height: 150, alignItems: 'center', justifyContent: 'center' }}>
-                <TouchableOpacity onPress={()=>this.getInfo()}   onPress={()=>this.props.navigation.navigate('Profile')}
+                <TouchableOpacity onPress={()=>this.getInfo()}   
                 >
                  
                     <Image source={this.state.avatar==null || this.state.avatar=='' 
