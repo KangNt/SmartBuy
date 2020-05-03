@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomeController extends Controller
 {
@@ -22,6 +24,7 @@ class HomeController extends Controller
         // return view('admin.home', compact('users','comments','categories'));
         return view('admin.home');
     }
+    
 
     /**
      * Show the form for creating a new resource.

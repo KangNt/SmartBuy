@@ -1,7 +1,7 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,17 +15,39 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
-
+})->name('wal');
+Route::get('login-dashboard', function () {
+    if(Auth::check()){
+        return redirect()->route('admin');
+    }else{
+        return view('login');
+    }  
+})->name('login');
+Route::get('logout', function () {
+    Auth::logout();
+    return redirect()->route('login');
+    
+})->name('logout');
+Route::post('check-login', function (Request $request) {
+    $Get_info = $request->only(['email', 'password']);
+    $checkLogin = Auth::attempt($Get_info);
+    if($checkLogin){
+        return redirect()->route('admin');
+    }
+    else{
+        return redirect()->route('login')->with('err','Tài khoản hoặc mật khẩu không chính xác');
+    }
+})->name('Checklogin');
 
 
 //  Route::get('/','HomeController@index')->name('admin');
- Route::get('admin','HomeController@index')->name('admin');
+ Route::get('admin','HomeController@index')->name('admin')->middleware('Checklogin');
  Route::group([
     'prefix'=>'admin/users',
     'as'=>'admin/users.',
-    // 'middleware'=> 'check_admin_role',
-],function(){
+    'middleware'=>'Checklogin'
+    ]
+    ,function(){
     Route::get('/','UserController@index')->name('index');// hiển thị tất cả tài nguyên
     Route::get('/create','UserController@create')->name('create');//tạo mới
     Route::post('/store','UserController@store')->name('store');//lưu trữ một tài nguyên mới
@@ -37,7 +59,7 @@ Route::get('/', function () {
 
 Route::group([
     'prefix'=>'admin/orders',
-    'as'=>'admin/orders.',
+    'as'=>'admin/orders.','middleware'=>'Checklogin'
     // 'middleware'=> 'check_admin_role',
 ],function(){
     Route::get('/','OrderController@index')->name('index');// hiển thị tất cả tài nguyên
@@ -52,7 +74,7 @@ Route::group([
 
 Route::group([
     'prefix'=>'admin/contacts',
-    'as'=>'admin/contacts.',
+    'as'=>'admin/contacts.','middleware'=>'Checklogin'
     // 'middleware'=> 'check_admin_role',
 ],function(){
     Route::get('/','ContactController@index')->name('index');// hiển thị tất cả tài nguyên
@@ -68,7 +90,7 @@ Route::group([
 
 Route::group([
     'prefix'=>'admin/comments',
-    'as'=>'admin/comments.',
+    'as'=>'admin/comments.','middleware'=>'Checklogin'
     // 'middleware'=> 'check_admin_role',
 ],function(){
     Route::get('/','CommentController@index')->name('index');// hiển thị tất cả tài nguyên
@@ -84,7 +106,7 @@ Route::group([
 
 Route::group([
     'prefix'=>'admin/products',
-    'as'=>'admin/products.',
+    'as'=>'admin/products.','middleware'=>'Checklogin'
     // 'middleware'=> 'check_admin_role',
 ],function(){
     Route::get('list-product','ProductController@index')->name('index');// hiển thị tất cả tài nguyên
@@ -101,7 +123,7 @@ Route::group([
 
 Route::group([
     'prefix'=>'admin/categories',
-    'as'=>'admin/categories.',
+    'as'=>'admin/categories.','middleware'=>'Checklogin'
     // 'middleware'=> 'check_admin_role',
 ],function(){
     Route::get('/','CategoryController@index')->name('index');// hiển thị tất cả tài nguyên
@@ -117,7 +139,7 @@ Route::group([
 
 Route::group([
     'prefix'=>'admin/vouchers',
-    'as'=>'admin/vouchers.',
+    'as'=>'admin/vouchers.','middleware'=>'Checklogin'
     // 'middleware'=> 'check_admin_role',
 ],function(){
     Route::get('/','VoucherController@index')->name('index');// hiển thị tất cả tài nguyên
@@ -148,7 +170,7 @@ Route::group([
 
 Route::group([
     'prefix'=>'settings_system',
-    'as'=>'settings_system.',
+    'as'=>'settings_system.','middleware'=>'Checklogin'
     // 'middleware'=> 'check_admin_role',
 ],function(){
     Route::get('/','Settings_systemController@index')->name('index');// hiển thị tất cả tài nguyên
@@ -161,5 +183,5 @@ Route::group([
     
 });
 
-
+// Auth::routes();
 

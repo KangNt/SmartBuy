@@ -1,6 +1,7 @@
 @extends('layouts')
 @section('title' , 'home | page')
 @section('contents')
+
 <!-- Content Wrapper. Contains page content -->
 <div class="wrapper">
   <!-- Content Header (Page header) -->

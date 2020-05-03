@@ -29,12 +29,14 @@
   <ul class="navbar-nav ml-auto">
   <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      Welcome: Phan Phuong Nam
+      Welcome: @if(Auth::user())
+                {{Auth::user()->name}}
+              @endif
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
       <a class="dropdown-item" href="#">Thong Tin Ca Nhan</a>
       <a class="dropdown-item" href="#">Doi Mat Khau</a>
-      <a class="dropdown-item" href="#">Dang Xuat</a>
+      <a onclick="return confirm('Bạn chắn chắn muốn đăng xuất?')" class="dropdown-item" href="{{route('logout')}}">Dang Xuat</a>
     </div>
   </div>
     <!-- Messages Dropdown Menu -->
