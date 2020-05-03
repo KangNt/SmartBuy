@@ -15,16 +15,24 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::paginate(7);
         $role =[
-            0 =>'member',
-            1 =>'admin'
+            0 =>'Thành Viên',
+            1 =>'Nhân Viên',
+            10 =>'Quản Trị Viên Tối Cao'
+        ];
+        $status =[
+            -5 =>'Khóa vĩnh viễn',
+            -3=>'Khóa 1 tháng',
+            -1 =>'Chưa kích hoạt',
+             0 =>'Kích hoạt',
+            
         ];
         // foreach ($users as $user) {
         //     $user->posts;
         // }
         // $users->toArray();
-        return view('admin.users.index', ['users' => $users,'role' => $role]);
+        return view('admin.users.index', ['users' => $users,'role' => $role,'status'=>$status]);
     }
 
     /**
@@ -81,10 +89,22 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response 
      */
     public function edit($id)
-    {
+    {   
+        $role =[
+            0 =>'Thành Viên',
+            1 =>'Nhân Viên',
+            10 =>'Quản Trị Viên Tối Cao'
+        ];
+        $status =[
+            -5 =>'Khóa vĩnh viễn',
+            -3=>'Khóa 1 tháng',
+            -1 =>'Chưa kích hoạt',
+             0 =>'Kích hoạt',
+            
+        ];
         $user = User::find($id);
-        return view('admin.users.edit1', [
-            'user' => $user,
+        return view('admin.users.edit', [
+            'user' => $user,'role'=>$role,'status'=>$status
         ]);
     }
 
@@ -98,18 +118,12 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-        // $data = $request->all();
-
         $user->update([
-            'name' => $request->name,
-            'avatar' => $request->avatar,
-            'email' => $request->email,
-            'password' => $request->password,
             'role' => $request->role,
             'status' => $request->status,
         ]);
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin/users.index');
     }
 
     /**
@@ -121,6 +135,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::destroy($id);
-        return redirect()->route('users.index');
+        return redirect()->route('admin/users.index');
     }
 }

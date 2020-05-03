@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Order_detail;
 use Illuminate\Support\Facades\Hash;
 class OrderController extends Controller
 {
@@ -64,8 +65,9 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::find($id);
-        return $order;
+        $order = DB::table('order_detail')->join('products','order_detail.product_id','=','products.id')->where('order_id',$id)->get();
+ 
+        return view('admin.orders.show',['order'=>$order]);
      
     }
 
@@ -122,6 +124,6 @@ class OrderController extends Controller
     public function destroy($id)
     {
         Order::destroy($id);
-        return redirect()->route('orders.index');
+        return redirect()->route('admin/orders.index');
     }
 }

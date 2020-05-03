@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Validator;
 class CategoryController extends Controller
 {
     /**
@@ -25,7 +26,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.categories.add');
     }
 
     /**
@@ -36,7 +37,31 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules =[
+            'name'=>'required|unique:categories,cate_name',
+            'description'=>'required',
+
+
+        ];
+        $msg = [
+            'name.required'=>"Tên danh mục không được để trống",
+            'name.unique'=>"Tên danh mục đã tồn tại",
+            'description.required'=>'Mô tả không được để trống',
+        ];
+        
+        $validator = Validator::make($request->except('_token'),$rules,$msg);
+        if($validator->fails()){
+            return redirect()->route('admin/categories.create')->withErrors($validator);
+        }else{
+
+            $Addcate = Category::insert(
+                [
+                    'cate_name'=>$request->name,
+                    'description'=>$request->description,
+                ]
+            );
+            return redirect()->route('admin/categories.index');
+        }
     }
 
     /**
@@ -58,7 +83,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cateDetail = Category::find($id);
+        return view('admin.categories.edit',['cateDetail'=>$cateDetail]);
     }
 
     /**
@@ -69,8 +95,19 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   
+        $checkCate = Category::where('cate_name',$request->name)->where('id','<>',$id)->first();
+        
+        // var_dump($checkCate);
+        if($checkCate){
+            return redirect()->route('admin/categories.edit',$id)->with('err','Tên danh mục đã tồn tại');
+        }
+        elseif($request->name==''){
+            return redirect()->route('admin/categories.edit',$id)->with('err','Tên danh mục không được để trống');
+        }
+        else{
+            return redirect()->route('admin/categories.index');
+        }
     }
 
     /**
@@ -82,6 +119,6 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::destroy($id);
-        return redirect()->route('categories.index');
+        return redirect()->route('admin/categories.index');
     }
 }

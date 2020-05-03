@@ -9,56 +9,53 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Contacts
-        <small>Optional description</small>
+        Danh sách liên hệ
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
+     
     </section>
 
     <!-- Main content -->
     <section class="content container-fluid">
-    <a href="{{ route('contacts.create')}}" class="btn btn-success">Create</a>
+    
     @if(empty($contacts))
         <p>No Data</p>
     @else
         <table class="table">
             <thead>
-                <th>ID</th>
-                <th>Fullname</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Status</th>
+                <th>Họ tên</th>
+                <th>Tiêu đề</th>
+                <th>Nội dung</th>
                 <th>Email</th>
-                <th>Phone_number</th>
-                <th>Address</th>
+                <th>Số điện thoại</th>
+                <th>Địa chỉ</th>
+                <th>Ngày gửi liên hệ</th>
+                <th>Trạng thái</th>
+                <th>Tùy chọn</th>
             </thead>
             <tbody>
                 @foreach($contacts as $item)
                     <tr>  
-                    <td>{{ $item ['id'] }}</td>
                         <td>{{ $item ['fullname'] }}</td>
                         <td>{{ $item ['title'] }}</td>
                         <td>{{ $item ['content'] }}</td>
-                        <td>{{ $item ['status'] }}</td>
                         <td>{{ $item ['email'] }}</td>
                         <td>{{ $item ['phone_number'] }}</td>
                         <td>{{ $item ['address'] }}</td>
-
-
-
-                            
-                        <td><a href="#" class="btn btn-primary"><i class="fas fa-pen-alt" > </i></a></td>
-                       
-                        <td><a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a></td>
+                        <td>{{ $item ['created_at'] }}</td>
                         <td>
-                          <form action="#" method="POST">
-                            @csrf
-                            <a class="btn btn-danger" type="submit" value=""  href="{{route('contacts.destroy',$item ['id'])}}" >  <i class="far fa-trash-alt"></i></a>
-                         
-                          </form>
+                          @if($item['status']==1)
+                            <p class="text-success">Đã trả lời</p>
+                          @else
+                          <p class="text-danger">Chưa trả lời</p>
+                          @endif
+                        </td>
+                        <td>
+                          <a href="#" class="btn btn-primary"><i class="fas fa-reply" ></i>
+                          </a>
+                          <a onclick="return confirm('Bạn có muốn xóa liên hệ này không')" class="btn btn-danger" type="submit" value=""  href="{{route('admin/contacts.destroy',$item ['id'])}}" >
+                            <i class="far fa-trash-alt"></i>
+                          </a>
+
                         </td>
 
                     </tr>

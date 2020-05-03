@@ -27,6 +27,16 @@
 
   <!-- Right navbar links -->
   <ul class="navbar-nav ml-auto">
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Welcome: Phan Phuong Nam
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="#">Thong Tin Ca Nhan</a>
+      <a class="dropdown-item" href="#">Doi Mat Khau</a>
+      <a class="dropdown-item" href="#">Dang Xuat</a>
+    </div>
+  </div>
     <!-- Messages Dropdown Menu -->
     <li class="nav-item dropdown">
       <a class="nav-link" data-toggle="dropdown" href="#">

@@ -9,55 +9,51 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Comments
-        <small>Optional description</small>
+        Danh sách bình luận
       </h1>
-      <ol class="breadcrumb">
-        <li><a href=""><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
     </section>
 
     <!-- Main content -->
     <section class="content container-fluid">
-    <a href="{{ route('comments.create') }}" class="btn btn-success">Create</a>
     @if(empty($comments))
         <p>No Data</p>
     @else
         <table class="table">
             <thead>
-                <th>ID</th>
-                <th>Content</th>
-                <th>Product_id</th>
-                <th>User_id</th>
-                <th>Reply_for</th>
+
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Avatar</th>
+                <th>Nội dung</th>
+                <th>Sản phẩm</th>
+                <th>Ngày bình luận</th>
+                
+                <th>Tùy chọn</th>
               
             </thead>
             <tbody>
                 @foreach($comments as $item)
                     <tr>  
-                    <td>{{ $item ['id'] }}</td>
-                        <td>{{ $item ['content'] }}</td>
-                        <td>{{ $item ['product_id'] }}</td>
-                        <td>{{ $item ['user_id'] }}</td>
-                        <td>{{ $item ['reply_for'] }}</td>
-                   
-                       
-                        <td><a href="#" class="btn btn-primary"><i class="fas fa-pen-alt" > </i></a></td>
-                       
-                        <td><a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a></td>
+                        <td>{{ $item->fullname}}</td>
+                        <td>{{ $item->email}}</td>
                         <td>
-                          <form action="#" method="POST">
-                            @csrf
-                            <a class="btn btn-danger" type="submit" value=""  href="{{route('comments.destroy',$item ['id'])}}" >  <i class="far fa-trash-alt"></i></a>
-                         
-                          </form>
+                          <img width="60" height="50" src="{{ $item->avatar}}" alt="">
+                        </td>
+                        <td>{{ $item->content}}</td>
+                        <td>{{ $item->name}}</td>
+                        <td>{{ $item->date_cmt}}</td>
+                        <td>
+                          <a onclick="return confirm('Bạn có muốn xóa bình luận này không')" class="btn btn-danger" type="submit" value=""  href="{{route('admin/comments.destroy',$item->id)}}" >
+                            <i class="far fa-trash-alt"></i>
+                          </a>
+
                         </td>
 
                     </tr>
                 @endforeach
             </tbody>
         </table>
+        {{$comments->links()}}
     @endif
     <!-- /.content -->
     </section> 

@@ -9,38 +9,47 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Orders
-        <small>Optional description</small>
+        Đơn Hàng
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
     </section>
-
+    <div class="row">
+      <div class="col-lg-5">
+        <input id="search" class="form-control mt-1 col-lg-7" type="text" placeholder="Tìm kiếm: Mã đơn hàng, tên khách hàng..." aria-label="Search">
+      </div>
+      <div class="col-lg-5">
+          <select class="float-right form-control col-lg-10 mt-1" name="" id="">
+            <option value="">Tùy chọn sản phẩm</option>
+            <option value="">Lọc sản phẩm giá 100 - 200 </option>
+            <option value="">Lọc từ mới tới cũ</option>
+          </select>
+      </div>
+      <div class="col-lg-2">
+        <button class="btn btn-primary mt-1"><i class="fas fa-filter"></i> Lọc</button>
+      </div>
+    </div>
+    <br>
     <!-- Main content -->
     <section class="content container-fluid">
-    <a href="{{ route('orders.create') }}" class="btn btn-success">Create</a>
-    @if(empty($orders))
-        <p>No Data</p>
-    @else
+    <?php $err=''; ?>
+    
         <table class="table">
             <thead>
-                <th>ID</th>
-                <th>Customer_name</th>
-                <th>Customer_phone</th>
-                <th>Customer_email</th>
-                <th>Customer_address</th>
-                <th>Status</th>
-                <th>Total_price</th>
-                <th>Payment_method</th>
-                <th>Discount</th>
-                <th>Buyer_id</th>
-                <th>Voucher_id</th>
-                <th>Message</th>
+                <th>Mã đơn hàng</th>
+                <th>Tên khách hàng</th>
+                <th>Số điện thoại</th>
+                <th>Email</th>
+                <th>Địa chỉ nhận hàng</th>
+                <th>Tổng tiền</th>
+                <th>Phương thức thanh toán</th>
+                <th>Trạng thái</th>
+                <th>Tùy chọn</th>
+                
                 
             </thead>
             <tbody>
+              @if(count($orders)==0)
+                 <td> Không có dữ liệu</td>
+              @else
                 @foreach($orders as $item)
                     <tr>  
                       <td>{{ $item ['id'] }}</td>
@@ -48,30 +57,32 @@
                         <td>{{ $item ['customer_phone'] }}</td>
                         <td>{{ $item ['customer_email'] }}</td>
                         <td>{{ $item ['customer_address'] }}</td>
-                        <td>{{ $item ['status'] }}</td>
+                        
                         <td>{{ $item ['total_price'] }}</td>
                         <td>{{ $item ['payment_method'] }}</td>
-                        <td>{{ $item ['discount'] }}</td>
-                        <td>{{ $item ['buyer_id'] }}</td>
-                        <td>{{ $item ['voucher_id'] }}</td>
-                        <td>{{ $item ['message'] }}</td>
-                          
-                        <td><a href="#" class="btn btn-primary"><i class="fas fa-pen-alt" > </i></a></td>
-                       
-                        <td><a href="{{route('orders.show',$item ['id'])}}" class="btn btn-info"><i class="fas fa-eye"></i></a></td>
+                        <td>{{ $item ['status'] }}</td>
                         <td>
-                          <form action="#" method="POST">
-                            @csrf
-                            <a class="btn btn-danger" type="submit" value="" href="{{route('orders.destroy',$item ['id'])}}"  >  <i class="far fa-trash-alt"></i></a>
-                         
-                          </form>
+                        <a href="#" class="btn btn-primary">
+                            <i class="fas fa-pen-alt"> </i>
+                          </a>
+                          <a href="{{route('admin/orders.show',$item['id'])}}" class="btn btn-info">
+                            <i class="fas fa-eye"></i>
+                          </a>
+                          <a onclick="return confirm('Bạn có muốn xóa đơn hàng này không?')" class="btn btn-danger" type="submit" value="" href="{{route('admin/orders.destroy',$item ['id'])}}"  >
+                            <i class="far fa-trash-alt"></i>
+                          </a>
+                          
+
                         </td>
+                        
+
 
                     </tr>
-                @endforeach
+                  @endforeach
+                @endif
             </tbody>
         </table>
-    @endif
+   
     <!-- /.content -->
     </section> 
   </div>

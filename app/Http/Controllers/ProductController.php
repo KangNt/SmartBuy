@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Validator;
 class ProductController extends Controller
@@ -14,8 +15,12 @@ class ProductController extends Controller
     }
 
     public function create()
-    {
-        return view('admin.products.create');
+    {   $get_all_categories = Category::all();
+        $status_cmt = [
+            "Bật"=>1,
+            "Tắt"=>0
+        ];
+        return view('admin.products.create',['categories'=>$get_all_categories,'status_cmt'=>$status_cmt]);
     }
     public function store(Request $request)
     {   
@@ -32,7 +37,7 @@ class ProductController extends Controller
         $msg = [
             'name.required'=>"Tên sản phẩm không được để trống",
             'name.unique'=>"Tên sản phẩm đã tồn tại",
-            'image'=>"Ảnh sản phẩm không được để trống",
+            'image.required'=>"Ảnh sản phẩm không được để trống",
             'price.required'=>"Giá sản phẩm không được để trống",
             'cate_id.required'=>'Danh mục không được để trống',
             'amount.required'=>'Số lượng không được để trống',
@@ -40,7 +45,7 @@ class ProductController extends Controller
         
         $validator = Validator::make($request->except('_token'),$rules,$msg);
         if($validator->fails()){
-            return view('admin.products.create')->withErrors($validator);
+            return redirect()->route('admin/products.create')->withErrors($validator);
         }
         else{
             $filename = $request->file('image')->getClientOriginalName();
@@ -65,16 +70,55 @@ class ProductController extends Controller
         }
 
     }
-    public function show($id)
-    {
-        $product = Product::find($id);
-        return $product;
+    public function search(Request $request)
+    {   
+        $search = Product::where('name','like','%'.$request->search.'%')->paginate(5);
+        $url =url('admin/products');
+        $output = '';
+        foreach($search as $s){
+            $output.="
+                
+                <tr>  
+                    <td>$s->id</td>
+                        <td>$s->cate_id</td>
+                        <td>$s->name</td>
+                        <td>
+                        <img width='60' height='50' src='$s->image'>
+                        </td>
+                        <td>$s->price</td>
+                        <td>$s->amount</td>
+                        <td>$s->views</td>
+                        <td>$s->rating</td>
+                        <td>
+                          <a href='$url/edit-product/$s->id' title='Chỉnh sửa' class='btn btn-primary'>
+                          <i class='fas fa-pen-alt'></i>
+                          </a>
+                          <a onclick='return confirm('Bạn có muốn xóa sản phẩm $s->name không ?');' class='btn btn-danger' title='Xóa'  href='$url/destroy/$s->id'>
+                            <i class='far fa-trash-alt'></i>
+                          </a>
+                        </td>         
+                    </tr>
+            ";
+        }
+        // dd($output);
+        if(count($search)>0){
+            return response()->json(['result'=>$output,'count'=>count($search)]);
+        }
+        else{
+            return response()->json(['result'=>'err']);
+        }
     }
+        // dd($search);
+        
     public function edit($id)
-    {
+    {   $status_cmt = [
+        "Bật"=>1,
+        "Tắt"=>0
+        ];
         $product = Product::find($id);
+        $get_all_categories = Category::all();
         return view('admin.products.edit', [
-            'product' => $product,
+            'product' => $product,'listCate'=>$get_all_categories,'status_cmt'=>$status_cmt
         ]);
     }
     public function update(Request $request, $id)

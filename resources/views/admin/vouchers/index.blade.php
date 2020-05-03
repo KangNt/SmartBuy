@@ -9,13 +9,9 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Page Vouchers
-        <small>Optional description</small>
+        Danh sách mã quà tặng
       </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
+      
     </section>
 
     <!-- Main content -->
@@ -34,6 +30,7 @@
                 <th>Start_time</th>
                 <th>End_time</th>
                 <th>Used_count</th>
+                <th>Tùy chọn</th>
                 
                 
             </thead>
@@ -48,18 +45,12 @@
                         <td>{{ $item ['start_time'] }}</td>
                         <td>{{ $item ['end_time'] }}</td>
                         <td>{{ $item ['used_count'] }}</td>
+                        <td><a href="#" class="btn btn-primary">
+                          <i class="fas fa-pen-alt" > </i></a>
+                          <a class="btn btn-danger" type="submit" value="" href="{{route('admin/vouchers.destroy',$item ['id'])}}">
+                            <i class="far fa-trash-alt"></i>
+                          </a>
 
-
-                           
-                        <td><a href="#" class="btn btn-primary"><i class="fas fa-pen-alt" > </i></a></td>
-                       
-                        <td><a href="#" class="btn btn-info"><i class="fas fa-eye"></i></a></td>
-                        <td>
-                          <form action="#" method="POST">
-                            @csrf
-                            <a class="btn btn-danger" type="submit" value="" href="{{route('vouchers.destroy',$item ['id'])}}">  <i class="far fa-trash-alt"></i></a>
-                         
-                          </form>
                         </td>
                     </tr>
                 @endforeach

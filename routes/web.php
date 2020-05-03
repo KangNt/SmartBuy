@@ -13,17 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 
 
 //  Route::get('/','HomeController@index')->name('admin');
  Route::get('admin','HomeController@index')->name('admin');
  Route::group([
-    'prefix'=>'users',
-    'as'=>'users.',
+    'prefix'=>'admin/users',
+    'as'=>'admin/users.',
     // 'middleware'=> 'check_admin_role',
 ],function(){
     Route::get('/','UserController@index')->name('index');// hiển thị tất cả tài nguyên
@@ -36,8 +36,8 @@ use Illuminate\Support\Facades\Route;
 });
 
 Route::group([
-    'prefix'=>'orders',
-    'as'=>'orders.',
+    'prefix'=>'admin/orders',
+    'as'=>'admin/orders.',
     // 'middleware'=> 'check_admin_role',
 ],function(){
     Route::get('/','OrderController@index')->name('index');// hiển thị tất cả tài nguyên
@@ -45,14 +45,14 @@ Route::group([
     Route::post('/store','OrderController@store')->name('store');//lưu trữ một tài nguyên mới
     Route::get('/edit/{id}','OrderController@edit')->name('edit');// sửa một tài nguyên theo tham số truyền vào
     Route::post('/update/{id}','OrderController@update')->name('update');//cập nhật 1 tài nguyên theo tham số truyền vào
-    Route::get('/show','OrderController@show')->name('show');
+    Route::get('/show/{id}','OrderController@show')->name('show');
     Route::get('/destroy/{id}','OrderController@destroy')->name('destroy');//xóa 1 tài nguyên
     
 });
 
 Route::group([
-    'prefix'=>'contacts',
-    'as'=>'contacts.',
+    'prefix'=>'admin/contacts',
+    'as'=>'admin/contacts.',
     // 'middleware'=> 'check_admin_role',
 ],function(){
     Route::get('/','ContactController@index')->name('index');// hiển thị tất cả tài nguyên
@@ -67,8 +67,8 @@ Route::group([
 
 
 Route::group([
-    'prefix'=>'comments',
-    'as'=>'comments.',
+    'prefix'=>'admin/comments',
+    'as'=>'admin/comments.',
     // 'middleware'=> 'check_admin_role',
 ],function(){
     Route::get('/','CommentController@index')->name('index');// hiển thị tất cả tài nguyên
@@ -83,21 +83,6 @@ Route::group([
 
 
 Route::group([
-    'prefix'=>'brands',
-    'as'=>'brands.',
-    // 'middleware'=> 'check_admin_role',
-],function(){
-    Route::get('/','BrandController@index')->name('index');// hiển thị tất cả tài nguyên
-    Route::get('/create','BrandController@create')->name('create');//tạo mới
-    Route::post('/store','BrandController@store')->name('store');//lưu trữ một tài nguyên mới
-    Route::get('/edit/{id}','BrandController@edit')->name('edit');// sửa một tài nguyên theo tham số truyền vào
-    Route::post('/update/{id}','BrandController@update')->name('update');//cập nhật 1 tài nguyên theo tham số truyền vào
-    Route::get('/show','BrandController@show')->name('show');
-    Route::get('/destroy/{id}','BrandController@destroy')->name('destroy');//xóa 1 tài nguyên
-    
-});
-
-Route::group([
     'prefix'=>'admin/products',
     'as'=>'admin/products.',
     // 'middleware'=> 'check_admin_role',
@@ -108,14 +93,15 @@ Route::group([
     Route::get('/edit-product/{id}','ProductController@edit')->name('edit');// sửa một tài nguyên theo tham số truyền vào
     Route::post('/update-product/{id}','ProductController@update')->name('update');//cập nhật 1 tài nguyên theo tham số truyền vào
     Route::get('/show','ProductController@show')->name('show');
+    Route::post('/search','ProductController@search')->name('search');
     Route::get('/destroy/{id}','ProductController@destroy')->name('destroy');//xóa 1 tài nguyên
     
 });
 
 
 Route::group([
-    'prefix'=>'categories',
-    'as'=>'categories.',
+    'prefix'=>'admin/categories',
+    'as'=>'admin/categories.',
     // 'middleware'=> 'check_admin_role',
 ],function(){
     Route::get('/','CategoryController@index')->name('index');// hiển thị tất cả tài nguyên
@@ -130,8 +116,8 @@ Route::group([
 
 
 Route::group([
-    'prefix'=>'vouchers',
-    'as'=>'vouchers.',
+    'prefix'=>'admin/vouchers',
+    'as'=>'admin/vouchers.',
     // 'middleware'=> 'check_admin_role',
 ],function(){
     Route::get('/','VoucherController@index')->name('index');// hiển thị tất cả tài nguyên

@@ -19,7 +19,7 @@ class Product extends Model
         'status',
         'views',
         'rating',
-        'disable_comment',
+        'disabled_comment',
     ];
 
 }

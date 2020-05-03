@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use Illuminate\Support\Facades\DB;
 class CommentController extends Controller
 {
     /**
@@ -13,8 +14,13 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::all();
+        $comments = DB::table('comments')
+                    ->select(DB::raw('*,users.name as fullname,DATE_FORMAT(comments.created_at, "%d-%m-%Y") as date_cmt'))
+                    ->join('users','comments.user_id','=','users.id')
+                    ->join('products','comments.product_id','=','products.id')->orderBy('date_cmt',"asc")->paginate(7);
+         
         return view('admin.comments.index', ['comments' => $comments]);
+        
 
     }
 
@@ -93,6 +99,6 @@ class CommentController extends Controller
     public function destroy($id)
     {
         Comment::destroy($id);
-        return redirect()->route('comments.index');
+        return redirect()->route('admin/comments.index');
     }
 }

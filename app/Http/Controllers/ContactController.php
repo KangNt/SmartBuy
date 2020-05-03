@@ -94,6 +94,6 @@ class ContactController extends Controller
     public function destroy($id)
     {
         Contact::destroy($id);
-        return redirect()->route('contacts.index');
+        return redirect()->route('admin/contacts.index');
     }
 }

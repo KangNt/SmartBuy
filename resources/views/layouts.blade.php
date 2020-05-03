@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>@yield('title')</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
+    <!-- jQuery -->
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
@@ -40,24 +42,25 @@ desired effect
 -->
 <body class="hold-transition sidebar-mini layout-fixed">
 
-<div class="wrapper">
+<div  class="wrapper">
     @include('header')
    
     @include('sidebar')
 
-    <div class="content-wrapper">
-        <section class="content">
-        @yield('contents')
+    <div style="min-height: 1200.88px;" class="content-wrapper">
+        <section style="margin-bottom:200px" class="content">
+            @yield('contents')
         </section>
+        
+       
     </div>
+    
     @include('footer')
     <aside class="control-sidebar control-sidebar-dark"></aside>
    
 </div>
 
-<!-- jQuery -->
-<script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+
 <script>
   $.widget.bridge('uibutton', $.ui.button)
 </script>
