@@ -164,7 +164,7 @@ export class FavouriteScreen extends Component {
         return (
 
             <SafeAreaView style={{ flex: 1, }}>
-                <CustomHeader title="Ưa Thích" navigation={this.props.navigation} />
+                <CustomHeader title="Yêu thích" navigation={this.props.navigation} />
                 <View style={styles.container}>
                     <FlatList
                         style={styles.contentList}

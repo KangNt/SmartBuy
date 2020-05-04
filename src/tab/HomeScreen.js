@@ -244,7 +244,7 @@ export class HomeScreen extends Component {
     // if(is)const {email} = this.props.route.params  
     return (
       <SafeAreaView  style={{ flex: 1, flexDirection: "column", }}>
-        <CustomHeader ref="addtocart" title="Home" isHome={true} cart={true} navigation={this.props.navigation} />
+        <CustomHeader ref="addtocart" title="Trang chủ" isHome={true} cart={true} navigation={this.props.navigation} />
         <SearchBar platform="android" containerStyle={{ height: 40, width: width, justifyContent: "center" }} inputStyle={{ fontSize: 15, }}
           placeholder="Search..."
           onChangeText={val => this.setState({ search: val })}

@@ -179,7 +179,7 @@ function TabNavigator({ navigation }) {
       <Tab.Screen
 
         options={{
-          tabBarLabel: 'Ưa Thích',
+          tabBarLabel: 'Yêu Thích',
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="charity" color={color} size={size} />),
         }}
         name="favourite" component={FavouriteStack} />

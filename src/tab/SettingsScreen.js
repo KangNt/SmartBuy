@@ -77,7 +77,7 @@ export class SettingsScreen extends Component {
             
         {/* <View style={{ flexDirection: 'row', height: 50, height: 150,}}> */}
           {/* <ImageBackground source={IMAGE.ICON_BACKGROUND} style={{ width: '100%', height: '100%' }}> */}
-         <CustomHeader isHome={false} title="Settings" navigation={this.props.navigation} />
+         <CustomHeader isHome={false} title="Cài đặt" navigation={this.props.navigation} />
           {/* </ImageBackground> */}
         {/* </View> */}
 

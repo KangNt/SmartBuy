@@ -185,7 +185,7 @@ export class HistoryScreen extends Component {
                 />
               }   style={{ flex: 1, }} >
             {/* <ScrollView style={{flex:1}}> */}
-                <CustomHeader title="History" navigation={this.props.navigation} />
+                <CustomHeader title="Lịch sử" navigation={this.props.navigation} />
                 
                 
                 
