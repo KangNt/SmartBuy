@@ -15,7 +15,7 @@ export class CustomHeader extends Component {
           {
             isHome ?
               <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                <Image style={{ width: 30, height: 30, marginLeft: 5,marginTop:10 }}
+                <Image style={{ width: 30, height: 30, marginLeft: 10,marginTop:15}}
                   source={IMAGE.ICON_MENU}
                   resizeMode='contain' />
                   
@@ -24,7 +24,7 @@ export class CustomHeader extends Component {
               <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
                 onPress={() => this.props.navigation.goBack()}
               >
-                <Image style={{ width: 25, height: 25, marginLeft:5,marginTop:10 }}
+                <Image style={{ width: 25, height: 25, marginLeft:10,marginTop:15 }}
                   source={IMAGE.ICON_BACK}
                 />
                 {/* <Text>Back</Text> */}
