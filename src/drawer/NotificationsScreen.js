@@ -7,7 +7,7 @@ export class NotificationsScreen extends Component {
         return (
 
             <SafeAreaView style={{ flex: 1, }}>
-                <CustomHeader title="Notifications" navigation={this.props.navigation} />
+                <CustomHeader title="Thông Báo" navigation={this.props.navigation} />
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <Text>Notifications Screen</Text>
                 </View>

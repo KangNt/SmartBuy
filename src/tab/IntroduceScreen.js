@@ -69,7 +69,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#92BBD9'
+    backgroundColor: '#92BBD9',
+    
+    
   },
   scrollView: {
     // backgroundColor: Colors.lighter,

@@ -29,6 +29,8 @@ import {
   ChangePasswordScreen,
   PolicyScreen,
   TutorialPaymentScreen,
+  IntroduceDrawer,
+  IntroduceStart,
 } from './src/drawer'
 import Test from "./src/Test"
 import { LoginScreen, RegisterScreen, ShowScan, } from './src/auth'
@@ -186,7 +188,6 @@ function TabNavigator({ navigation }) {
 
 
       <Tab.Screen
-
         options={{
           tabBarLabel: 'Cài Đặt',
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="settings" color={color} size={size} />),
@@ -210,8 +211,8 @@ function DrawerNavigator({ navigation }) {
       <Drawer.Screen name="Contact" component={ContactScreen} />
       <Drawer.Screen name="Policy" component={PolicyScreen} />
       <Drawer.Screen name="TutorialPayment" component={TutorialPaymentScreen} />
-      
-
+      <Drawer.Screen name="IntroduceDrawer" component={IntroduceDrawer} />
+      <Drawer.Screen name="IntroduceStart" component={IntroduceStart} />
     </Drawer.Navigator>
   )
 }
@@ -221,7 +222,7 @@ const StackApp = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <StackApp.Navigator initialRouteName="Introduce">
+      <StackApp.Navigator initialRouteName="HomeApp">
         <StackApp.Screen name="Introduce" component={IntroduceScreen} options={navOptionHandler} />
         <StackApp.Screen name="HomeApp" component={DrawerNavigator} options={navOptionHandler} />
         <StackApp.Screen name="Login" component={LoginScreen} options={navOptionHandler} />

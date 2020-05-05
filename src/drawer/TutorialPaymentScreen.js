@@ -7,7 +7,7 @@ export class TutorialPaymentScreen extends Component {
         return (
 
             <SafeAreaView style={{ flex: 1, }}>
-                <CustomHeader title="TutorialPayment" navigation={this.props.navigation} />
+                <CustomHeader title="Hướng dẫn thanh toán" navigation={this.props.navigation} />
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <Text>TutorialPayment Screen</Text>
                 </View>

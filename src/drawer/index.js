@@ -13,3 +13,7 @@ export * from './ContactScreen'
 export * from './PolicyScreen'
 
 export * from './TutorialPaymentScreen'
+
+export * from './IntroduceDrawer'
+
+export * from './IntroduceStart'

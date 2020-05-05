@@ -242,6 +242,7 @@ export class HomeScreenDetail extends Component {
   render() {
     const {product} =this.props.route.params
     
+    
     return (
       <SafeAreaView style={{ flex: 1, }}>
         <CustomHeader title='Chi Tiết' Total={this.state.totalCart} cart={true} navigation={this.props.navigation} />
@@ -250,7 +251,7 @@ export class HomeScreenDetail extends Component {
           <View style={{alignItems:'center', justifyContent:'center',marginHorizontal:30}}>
             <Image style={styles.productImg} source={{uri:product.image}}/>
             <Text style={styles.name}>{product.name}</Text>
-            <Text style={styles.price}>{product.price} $</Text>
+            <Text style={styles.price}>{product.price} VNĐ</Text>
             
           </View>
           <View style={styles.starContainer}>

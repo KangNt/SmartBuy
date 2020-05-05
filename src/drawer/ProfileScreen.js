@@ -38,7 +38,7 @@ export class ProfileScreen extends Component {
       
         return (
             <SafeAreaView style={{ flex: 1, }}>
-                <CustomHeader title=" Profile" navigation={this.props.navigation} />
+                <CustomHeader title="Thông tin người dùng" navigation={this.props.navigation} />
                 <SafeAreaView style={styles.container}>
                     <ScrollView showsVerticalScrollIndicator={false}>
 

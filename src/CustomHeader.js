@@ -1,52 +1,56 @@
 import React, { Component } from 'react'
-
-import { Text, View, Image, TouchableOpacity } from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity
+} from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
-  import { IMAGE } from './constants/Image'
+import { IMAGE } from './constants/Image'
 import { TextInput } from 'react-native-paper';
 
 
 export class CustomHeader extends Component {
   render() {
-    let { navigation, isHome, title,cart } = this.props
+    let { navigation, isHome, title, cart } = this.props
     return (
-      <View style={{ flexDirection: 'row', height: 70,marginTop:-20, backgroundColor:"#F6F8FA" }}>
+      <View style={{ flexDirection: 'row', height: 70, marginTop: -20, backgroundColor: "#F6F8FA" }}>
         <View style={{ flex: 1, justifyContent: 'center' }}>
           {
             isHome ?
               <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                <Image style={{ width: 30, height: 30, marginLeft: 10,marginTop:15}}
+                <Image style={{ width: 30, height: 30, marginLeft: 10, marginTop: 15 }}
                   source={IMAGE.ICON_MENU}
                   resizeMode='contain' />
-                  
+
               </TouchableOpacity>
               :
               <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
                 onPress={() => this.props.navigation.goBack()}
               >
-                <Image style={{ width: 25, height: 25, marginLeft:10,marginTop:15 }}
+                <Image style={{ width: 25, height: 25, marginLeft: 10, marginTop: 15 }}
                   source={IMAGE.ICON_BACK}
                 />
                 {/* <Text>Back</Text> */}
               </TouchableOpacity>
           }
-         
+
         </View>
 
-        <View style={{ flex:15, justifyContent: 'center'}}>
-          <Text style={{ textAlign: 'center',fontSize:19, marginTop:7, }}>{title}</Text>
-          {cart 
-          ?
-          <TouchableOpacity onPress={()=> navigation.navigate('cart')} style={{position:'absolute',right:0,}}>
-            <FontAwesome5 name="cart-plus" size={20} style={{marginTop:10, marginLeft:"89%"}}></FontAwesome5>
-            {/* <View style={{borderRadius:15,shadowOpacity:0.5,width:20,height:20,backgroundColor:'red',justifyContent:"center",alignItems:"center",position:"absolute",top:-5,left:15, }}>
+        <View style={{ flex: 5, justifyContent: 'center', }}>
+          <Text style={{ textAlign: 'center', fontSize: 19, marginTop: 7, marginRight:55 }}>{title}</Text>
+          {cart
+            ?
+            <TouchableOpacity onPress={() => navigation.navigate('cart')} style={{ position: 'absolute', right: 0 }}>
+              <FontAwesome5 name="cart-plus" size={20} style={{ marginTop: 10, marginRight: 20 }}></FontAwesome5>
+              {/* <View style={{borderRadius:15,shadowOpacity:0.5,width:20,height:20,backgroundColor:'red',justifyContent:"center",alignItems:"center",position:"absolute",top:-5,left:15, }}>
               <Text style={{color:'white',fontSize:11}}>0</Text>
             </View> */}
-          </TouchableOpacity>
-          : null
+            </TouchableOpacity>
+            : null
           }
         </View>
-        <View style={{ flex: 1 }}></View>
+        {/* <View style={{ flex: 1 }}></View> */}
       </View>
     )
   }
@@ -79,7 +83,7 @@ export class CustomHeader extends Component {
 //                 <Image style={{ width: 30, height: 30, marginLeft: 5,marginTop:10 }}
 //                   source={IMAGE.ICON_MENU}
 //                   resizeMode='contain' />
-                  
+
 //               </TouchableOpacity>
 //               :
 //               <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }}
@@ -92,7 +96,7 @@ export class CustomHeader extends Component {
 //                 {/* <Text>Back</Text> */}
 //               </TouchableOpacity>
 //           }
-         
+
 //         </View>
 
 //         <View style={{ flex: 15, justifyContent: 'center'}}>
