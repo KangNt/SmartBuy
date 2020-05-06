@@ -186,15 +186,10 @@ export class HistoryScreen extends Component {
         const { selectedIndex } = this.state
         let { navigation, isHome, title } = this.props
         return (
+            <SafeAreaView style={{ flex: 1, }}>
 
-            <ScrollView refreshControl={
-                <RefreshControl
-                    onRefresh={this.PulltoRefresh}
-                    refreshing={this.state.loading}
-                />
-            } style={{ flex: 1, }} >
                 {/* <ScrollView style={{flex:1}}> */}
-                <CustomHeader title="Lịch sử" navigation={this.props.navigation}  />
+                <CustomHeader title="Lịch sử" navigation={this.props.navigation} />
 
 
 
@@ -204,43 +199,49 @@ export class HistoryScreen extends Component {
                     buttons={buttons}
                     containerStyle={{ height: 50, borderRadius: 30 }}
                 />
-                <View style={{ flex: 1, alignItems: 'center' }}>
-                    <FlatList
-                        style={styles.list} showsVerticalScrollIndicator={false}
-                        contentContainerStyle={styles.listContainer}
-                        data={this.state.data}
-                        horizontal={false}
-                        renderItem={({ item }) => {
-                            return (
-                                <TouchableOpacity style={styles.card} onPress={() => this.props.navigation.navigate('DetailHistory', { item: item })}>
-                                    {/* <Image style={styles.cardImage} source={{ uri: item.image }} /> */}
-                                    <View style={{ alignContent: "center", width: width - 50, top: 17 }}>
-                                        <Text style={styles.title}>Mã Đơn Hàng: {item.id}</Text>
-                                        <Text style={styles.title}>Tên Khách Hàng: {item.customer_name}</Text>
-                                        {
-                                            STT_order.map((stt) => {
-                                                if (item.status == stt.value) {
-                                                    return (
-                                                        <Text style={styles.title}>Trạng Thái:
-                                                            <Text style={{
-                                                                color: stt.color, fontSize: 15,
-                                                                fontWeight: 'bold',
-                                                                marginLeft: 40,
-                                                            }}> {stt.method}
+                <ScrollView style={{ flex: 1, }} refreshControl={
+                    <RefreshControl
+                        onRefresh={this.PulltoRefresh}
+                        refreshing={this.state.loading}
+                    />
+                } >
+                    <View style={{ flex: 1, alignItems: 'center', }} >
+                        <FlatList
+                            style={styles.list} showsVerticalScrollIndicator={false}
+                            contentContainerStyle={styles.listContainer}
+                            data={this.state.data}
+                            horizontal={false}
+                            renderItem={({ item }) => {
+                                return (
+                                    <TouchableOpacity style={styles.card} onPress={() => this.props.navigation.navigate('DetailHistory', { item: item })}>
+                                        {/* <Image style={styles.cardImage} source={{ uri: item.image }} /> */}
+                                        <View style={{ alignContent: "center", width: width - 50, top: 17 }}>
+                                            <Text style={styles.title}>Mã Đơn Hàng: {item.id}</Text>
+                                            <Text style={styles.title}>Tên Khách Hàng: {item.customer_name}</Text>
+                                            {
+                                                STT_order.map((stt) => {
+                                                    if (item.status == stt.value) {
+                                                        return (
+                                                            <Text style={styles.title}>Trạng Thái:
+                                                                <Text style={{
+                                                                    color: stt.color, fontSize: 15,
+                                                                    fontWeight: 'bold',
+                                                                    marginLeft: 40,
+                                                                }}> {stt.method}
+                                                                </Text>
                                                             </Text>
-                                                        </Text>
-                                                    )
-                                                }
-                                            })
-                                        }
-                                        <Text style={styles.title}>Tổng Tiền: {item.total_price} VNĐ</Text>
-                                        <Text style={styles.title}>Ngày Đặt: {item.day_buy}</Text>
+                                                        )
+                                                    }
+                                                })
+                                            }
+                                            <Text style={styles.title}>Tổng Tiền: {item.total_price} VNĐ</Text>
+                                            <Text style={styles.title}>Ngày Đặt: {item.day_buy}</Text>
 
-                                        <Text style={{ position: "absolute", right: 5, top: 40, fontWeight: "bold", color: "#3399f0", fontSize: 40 }}>
-                                            <FontAwesome5 name='chevron-right' size={20}></FontAwesome5>
-                                        </Text>
-                                    </View>
-                                    {/* <Text style={styles.title}>Địa chỉ nhận hàng: {item.customer_address}</Text>
+                                            <Text style={{ position: "absolute", right: 5, top: 40, fontWeight: "bold", color: "#3399f0", fontSize: 40 }}>
+                                                <FontAwesome5 name='chevron-right' size={20}></FontAwesome5>
+                                            </Text>
+                                        </View>
+                                        {/* <Text style={styles.title}>Địa chỉ nhận hàng: {item.customer_address}</Text>
                                     <Text style={styles.title}>Số điện thoại: {item.customer_phone}</Text>
                                     {
                                         STT_payment.map((stt)=>{
@@ -251,31 +252,32 @@ export class HistoryScreen extends Component {
                                             }
                                         })
                                     } */}
-                                    {item.status != 1 ? <Text></Text>
-                                        :
-                                        <View style={{ alignItems: "flex-end" }}>
-                                            <TouchableOpacity onPress={() => this.confirm_cancel(item)} style={{
-                                                width: 80, height: 30, borderRadius: 30,
-                                                justifyContent: "center", backgroundColor: "white",
-                                                borderWidth: 1, borderColor: "#dcdcdc", marginBottom: 3
-                                            }}>
-                                                <Text style={{ textAlign: "center", color: 'red' }}>Hủy</Text>
-                                            </TouchableOpacity>
-                                        </View>
+                                        {item.status != 1 ? <Text></Text>
+                                            :
+                                            <View style={{ alignItems: "flex-end" }}>
+                                                <TouchableOpacity onPress={() => this.confirm_cancel(item)} style={{
+                                                    width: 80, height: 30, borderRadius: 30,
+                                                    justifyContent: "center", backgroundColor: "white",
+                                                    borderWidth: 1, borderColor: "#dcdcdc", marginBottom: 3
+                                                }}>
+                                                    <Text style={{ textAlign: "center", color: 'red' }}>Hủy</Text>
+                                                </TouchableOpacity>
+                                            </View>
 
-                                    }
+                                        }
 
-                                </TouchableOpacity>
+                                    </TouchableOpacity>
 
-                            )
-                        }} />
-                </View>
-
-
+                                )
+                            }} />
+                    </View>
 
 
-                {/* </ScrollView> */}
-            </ScrollView>
+
+
+                    {/* </ScrollView> */}
+                </ScrollView>
+            </SafeAreaView>
 
 
 
