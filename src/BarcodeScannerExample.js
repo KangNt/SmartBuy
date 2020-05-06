@@ -76,9 +76,6 @@ export class BarcodeScannerExample extends React.Component {
   };
 }
 
-
-
-
 const opacity = 'rgba(0, 0, 0, .6)';
 const styles = StyleSheet.create({
   container: {
