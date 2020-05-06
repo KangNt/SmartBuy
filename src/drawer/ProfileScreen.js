@@ -63,7 +63,7 @@ export class ProfileScreen extends Component {
                         <TouchableOpacity> 
                             <ListItem
                                 title={"Full Name"}
-                                subtitle={'Nguyễn Thiện Quang'}
+                                subtitle={'John K'}
                                 leftIcon={{ name: 'account-circle' }}
                                 bottomDivider
                                 chevron
@@ -72,7 +72,7 @@ export class ProfileScreen extends Component {
                         <TouchableOpacity>
                             <ListItem
                                 title={"Email"}
-                                subtitle={'kangnguyen2603@gmail.com'}
+                                subtitle={'quangnt@novaon.vn'}
                                 leftIcon={{ name: 'email' }}
                                 bottomDivider
                                 chevron
@@ -81,7 +81,7 @@ export class ProfileScreen extends Component {
                         <TouchableOpacity>
                             <ListItem
                                 title={"Address"}
-                                subtitle={'27 Võ Chí Công'}
+                                subtitle={'66 Hồ Tùng Mậu'}
                                 leftIcon={{ name: 'map' }}
                                 bottomDivider
                                 chevron

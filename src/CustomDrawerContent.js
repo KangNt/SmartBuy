@@ -120,29 +120,40 @@ export class CustomDrawerContent extends Component {
             <SafeAreaView style={styles.container}>
                 
                 
-                <View style={{ height: 160, alignItems: 'center', justifyContent: 'center',marginTop:-20,backgroundColor:"#CCFFFF"}}>
+                <View style={{ height: 160, alignItems: 'center', justifyContent: 'center',marginTop:-20,backgroundColor:"#CCFFFF",borderBottomWidth:2 ,flexDirection:"row"}}>
                 {/* <Image  source={require('./images/background.png')} style={{width:"100%",height:200}} /> */}
+                    <View  >
                     <TouchableOpacity onPress={() => this.getInfo()}
                     >
                         <Image source={this.state.avatar == null || this.state.avatar == ''
                             ? require('./images/user.png')
                             : { uri: this.state.avatar }}
-                            style={{ height: 70, width: 70, borderRadius: 60, marginRight: 180, marginTop: 5 }}
+                            style={{ height: 70, width: 70, borderRadius: 60, marginRight: 120, marginTop: 10,marginLeft:40 }}
                             showEditButton
                         />
                     </TouchableOpacity>
 
 
                     <TouchableOpacity>
-                        <Text style={{ marginTop: 5, marginLeft: -120, fontSize: 18, fontWeight: "bold" }}
+                        <Text style={{ marginTop: 5, marginLeft:"15%", fontSize: 18, fontWeight: "bold" }}
                             onPress={() => this.props.navigation.navigate('Profile')}>{this.state.name} </Text>
                     </TouchableOpacity>
 
 
                     <TouchableOpacity>
-                        <Text style={{ marginTop: 5, marginLeft: -120, color: "#ABB4BD" }}
+                        <Text style={{ marginTop: 5, marginLeft: "15%", color: "#ABB4BD" }}
                             onPress={() => this.props.navigation.navigate('Profile')}>{this.state.email}</Text>
                     </TouchableOpacity>
+                    </View>
+                    
+
+                    <View  style={{marginRight:"10%",marginTop:"-29%"}}>
+                    <TouchableOpacity 
+                            onPress={() => this.props.navigation.navigate('Home')}
+                    >
+                        <Image source={require('./images/curve-arrow.png')}  />
+                        </TouchableOpacity>
+                    </View>
 
                 </View>
            
