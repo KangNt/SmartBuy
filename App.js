@@ -224,7 +224,7 @@ const StackApp = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <StackApp.Navigator initialRouteName="Introduce">
+      <StackApp.Navigator initialRouteName="HomeApp">
         <StackApp.Screen name="Introduce" component={IntroduceScreen} options={navOptionHandler} />
         <StackApp.Screen name="HomeApp" component={DrawerNavigator} options={navOptionHandler} />
         <StackApp.Screen name="Login" component={LoginScreen} options={navOptionHandler} />
