@@ -50,13 +50,15 @@ export default class Cart extends Component {
           dataCart: cartfood,
           wait_for_reloading:false
         })
-
       }
-    })
-      .catch((err) => {
+      else{
+        this.setState({   
+          wait_for_reloading:false
+        })
+      }
+    }).catch((err) => {
         // alert(err)
-      })
-
+    })
   }
   submit_order() {
     // this.setState({
@@ -181,8 +183,9 @@ export default class Cart extends Component {
   }
 
   render() {
-   
+    
     if (this.state.dataCart == '' || this.state.dataCart == null) {
+      
       return (
         <SafeAreaView style={{ flex: 1, }}>
           
@@ -328,7 +331,7 @@ export default class Cart extends Component {
                   <View style={{ alignItems: "flex-start", width: width - 65 }}>
                     <Text style={{ color: "red" }}>{this.state.err_phone}</Text>
                   </View>
-                  <View style={{ alignItems: "flex-start", width: width - 65 }}>
+                  <View style={{ alignItems: "flex-start", width: width - 65,top:-30 }}>
                     <Picker
                       enabled={true}
                       mode={'dialog'}
@@ -352,11 +355,11 @@ export default class Cart extends Component {
                       backgroundColor: "#9fd236",
                       width: width - 40,
                       alignItems: 'center',
-                      marginBottom: 20,
-                      marginTop: 10,
+                      marginBottom: 50,
+                      marginTop: 90,
                       padding: 10,
                       borderRadius: 5,
-                      marginTop: -50
+                      // marginTop: 20
                     }}>
                     <Text style={{
                       fontSize: 24,

@@ -22,8 +22,6 @@ import { TextInput } from 'react-native-paper';
 var { width, height } = Dimensions.get('window');
 var cart = []
 export class ShowScan extends Component {
-    
-
     constructor(props) {
         super(props); 
         this.state = {
@@ -36,19 +34,16 @@ export class ShowScan extends Component {
         }
         try {
           const val = AsyncStorage.multiGet(["id_user","email","name",'avatar']).then(result => {
-            
-
               this.setState({
                 user_id:result[0][1],
                 email:result[1][1],
                 name:result[2][1],
                 avatar:result[3][1],
-                
               })
               
             }) 
         } catch (error) {
-              console.log(error)
+          console.log(error)
         }
         const { idProduct } = this.props.route.params
         fetch('https://smartbuy01.gq/api/products/detail/'+idProduct)

@@ -181,7 +181,7 @@ export class CustomDrawerContent extends Component {
                     :
                     <TouchableOpacity
                         style={{marginTop:25}}
-                        onPress={()=> this._AlertLogout()}
+                        onPress={()=> this._Logout()}
                     >
                     <Text style={styles.text}><FontAwesome5 name="sign-in-alt" size={24} color={"#CDCCCE"} />
                         <Text style={styles.texts}>   Đăng Xuất</Text>

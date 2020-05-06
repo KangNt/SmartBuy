@@ -22,10 +22,6 @@ const RECIPE_ITEM_HEIGHT = 150;
 const RECIPE_ITEM_MARGIN = 20;
 var cart =[]
 export class HomeScreen extends Component {
-
-  //**Sản phẩm ưa thích  */
-
-
   constructor(props) {
     super(props);
     this.state = {
@@ -139,7 +135,6 @@ export class HomeScreen extends Component {
 
   }
   renderProNew(item) {
-
     return (
       <TouchableOpacity style={{position:'relative'}} onPress={() => this.props.navigation.navigate('HomeDetail', { product: item })}>
         <View style={styles.container1}>
@@ -153,27 +148,15 @@ export class HomeScreen extends Component {
         </View>
       </TouchableOpacity>
 
-      // <TouchableOpacity style={styles.divListProduct} onPress={()=>this.props.navigation.navigate('HomeDetail',{product:item})}>
-      //     <Image
-      //         style={styles.imageProduct}
-      //         resizeMode="contain"
-      //         source={{uri:item.image}} />
-      //         <View style={{height:((width/2)-20)-90, backgroundColor:'transparent', width:((width/2)-20)-10}} />
-      //         <Text style={{fontWeight:'bold',fontSize:18,textAlign:'center'}}>
-      //         {item.name}
-      //         </Text>
-      //         <Text>Descp Food and Details</Text>
-      //         <Text style={{fontSize:20,color:"green"}}>{item.price}</Text>
-      // </TouchableOpacity>
-
     )
 
 
 
   }
-  PulltoRefresh=()=>{
+  PulltoRefresh(){
     this.setState({
-      loading:true
+      loading:true,
+      
     })
     Promise.all([fetch('https://smartbuy01.gq/api/slider'), fetch('https://smartbuy01.gq/api/products'),
                 fetch('https://smartbuy01.gq/api/categories'),fetch('https://smartbuy01.gq/api/products/list-favorite-products')
@@ -193,7 +176,7 @@ export class HomeScreen extends Component {
           listNewProducts:res6,
           loading:false
         })
-        console.log(this.state.categories.category)
+
       })
       .catch((error) => {
         console.error(error);
@@ -232,16 +215,12 @@ export class HomeScreen extends Component {
 
 
   render() {
-
-
     const data = this.state.products
     const searchPros = data.filter((item) => {
       const itemData = item.name.toUpperCase()
       return itemData.indexOf(this.state.search.toUpperCase()) > -1
 
-    })
-
-    // if(is)const {email} = this.props.route.params  
+    }) 
     return (
       <SafeAreaView  style={{ flex: 1, flexDirection: "column", }}>
         <CustomHeader ref="addtocart" title="Home" isHome={true} cart={true} navigation={this.props.navigation} />
@@ -254,9 +233,10 @@ export class HomeScreen extends Component {
         <ActivityIndicator animating={true} style={{marginTop:50}} size={50} color="#61dafb"> 
         </ActivityIndicator> 
         :
-        <ScrollView refreshControl={
+        <ScrollView 
+        refreshControl={
           <RefreshControl
-          onRefresh={this.PulltoRefresh}
+          onRefresh={()=>this.PulltoRefresh()}
           refreshing={this.state.loading}
           />
           }
