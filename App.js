@@ -31,6 +31,7 @@ import {
   TutorialPaymentScreen,
   IntroduceDrawer,
   IntroduceStart,
+  ForgotPasswordScreen,
 } from './src/drawer'
 import Test from "./src/Test"
 import { LoginScreen, RegisterScreen, ShowScan, } from './src/auth'
@@ -213,6 +214,7 @@ function DrawerNavigator({ navigation }) {
       <Drawer.Screen name="TutorialPayment" component={TutorialPaymentScreen} />
       <Drawer.Screen name="IntroduceDrawer" component={IntroduceDrawer} />
       <Drawer.Screen name="IntroduceStart" component={IntroduceStart} />
+      <Drawer.Screen name="Forgotpassword" component={ForgotPasswordScreen} />
     </Drawer.Navigator>
   )
 }

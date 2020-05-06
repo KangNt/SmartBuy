@@ -16,8 +16,6 @@
       "image": "./assets/splash-01.png",
       "resizeMode": "cover",
       "backgroundColor": "#F7F7F7"
-      
-      
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -28,7 +26,7 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "update 4/5 2st ",
+    "description": "update 6/5",
     "githubUrl": "https://github.com/KangNt/SmartBuy/tree/20/4"
   }
 }
