@@ -278,12 +278,12 @@ export class HomeScreenDetail extends Component {
           </View>
           <View style={styles.addToCarContainer}>
             <TouchableOpacity style={styles.shareButtonFavorite} onPress={()=> this.AddToFavourite()}>
-              <Text style={styles.shareButtonText}><FontAwesome5 style={{color:'red'}} name={'heartbeat'} size={21}></FontAwesome5>  Add To Favourite</Text>  
+              <Text style={styles.shareButtonText}><FontAwesome5 style={{color:'red'}} name={'heartbeat'} size={21}></FontAwesome5>  Thêm yêu thích</Text>  
             </TouchableOpacity>
           </View>
           <View style={styles.addToCarContainer}>
             <TouchableOpacity style={styles.shareButton} onPress={()=> this.clickEventListener(product)}>
-              <Text style={styles.shareButtonText}><FontAwesome5 name={'cart-plus'} size={19}></FontAwesome5>  Add To Cart</Text>  
+              <Text style={styles.shareButtonText}><FontAwesome5 name={'cart-plus'} size={19}></FontAwesome5>  Thêm giỏ hàng</Text>  
             </TouchableOpacity>
           </View> 
           <View style={{textAlign:'center',marginTop:10,alignItems:"center",justifyContent:"center",alignContent:"center"}}>

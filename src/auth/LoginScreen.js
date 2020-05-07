@@ -1,143 +1,161 @@
 import React, { Component } from 'react'
 
-import { Text, View, SafeAreaView, TouchableOpacity, StyleSheet, ScrollView, Image,AsyncStorage,KeyboardAvoidingView } from 'react-native'
+import {
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Image,
+  AsyncStorage,
+  KeyboardAvoidingView
+} from 'react-native'
 
 import { CustomHeader } from '../index'
 import InputTextField from "../../components/InputTextField"
 import Test from "../Test.js"
 import AddButton from '../../components/AddButton'
 export class LoginScreen extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state ={ 
-        
-        isLoading: true,
-        id:'',
-        name:'',
-        email:'',
-        password:'',
-        avatar:""
+    this.state = {
 
-      }
+      isLoading: true,
+      id: '',
+      name: '',
+      email: '',
+      password: '',
+      avatar: ""
 
-}
+    }
 
-Login(){
-  
-    if(this.state.email==''){
-        alert('Email không được để trống');
-      }
-      else if(this.state.password==''){
-        alert('Password không được để trống');
-      }
-      else{
-        fetch('https://smartbuy01.gq/api/users/login', {
-          method: 'POST',
-          headers:{
+  }
+
+  Login() {
+
+    if (this.state.email == '') {
+      alert('Email không được để trống');
+    }
+    else if (this.state.password == '') {
+      alert('Password không được để trống');
+    }
+    else {
+      fetch('https://smartbuy01.gq/api/users/login', {
+        method: 'POST',
+        headers: {
           'Accept': 'application/json',
           'Content-type': 'application/json',
-          
-          },
-          
-          body:JSON.stringify({
-            email: this.state.email,
-            password:this.state.password,
-          })
-          
+
+        },
+
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password,
+        })
+
       })
-          
-          .then((response) => response.json())
-          .then((responseJson) =>{
-          
-          if(responseJson.msg=='login fail'){
-              alert('Đăng nhập thất bại, vui lòng kiểm lại email hoặc password')
+
+        .then((response) => response.json())
+        .then((responseJson) => {
+
+          if (responseJson.msg == 'login fail') {
+            alert('Đăng nhập thất bại, vui lòng kiểm lại email hoặc password')
           }
-         
-          else{
-            AsyncStorage.multiSet([['id_user',`${responseJson.user_info.id}`],['email',responseJson.user_info.email],['name',responseJson.user_info.name],['avatar',responseJson.user_info.avatar]])
+
+          else {
+            AsyncStorage.multiSet([['id_user', `${responseJson.user_info.id}`], ['email', responseJson.user_info.email], ['name', responseJson.user_info.name], ['avatar', responseJson.user_info.avatar]])
             this.props.navigation.navigate('Home')
-            
+
           }
-          
-          
+
+
           // this.setState({
           //   name:'',
           //   price:''
           // })
           // this.del1.clear()
           // this.del2.clear()
-          })
-          .catch((error)=>{
+        })
+        .catch((error) => {
           console.error(error);
-          });
-          
-          
-      }
+        });
+
+
+    }
 
   }
 
   render() {
     return (
-      
+
       <ScrollView style={styles.container}>
-        
-        <KeyboardAvoidingView style={{flex:1,marginBottom:200,}}>
-        {/* <CustomHeader title="Login" navigation={this.props.navigation} /> */}
-        <View>
-          <View style={{ marginTop: 60, alignItems: "center", justifyContent: "center" }}>
-
-            <Image source={require("../images/logo-Sb.png") } style={{width:70,height:70}}></Image>
-            <Text style={[styles.text, { marginTop: 10, fontSize: 22, fontWeight: "500" }]}>  SmartBuy</Text>
-
-          </View>
-          <View style={{ marginTop: 48, flexDirection: "row", justifyContent: "center" }}>
-            <TouchableOpacity>
-              <View style={styles.socialButton}>
-                <Image source={require("../images/facebook.png")} style={styles.socialLogo} ></Image>
-                <Text style={styles.text}>Facebook</Text>
-              </View>
+        <KeyboardAvoidingView style={{ flex: 1, marginBottom: 200, }}>
+          {/* <CustomHeader title="Login" navigation={this.props.navigation} /> */}
+          <View>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Home')}
+              style={{ marginTop: "9%", marginLeft: "-4%", flexDirection: "row" }}
+            >
+              <Image source={require('../images/return.png')} />
+          
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <View style={styles.socialButton}>
-                <Image source={require("../images/google.png")} style={styles.socialLogo}></Image>
-                <Text style={styles.text}>Google</Text>
-              </View>
+
+            <View style={{ marginTop: 60, alignItems: "center", justifyContent: "center" }}>
+
+              <Image source={require("../images/logo-Sb.png")} style={{ width: 70, height: 70 }}></Image>
+              <Text style={[styles.text, { marginTop: 10, fontSize: 22, fontWeight: "500" }]}>  SmartBuy</Text>
+
+            </View>
+            <View style={{ marginTop: 48, flexDirection: "row", justifyContent: "center" }}>
+              <TouchableOpacity>
+                <View style={styles.socialButton}>
+                  <Image source={require("../images/facebook.png")} style={styles.socialLogo} ></Image>
+                  <Text style={styles.text}>Facebook</Text>
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity>
+                <View style={styles.socialButton}>
+                  <Image source={require("../images/google.png")} style={styles.socialLogo}></Image>
+                  <Text style={styles.text}>Google</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+
+
+            <Text style={[styles.text, { color: "#ABB4BD", fontSize: 15, textAlign: "center", marginVertical: 20 }]}>or</Text>
+
+            <InputTextField valueText={(value) => this.setState({ email: value })} title="Email"></InputTextField>
+            <InputTextField
+              style={{ marginTop: 32, marginBottom: 8 }}
+              title="Password" isSecure={true} valueText={(value) => this.setState({ password: value })}>
+
+            </InputTextField>
+
+
+
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Forgotpassword')}>
+              <Text style={[styles.text, styles.link, { textAlign: "right" }]}>Forgot Password?</Text>
             </TouchableOpacity>
+            {/* this.props.navigation.navigate('HomeApp') */}
+            <TouchableOpacity style={styles.submitContainer} onPress={this.Login.bind(this)}>
+              <Text style={[styles.text, { color: "#ffff", ontWeight: "600", fontSize: 16 }]}>Login</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')}>
+              <Text style={[styles.text, { fontSize: 14, color: "#ABB4BD", textAlign: "center", marginTop: 24 }]}>
+                Don't have an account? <Text style={[styles.text, styles.link]}>Register now</Text>
+              </Text>
+
+            </TouchableOpacity>
+
           </View>
-
-
-          <Text style={[styles.text, { color: "#ABB4BD", fontSize: 15, textAlign: "center", marginVertical: 20 }]}>or</Text>
-          
-          <InputTextField valueText={(value)=>this.setState({email:value})} title="Email"></InputTextField>
-          <InputTextField
-            style={{ marginTop: 32, marginBottom: 8 }}
-            title="Password" isSecure={true}  valueText={(value)=>this.setState({password:value})}>
-           
-          </InputTextField>
-          
-          
-          
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Forgotpassword')}>
-          <Text style={[styles.text, styles.link, { textAlign: "right" }]}>Forgot Password?</Text>
-          </TouchableOpacity>
-          {/* this.props.navigation.navigate('HomeApp') */}
-          <TouchableOpacity style={styles.submitContainer} onPress={this.Login.bind(this)}>
-            <Text style={[styles.text, { color: "#ffff", ontWeight: "600", fontSize: 16 }]}>Login</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')}>
-          <Text style={[styles.text, { fontSize: 14, color: "#ABB4BD", textAlign: "center", marginTop: 24 }]}>
-            Don't have an account? <Text style={[styles.text, styles.link]}>Register now</Text>
-          </Text>
-
-          </TouchableOpacity>
-          
-        </View>
         </KeyboardAvoidingView>
       </ScrollView>
-      
-      
+
+
 
 
 
@@ -216,13 +234,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     shadowColor: "rgb(49, 74, 134)",
     shadowOffset: { width: 0, height: 9 },
-    shadowOpacity: 1,   
+    shadowOpacity: 1,
     shadowRadius: 5,
     alignSelf: 'stretch',
     marginLeft: 85,
     marginRight: 90,
-    marginBottom:20
-   
+    marginBottom: 20
+
 
 
   },

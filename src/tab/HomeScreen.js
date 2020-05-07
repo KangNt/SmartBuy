@@ -310,9 +310,15 @@ export class HomeScreen extends Component {
                 </Text>
 
                     :
-                    <Text style={{ textAlign: "center", fontSize: 17, fontWeight: "bold", width: 130, color: "#677ba6", }}>
-                      Sản Phẩm Mới
-                </Text>}
+                    <View style={{flexDirection:"row", marginTop:10}}>
+                       <Text style={{ textAlign: "left", fontSize: 17, fontWeight: "bold", width: 250, color: "#314A86", }}>
+                      Sản Phẩm Mới 
+                      
+                    </Text>
+                    <Text style={{textAlign:"right"}}  onPress={() => this.props.navigation.navigate('AllProductsNews')}>Xem tất cả</Text>
+                    </View>
+                   
+                    }
                   <Text>
                     {searchPros == '' ?
                       <Text
@@ -345,7 +351,12 @@ export class HomeScreen extends Component {
             </View>
             <View style={this.state.search != '' ? { display: 'none' } : {}}>
 
-              <Text style={{ fontSize: 17, color: "#677ba6", fontWeight: "bold", marginLeft: 10 }}>Sản phẩm được mua nhiều <FontAwesome5 name="jedi-order" size={24} color={"#FF0C0C"} /> </Text>
+              <View style={{flexDirection:"row", marginTop:10, marginBottom:9}}>
+                       <Text style={{ textAlign: "left",marginLeft:5, fontSize: 17, fontWeight: "bold", width: 250, color: "#314A86", }}>
+                      Sản phẩm được mua nhiều <FontAwesome5 name="jedi-order" size={24} color={"#FF0C0C"} />
+                    </Text>
+                    <Text style={{textAlign:"right" , marginLeft:25,marginTop:5}}  onPress={() => this.props.navigation.navigate('AllProductsBuys')}>Xem tất cả</Text>
+                    </View>
               <FlatList style={styles.list}
 
                 contentContainerStyle={styles.listContainer}
@@ -398,7 +409,13 @@ export class HomeScreen extends Component {
 
             </View>
             <View style={this.state.search != '' ? { display: 'none' } : {}}>
-              <Text style={{ fontSize: 17, fontWeight: "bold", color: "#677ba6", marginLeft: 10 }}>Sản phẩm được ưa thích  <FontAwesome5 name="heartbeat" size={24} color={"#FF0C0C"} /> </Text>
+              
+                <View style={{flexDirection:"row", marginTop:10, marginBottom:9}}>
+                       <Text style={{ textAlign: "left",marginLeft:5, fontSize: 17, fontWeight: "bold", width: 250, color: "#314A86", }}>
+                      Sản phẩm được yêu thích  <FontAwesome5 name="heartbeat" size={24} color={"#FF0C0C"} />
+                    </Text>
+                    <Text style={{textAlign:"right" , marginLeft:25,marginTop:5}}  onPress={() => this.props.navigation.navigate('AllProductsHearts')}>Xem tất cả</Text>
+                    </View>
               <FlatList style={styles.list}
                 contentContainerStyle={styles.listContainer}
                 data={this.state.list_favorite_products}

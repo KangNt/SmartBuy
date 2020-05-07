@@ -71,6 +71,13 @@ export class RegisterScreen extends Component {
         return (
 
             <ScrollView style={styles.container}>
+                  <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('HomeApp')}
+              style={{ marginTop: "9%", marginLeft: "-4%", flexDirection: "row" }}
+            >
+              <Image source={require('../images/return.png')} />
+          
+            </TouchableOpacity>
 
                 <View>
                     <View style={{ marginTop: 60, alignItems: "center", justifyContent: "center" }}>

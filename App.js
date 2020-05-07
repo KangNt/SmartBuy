@@ -19,7 +19,10 @@ import {
   FavouriteScreen,
   ScanQrCodeScreen,
   TutorialScreen,
-  IntroduceScreen
+  IntroduceScreen,
+  AllProductsNews,
+  AllProductsBuys,
+  AllProductsHearts
 } from './src/tab'
 import {
   NotificationsScreen,
@@ -65,6 +68,9 @@ function HomeStack() {
       <StackHome.Screen name="Menu" component={CustomDrawerContent} options={navOptionHandler} />
       <StackHome.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
       <StackHome.Screen name="CategoryDetail" component={CategoryDetail} options={navOptionHandler} />
+      <StackHome.Screen name="AllProductsNews" component={AllProductsNews} options={navOptionHandler} />
+      <StackHome.Screen name="AllProductsBuys" component={AllProductsBuys} options={navOptionHandler} />
+      <StackHome.Screen name="AllProductsHearts" component={AllProductsHearts} options={navOptionHandler} />
     </StackHome.Navigator>
   );
 };
@@ -95,7 +101,6 @@ function SettingStack() {
       <StackSetting.Screen name="ChangePassword" component={ChangePasswordScreen} options={navOptionHandler} />
       <StackSetting.Screen name="EditProfile" component={EditProfileScreen} options={navOptionHandler} />
       <StackSetting.Screen name="Login" component={LoginScreen} options={navOptionHandler} />
-
     </StackSetting.Navigator>
   )
 }
