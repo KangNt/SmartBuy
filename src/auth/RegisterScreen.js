@@ -63,6 +63,9 @@ export class RegisterScreen extends Component {
                 this.clear_password.clear()
                 this.clear_cfpasword.clear()
             }
+            setTimeout(() => {
+                this.props.navigation.navigate("Login")
+            }, 1500);
          
         })   
     }
