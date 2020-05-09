@@ -1,9 +1,8 @@
 import * as React from 'react';
-// import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity,Button, Alert } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { CustomDrawerContent, BarcodeScannerExample } from './src'
@@ -21,8 +20,6 @@ import {
   TutorialScreen,
   IntroduceScreen,
   AllProductsNews,
-  AllProductsBuys,
-  AllProductsHearts
 } from './src/tab'
 import {
   NotificationsScreen,
@@ -43,10 +40,13 @@ import { AddButton } from './components/AddButton'
 
 import { MaterialCommunityIcons } from 'react-native-vector-icons';
 
+
 // import { FontAwesome5 } from '@expo/vector-icons';
 // import { IMAGE } from './src/constants/Image';
 // import { AddButton } from './src/tab/AddButton'
-//error AddButton 
+
+
+
 
 const Tab = createBottomTabNavigator();
 
@@ -57,7 +57,7 @@ const navOptionHandler = () => ({
 const StackHome = createStackNavigator();
 
 function HomeStack() {
-
+ 
   return (
     <StackHome.Navigator initialRouteName="Home">
       <StackHome.Screen name="Home" component={HomeScreen} options={navOptionHandler} />
@@ -69,8 +69,6 @@ function HomeStack() {
       <StackHome.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
       <StackHome.Screen name="CategoryDetail" component={CategoryDetail} options={navOptionHandler} />
       <StackHome.Screen name="AllProductsNews" component={AllProductsNews} options={navOptionHandler} />
-      <StackHome.Screen name="AllProductsBuys" component={AllProductsBuys} options={navOptionHandler} />
-      <StackHome.Screen name="AllProductsHearts" component={AllProductsHearts} options={navOptionHandler} />
     </StackHome.Navigator>
   );
 };
@@ -130,28 +128,20 @@ function ScanQrCodeStack() {
   )
 }
 
+
+
+
 function TabNavigator({ navigation }) {
+  
+ 
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
         activeTintColor: '#e91e63',
-        // style:{
-        //   height:40,
-        //   marginBottom:20,
-        //   backgroundColor: 'blue', 
-
-        // },
-        // labelStyle :{
-
-        // },
-        // tabStyle:{
-
-
-        //   top:40
-        // }
-
       }}
+      
     >
 
       <Tab.Screen
@@ -162,26 +152,32 @@ function TabNavigator({ navigation }) {
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }}
-        component={HomeStack} />
-      <Tab.Screen
+        component={HomeStack}
+        
+          />
+             
+         
+       
+      
+        
 
+
+        
+      <Tab.Screen
         options={{
           tabBarLabel: 'Lịch Sử',
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="clock" color={color} size={size} />),
         }}
-        name="History" component={HistoryStack} />
+        name="History" component={HistoryStack}
+        />
 
       <Tab.Screen
-
         options={{
           tabBarLabel: 'Quét QR',
           tabBarIcon: () => <AddButton {...navigation} />,
-
-
         }}
-
         name="ScanQrCode" component={ScanQrCodeStack}
-
+   
       />
 
       <Tab.Screen
@@ -190,7 +186,10 @@ function TabNavigator({ navigation }) {
           tabBarLabel: 'Yêu Thích',
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="charity" color={color} size={size} />),
         }}
-        name="favourite" component={FavouriteStack} />
+        name="favourite" component={FavouriteStack}
+      
+        
+        />
 
 
       <Tab.Screen
@@ -198,7 +197,9 @@ function TabNavigator({ navigation }) {
           tabBarLabel: 'Cài Đặt',
           tabBarIcon: ({ color, size }) => (<MaterialCommunityIcons name="settings" color={color} size={size} />),
         }}
-        name="Settings" component={SettingStack} />
+        name="Settings" component={SettingStack}
+        
+         />
 
     </Tab.Navigator>
   )
@@ -227,14 +228,19 @@ function DrawerNavigator({ navigation }) {
 const StackApp = createStackNavigator();
 
 export default function App() {
+
+
   return (
+
     <NavigationContainer>
+
       <StackApp.Navigator initialRouteName="HomeApp">
         <StackApp.Screen name="Introduce" component={IntroduceScreen} options={navOptionHandler} />
         <StackApp.Screen name="HomeApp" component={DrawerNavigator} options={navOptionHandler} />
         <StackApp.Screen name="Login" component={LoginScreen} options={navOptionHandler} />
         <StackApp.Screen name="Register" component={RegisterScreen} options={navOptionHandler} />
       </StackApp.Navigator>
+
     </NavigationContainer>
 
   );

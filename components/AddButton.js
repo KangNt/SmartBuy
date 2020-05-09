@@ -11,18 +11,20 @@ import {BarcodeScannerExample}  from '../src'
 
 
 
+
 export class AddButton extends Component {
         // _onPressButton = () =>{
         //    this.props.navigation.navigate('ScanQrCode')
         // }
     
     render() {
-
+       
         return (
-
             <View style={StyleSheet.container}>
                  <TouchableOpacity style={styles.button}
-                 onPress={ () =>this.props.navigate('ScanQrCode')}>
+                 onPress={ () =>this.props.navigate('ScanQrCode')}
+
+                 >
                     <MaterialCommunityIcons name="qrcode-scan" size={35} color="#FFF" /> 
                 </TouchableOpacity>
             </View>

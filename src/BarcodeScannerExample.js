@@ -47,7 +47,7 @@ export class BarcodeScannerExample extends React.Component {
           <Text style={styles.description}>Scan your QR code</Text>
           {/* <Image
             style={styles.qr}
-            source={require('./images/white-scan.png')}
+            source={require('./images/shapes.png')}
           /> */}
           <TouchableOpacity  onPress={() => this.props.navigation.goBack()}>
           <Text

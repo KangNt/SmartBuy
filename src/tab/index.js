@@ -14,6 +14,4 @@ export * from './ScanQrCodeScreen'
 
 export * from './IntroduceScreen'
 
-export * from './AllProductsBuys'
-export * from './AllProductsHearts'
 export * from './AllProductsNews'
