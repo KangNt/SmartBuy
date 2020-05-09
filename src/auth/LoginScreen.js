@@ -62,6 +62,12 @@ export class LoginScreen extends Component {
           if (responseJson.msg == 'login fail') {
             alert('Đăng nhập thất bại, vui lòng kiểm lại email hoặc password')
           }
+          else if (responseJson.user_info.status == -5) {
+            alert('Tài khoản của bạn đã bị khóa vĩnh viễn')
+          }
+          else if (responseJson.user_info.status == -3) {
+            alert('Tài khoản của bạn đã bị 1 tháng')
+          }
 
           else {
             AsyncStorage.multiSet([['id_user', `${responseJson.user_info.id}`], ['email', responseJson.user_info.email], ['name', responseJson.user_info.name], ['avatar', responseJson.user_info.avatar]])
@@ -98,7 +104,7 @@ export class LoginScreen extends Component {
               style={{ marginTop: "9%", marginLeft: "-4%", flexDirection: "row" }}
             >
               <Image source={require('../images/return.png')} />
-          
+
             </TouchableOpacity>
 
 

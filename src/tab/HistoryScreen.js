@@ -74,7 +74,9 @@ export class HistoryScreen extends Component {
             user_id: "",
             data: [],
             payment_method: "",
-            loading: false
+            loading: false,
+            status:"",
+            confirm:'none'
         };
 
     }
@@ -144,8 +146,99 @@ export class HistoryScreen extends Component {
 
 
     }
+    Confirm_order(item){
+        this.setState({
+            idOrder: item.id
+        })
+        Alert.alert("Thông báo!", "Bạn đã nhận được hàng?",
+            [
 
+                { text: 'Cancel' },
+                {
+                    text: 'OK', onPress: this.submit_confirm_order
 
+                }
+            ],
+            { cancelable: false })
+    }
+    submit_confirm_order= ()=>{
+        this.setState({
+            status:3
+        })
+        fetch('https://smartbuy01.gq/api/orders/update-order/' + this.state.user_id + '/' + this.state.idOrder, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json',
+            },
+            body:JSON.stringify({
+                status:this.state.status,
+                
+              })
+        }).then((res) => res.json()).then((res) => {
+            if (res.result == 'ok') {
+                fetch('https://smartbuy01.gq/api/history/history-by-user/' + this.state.user_id)
+                    .then((resHistory) => resHistory.json()).then((resHistory) => {
+                        this.setState({
+                            data: resHistory.result
+                        })
+                        Alert.alert("Thành Công", "Cảm ơn bạn đã sử dụng sản phẩm của chúng tôi!")
+                    })
+            }
+        })
+    }
+    Continue(item){
+        
+        this.setState({
+            idOrder: item.id
+        })
+        Alert.alert("Thông báo!", "Bạn có muốn vận chuyển đơn hàng này tới địa chỉ của bạn không?",
+            [
+
+                { text: 'Cancel' },
+                {
+                    text: 'OK', onPress: this.submit_ship_order
+
+                }
+            ],
+            { cancelable: false })
+    }
+    submit_ship_order= ()=>{
+        this.setState({
+            status:2
+        })
+        setTimeout(() => {
+            this.setState({
+               confirm:"flex"
+            })
+        }, 60000);
+        fetch('https://smartbuy01.gq/api/orders/update-order/' + this.state.user_id + '/' + this.state.idOrder, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json',
+            },
+            body:JSON.stringify({
+                status:this.state.status,
+                
+              })
+        }).then((res) => res.json()).then((res) => {
+            if (res.result == 'ok') {
+                fetch('https://smartbuy01.gq/api/history/history-by-user/' + this.state.user_id)
+                    .then((resHistory) => resHistory.json()).then((resHistory) => {
+                        this.setState({
+                            data: resHistory.result
+                        })
+                        Alert.alert("Thành Công", "Đã nhận yêu cầu từ bạn thành công!")
+                    })
+                    setTimeout(() => {
+                        this.setState({
+                           confirm:"flex"
+                        })
+                    }, 60000);
+            }
+        })
+    }
     confirm_cancel(item) {
         this.setState({
             idOrder: item.id
@@ -162,12 +255,19 @@ export class HistoryScreen extends Component {
             { cancelable: false })
     }
     submit_cancel_order = () => {
-        fetch('https://smartbuy01.gq/api/orders/cancel-order/' + this.state.user_id + '/' + this.state.idOrder, {
+        this.setState({
+            status:0
+        })
+        fetch('https://smartbuy01.gq/api/orders/update-order/' + this.state.user_id + '/' + this.state.idOrder, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json',
             },
+            body:JSON.stringify({
+                status:this.state.status,
+                
+              })
         }).then((res) => res.json()).then((res) => {
             if (res.result == 'ok') {
                 fetch('https://smartbuy01.gq/api/history/history-by-user/' + this.state.user_id)
@@ -241,31 +341,48 @@ export class HistoryScreen extends Component {
                                                 <FontAwesome5 name='chevron-right' size={20}></FontAwesome5>
                                             </Text>
                                         </View>
-                                        {/* <Text style={styles.title}>Địa chỉ nhận hàng: {item.customer_address}</Text>
-                                    <Text style={styles.title}>Số điện thoại: {item.customer_phone}</Text>
-                                    {
-                                        STT_payment.map((stt)=>{
-                                            if(item.payment_method==stt.value){
-                                                return(
-                                                    <Text style={styles.title}>Phương Thức Thanh Toán: {stt.method}</Text>
-                                                ) 
-                                            }
-                                        })
-                                    } */}
-                                        {item.status != 1 ? <Text></Text>
+                                       
+                                        {item.status != 1 ? 
+                                        
+                                            <Text></Text>
                                             :
-                                            <View style={{ alignItems: "flex-end" }}>
+                                            <View style={{ flexDirection:"row-reverse",backgroundColor:"white",paddingLeft:10 }}>
+                                                
                                                 <TouchableOpacity onPress={() => this.confirm_cancel(item)} style={{
                                                     width: 80, height: 30, borderRadius: 30,
                                                     justifyContent: "center", backgroundColor: "white",
-                                                    borderWidth: 1, borderColor: "#dcdcdc", marginBottom: 3
+                                                    borderWidth: 1, borderColor: "#dcdcdc", marginBottom: 3,marginTop: 3
                                                 }}>
                                                     <Text style={{ textAlign: "center", color: 'red' }}>Hủy</Text>
                                                 </TouchableOpacity>
+                                                <TouchableOpacity onPress={() => this.Continue(item)} style={{
+                                                    width: 80, height: 30, borderRadius: 30,
+                                                    justifyContent: "center", backgroundColor: "white",
+                                                    borderWidth: 1, borderColor: "#dcdcdc", marginBottom: 3,marginTop: 3,marginRight:5
+                                                }}>
+                                                    <Text style={{ textAlign: "center", color: 'green' }}>Tiếp tục</Text>
+                                                </TouchableOpacity>
+                                                
+                                                
                                             </View>
+                                            
 
                                         }
-
+                                         {item.status == 2 ?
+                                            <View style={{display:this.state.confirm, flexDirection:"row-reverse",backgroundColor:"white",paddingLeft:10 }}>   
+                                            <TouchableOpacity onPress={() => this.Confirm_order(item)} style={{
+                                                width: 80, height: 30, borderRadius: 30,
+                                                justifyContent: "center", backgroundColor: "white",
+                                                borderWidth: 1, borderColor: "#dcdcdc", marginBottom: 3,marginTop: 3,marginRight:5
+                                            }}>
+                                                <Text style={{ textAlign: "center", color: 'green' }}>Xác nhận</Text>
+                                            </TouchableOpacity>
+                                        
+                                            </View>
+                                          
+                                            :
+                                            null
+                                        }
                                     </TouchableOpacity>
 
                                 )
@@ -315,11 +432,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 20,
         width: width - 30,
-        // height:150,
+        height:140,
         // flexDirection:'column',
         // padding:20,
-        borderBottomWidth: 2,
+        // borderBottomWidth: 2,
         borderBottomColor: "#3399f0",
+        borderRadius:20
 
 
 

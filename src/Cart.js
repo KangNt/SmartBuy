@@ -221,9 +221,6 @@ export default class Cart extends Component {
       let { name, address, phone, email } = this.state
       return (
         <SafeAreaView style={{ flex: 1, }}>
-
-          <View style={{ flex: 1, }}>
-            {/* <CustomHeader title="Cart" isHome={false} navigation={this.props.navigation} /> */}
             <View style={{ marginLeft: 10, marginTop: 10, flexDirection: 'row' }}>
               <TouchableOpacity
                 onPress={() => this.props.navigation.goBack()}>
@@ -234,7 +231,10 @@ export default class Cart extends Component {
                 <Text style={{ fontSize: 16, color: 'red', }}><FontAwesome5 name={'trash-restore'} size={25}></FontAwesome5></Text>
               </TouchableOpacity>
             </View>
-            <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1, marginBottom: 10 }}>
+            <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1,}}>
+          <View style={{ flex: 1, }}>
+            
+            {/* <CustomHeader title="Cart" isHome={false} navigation={this.props.navigation} /> */}
 
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 {this.state.dataCart.map((item, i) => {
@@ -342,13 +342,13 @@ export default class Cart extends Component {
                     <Text style={{ color: "red" }}>{this.state.err_phone}</Text>
                   </View>
 
-                  <SafeAreaView>
-                  <View style={{ alignItems: "flex-start", width: width - 65 }}>
+               
+                  <View style={{ alignItems: "flex-start",}}>
                     <Picker
                       enabled={true}
                       mode={'dialog'}
                       selectedValue={this.state.payment_method}
-                      style={{ height: 50, width: width - 65, color: "#696868" }}
+                      style={{ height:  50, width: width - 65, color: "#696868" }}
 
                       onValueChange={(itemValue, itemIndex) => this.setState({ payment_method: itemValue })}
                     >
@@ -360,7 +360,7 @@ export default class Cart extends Component {
                     </Picker>
                     <Text style={{ color: "red" }}>{this.state.err_payment_method}</Text>
                   </View>
-                  </SafeAreaView>
+                 
                   
 
 
@@ -388,8 +388,9 @@ export default class Cart extends Component {
 
                 <View style={{ height: 20 }} />
               </View>
-            </ScrollView>
+            
           </View>
+          </ScrollView>
         </SafeAreaView>
 
       )
